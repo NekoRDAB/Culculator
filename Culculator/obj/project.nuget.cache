@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Ok0A2fL/s9b0hSgS5KdDuOH/gNvXY3So/lWVCgHsNeqBC7aAplQnCNkZWfgHAqVPfEj382nbxvFktcFBfacGuw==",
+  "dgSpecHash": "uFSEYZvuJDrjbR5ca1uEBnMbnax3VclVOn7/Q1KTwkQHjU/SaHgtDZSav9DcvnF++ajFJ5KUxNmoYvc9nVP/pA==",
   "success": true,
-  "projectFilePath": "D:\\GitHubProjects\\Culculator\\Culculator\\Culculator.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\cooluser\\C# projects\\Culculator\\Culculator\\Culculator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cooluser\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.23\\microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\cooluser\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\cooluser\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.23\\microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\cooluser\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.23\\microsoft.netcore.app.host.win-x64.6.0.23.nupkg.sha512"
+  ],
   "logs": []
 }
