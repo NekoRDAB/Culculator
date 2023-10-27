@@ -15,7 +15,7 @@ public struct Ingredient
         Name = name;
         Amount = amount;
         Measurement = measurement;
-        price = -1; // структуры немного корявые но учитывая то, что ингридиентов список оно того стоит
+        price = -1; // структуры немного корявые но учитывая то, что ингредиентов список оно того стоит
         price = GetPriceFromDB();
     }
 
