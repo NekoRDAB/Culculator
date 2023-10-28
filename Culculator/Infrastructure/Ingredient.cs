@@ -1,4 +1,4 @@
-﻿namespace Infrastructure;
+﻿namespace Culculator.Infrastructure;
 
 public struct Ingredient
 {
@@ -7,7 +7,7 @@ public struct Ingredient
     public readonly MeasurementUnit Measurement;
     public readonly string Name;
     public double Price => price * Amount;
-    private double price;
+    private double price = 0;
 
     public Ingredient(int id, string name, double amount, MeasurementUnit measurement)
     {
@@ -15,7 +15,6 @@ public struct Ingredient
         Name = name;
         Amount = amount;
         Measurement = measurement;
-        price = -1; // структуры немного корявые но учитывая то, что ингредиентов список оно того стоит
         price = GetPriceFromDB();
     }
 
@@ -29,5 +28,4 @@ public struct Ingredient
         return $"{IdInRecipe}.{Name}, {Amount}, {Measurement} - {Price}руб.";
     }
 }
-    
-    
+

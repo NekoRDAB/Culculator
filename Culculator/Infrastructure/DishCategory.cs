@@ -1,4 +1,4 @@
-﻿namespace Infrastructure;
+﻿namespace Culculator.Infrastructure;
 
 public enum DishCategory
 {

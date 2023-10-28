@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Culculator.Infrastructure;
 
 namespace Domain;
 
@@ -14,7 +15,7 @@ public class Dish
 
     public Dish(
         string name, string recipe, int portions,
-        Infrastructure.DishCategory category, params Infrastructure.Ingredient[] ingredients
+        DishCategory category, params Ingredient[] ingredients
         )
     {
         Name = name;
