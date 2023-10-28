@@ -1,4 +1,4 @@
-﻿namespace Culculator;
+﻿namespace Infrastructure;
 
 public struct Ingredient
 {

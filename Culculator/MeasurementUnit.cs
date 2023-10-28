@@ -1,4 +1,4 @@
-﻿namespace Culculator;
+﻿namespace Infrastructure;
 
 public enum MeasurementUnit //надо подумать как выводить на русском
 {

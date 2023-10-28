@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Culculator;
+namespace Domain;
 
 public class Dish
 {
@@ -12,7 +12,10 @@ public class Dish
     public double PricePerPortion => Price / NumberOfPortions;
     public readonly double Price; 
 
-    public Dish(string name, string recipe, int portions, DishCategory category, params Ingredient[] ingredients)
+    public Dish(
+        string name, string recipe, int portions,
+        Infrastructure.DishCategory category, params Infrastructure.Ingredient[] ingredients
+        )
     {
         Name = name;
         Recipe = recipe;
