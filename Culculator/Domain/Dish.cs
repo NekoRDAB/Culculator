@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Culculator.Infrastructure;
+using Culculator.Domain;
 
 namespace Domain;
 

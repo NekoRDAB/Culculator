@@ -1,4 +1,4 @@
-﻿namespace Culculator.Infrastructure;
+﻿namespace Culculator.Domain;
 
 public struct Ingredient
 {
