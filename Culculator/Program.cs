@@ -1,4 +1,6 @@
-﻿namespace Culculator
+﻿using Culculator.Domain;
+
+namespace Culculator
 {
     internal class Program
     {

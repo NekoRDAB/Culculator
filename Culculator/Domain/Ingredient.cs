@@ -1,4 +1,4 @@
-﻿namespace Culculator.Domain;
+namespace Culculator.Domain;
 
 public struct Ingredient
 {
@@ -6,19 +6,23 @@ public struct Ingredient
     public readonly double Amount;
     public readonly MeasurementUnit Measurement;
     public readonly string Name;
+    // private readonly IIngredientRepository _repository;
     public double Price => price * Amount;
     private double price = 0;
 
-    public Ingredient(int id, string name, double amount, MeasurementUnit measurement)
+    public Ingredient(int id, 
+        string name, 
+        double amount, 
+        MeasurementUnit measurement)
     {
         IdInRecipe = id;
         Name = name;
         Amount = amount;
         Measurement = measurement;
-        price = GetPriceFromDB();
+        price = PostGreIngredientRepository.GetPriceFromDB(Name);
     }
 
-    private double GetPriceFromDB()
+    private double GetPriceFromDB() // это стоит перенести в отдельный класс репозитория
     {
         return -1; // Кто там делает БДшку напишите суда какой нибудь запрос. Желательно с EF
     }
@@ -27,5 +31,6 @@ public struct Ingredient
     {
         return $"{IdInRecipe}.{Name}, {Amount}, {Measurement} - {Price}руб.";
     }
+    // я б добавил сюда Equals и GetHashCode но навряд ли мы будем сравнивать блюда и ингридиенты
 }
 
