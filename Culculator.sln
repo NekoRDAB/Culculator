@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Culculator", "Culculator\Culculator.csproj", "{95A5DDE9-E7A1-4799-BF31-EE952B70AAB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulculatorTests", "CulculatorTests\CulculatorTests.csproj", "{EF2C6489-2F80-46B5-94CE-A3B262511DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{95A5DDE9-E7A1-4799-BF31-EE952B70AAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A5DDE9-E7A1-4799-BF31-EE952B70AAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95A5DDE9-E7A1-4799-BF31-EE952B70AAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF2C6489-2F80-46B5-94CE-A3B262511DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF2C6489-2F80-46B5-94CE-A3B262511DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF2C6489-2F80-46B5-94CE-A3B262511DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF2C6489-2F80-46B5-94CE-A3B262511DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

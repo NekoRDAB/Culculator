@@ -1,7 +1,6 @@
 ﻿using System.Text;
-using Culculator.Infrastructure;
 
-namespace Domain;
+namespace Culculator.Domain;
 
 public class Dish
 {
