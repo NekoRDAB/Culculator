@@ -3,9 +3,9 @@
 [TestFixture]
 public class IngridientShould
 {
-    [SetUp]
-    public static void SetUp()
+    [Test]
+    public void TestToString()
     {
-        var ing = new Ingredient(1, "2", 3, MeasurementUnit.Kilogram);
+        
     }
 }
