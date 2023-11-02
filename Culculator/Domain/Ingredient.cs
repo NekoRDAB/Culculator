@@ -1,38 +1,54 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Culculator.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 
-namespace Culculator.Domain;
-
-public struct Ingredient
+namespace Culculator.Domain
 {
-    public readonly int IdInRecipe;
-    public readonly double Amount;
-    public readonly MeasurementUnit Measurement;
-    public readonly string Name;
-    // private readonly IIngredientRepository _repository;
-    public double Price => price * Amount;
-    private double price = 0;
-
-    public Ingredient(int id, 
-        string name, 
-        double amount, 
-        MeasurementUnit measurement)
+    [Table("IngredientsDB")]
+    public class Ingredient
     {
-        IdInRecipe = id;
-        Name = name;
-        Amount = amount;
-        Measurement = measurement;
-        price = PostGreIngredientRepository.GetPriceFromDB(Name);
-    }
+        [Key]
+        public int IdInRecipe { get; set; }
+        [Column("amount")]
+        public double Amount { get; set; }
+        [Column("measurement")]
+        public string Measurement { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
 
-    private double GetPriceFromDB() // это стоит перенести в отдельный класс репозитория
-    {
-        return -1; // Кто там делает БДшку напишите суда какой нибудь запрос. Желательно с EF
-    }
+        // private readonly IIngredientRepository _repository;
+        [Column("price")]
+        public double Price { get; set; }
+        // {
+        //     get => price * Amount;
+        //     set => price = value;
+        // }
+        // private double price = 0;
 
-    public override string ToString()
-    {
-        return $"{IdInRecipe}.{Name}, {Amount}, {Measurement} - {Price}руб.";
+        // Пустой конструктор нужен для базы данных        
+        public Ingredient()
+        {
+        }
+        
+        public Ingredient(int amount, string measurement, string name, double price)
+        {
+            Amount = amount;
+            Measurement = measurement;
+            Name = name;
+            Price = price;
+            // price = PostGreIngredientRepository.GetPriceFromDB(Name);
+        }
+
+        private double GetPriceFromDB() // это стоит перенести в отдельный класс репозитория
+        {
+            return -1; // Кто там делает БДшку напишите суда какой нибудь запрос. Желательно с EF
+        }
+
+        // public override string ToString()
+        // {
+        //     return $"{IdInRecipe}.{Name}, {Amount}, {Measurement} - {Price}руб.";
+        // }
+        // я б добавил сюда Equals и GetHashCode но навряд ли мы будем сравнивать блюда и ингридиенты
     }
-    // я б добавил сюда Equals и GetHashCode но навряд ли мы будем сравнивать блюда и ингридиенты
 }
 

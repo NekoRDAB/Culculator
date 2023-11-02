@@ -1,17 +1,28 @@
-﻿using Culculator.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Culculator.DataBase;
+using Culculator.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Culculator
 {
+    [Table("IngredientsDB")]
     internal class Program
     {
         static void Main(string[] args)
         {
-            var dish = new Dish("aboba",
-                "aaaaaaaaa,adsadasd",
-                3,
-                DishCategory.Breakfast,
-                new[] { new Ingredient(1, "amogus", 2, MeasurementUnit.Tbsp) });
-            Console.WriteLine(dish);
+            Ingredient test = new Ingredient(10, "Abc", "Egg", 70);
+            var test2 = new Ingredient(2, "Залупа", "Ебать", 10000);
+            using (var db = new ApplicationContext())
+            {
+                db.IngredientsDB.Add(test);
+                db.IngredientsDB.Add(test2);
+                db.SaveChanges();
+                // db.IngredientsDB.ExecuteDelete();
+            }
+            
+            // var db = new ApplicationContext();
+            // db.IngredientsDB.Add(test);
+            // db.SaveChanges();
         }
     }
 }
