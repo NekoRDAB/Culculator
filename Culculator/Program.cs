@@ -10,19 +10,23 @@ namespace Culculator
     {
         static void Main(string[] args)
         {
-            Ingredient test = new Ingredient(10, "Abc", "Egg", 70);
-            var test2 = new Ingredient(2, "Залупа", "Ебать", 10000);
-            using (var db = new ApplicationContext())
+            var egg = new Ingredient("Яйцо", 7);
+            var sugar = new Ingredient("Сахар", 0.06);
+            // using (var db = new IngredientsContext())
+            // {
+            //     db.IngredientsDataBase.Add(egg);
+            //     db.IngredientsDataBase.Add(sugar);
+            //     db.SaveChanges();
+            //     // db.IngredientsDB.ExecuteDelete();
+            // }
+            var friedEggRecipe =
+                new Recipe("Яичница", "Простые",
+                    "Яйцо 3; Сосиска 2; Помидор 200", 0, "Вкусная яишенка");
+            using (var recipeDB = new RecipesContext())
             {
-                db.IngredientsDB.Add(test);
-                db.IngredientsDB.Add(test2);
-                db.SaveChanges();
-                // db.IngredientsDB.ExecuteDelete();
+                recipeDB.RecipesDataBase.Add(friedEggRecipe);
+                recipeDB.SaveChanges();
             }
-            
-            // var db = new ApplicationContext();
-            // db.IngredientsDB.Add(test);
-            // db.SaveChanges();
         }
     }
 }

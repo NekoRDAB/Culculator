@@ -12,18 +12,18 @@ public class Dish
     public double PricePerPortion => Price / NumberOfPortions;
     public readonly double Price; 
 
-    public Dish(
-        string name, string recipe, int portions,
-        DishCategory category, params Ingredient[] ingredients
-        )
-    {
-        Name = name;
-        Recipe = recipe;
-        NumberOfPortions = portions;
-        Category = category;
-        Ingredients = new List<Ingredient>(ingredients);
-        Price = Ingredients.Sum(i => i.Price);
-    }
+    // public Dish(
+    //     string name, string recipe, int portions,
+    //     DishCategory category, params Ingredient[] ingredients
+    //     )
+    // {
+    //     Name = name;
+    //     Recipe = recipe;
+    //     NumberOfPortions = portions;
+    //     Category = category;
+    //     Ingredients = new List<Ingredient>(ingredients);
+    //     Price = Ingredients.Sum(i => i.Price);
+    // }
 
     public override string ToString() // ToString для бота
     {
