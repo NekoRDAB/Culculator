@@ -1,7 +1,7 @@
 ﻿namespace CulculatorTests;
 
 [TestFixture]
-public class IngridientShould
+public class IngredientShould
 {
     [Test]
     public void TestToString()
