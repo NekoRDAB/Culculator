@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+Culculator.assets.cache
+Culculator.GeneratedMSBuildEditorConfig.editorconfig
+
 # User-specific files
 *.rsuser
 *.suo
@@ -98,6 +101,7 @@ StyleCopReport.xml
 *.svclog
 *.scc
 *.cache
+*.editorconfig
 
 # Chutzpah Test files
 _Chutzpah*
