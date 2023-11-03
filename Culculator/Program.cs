@@ -32,6 +32,7 @@ namespace Culculator
             //     recipeDB.RecipesDataBase.Add(friedEggRecipe);
             //     recipeDB.SaveChanges();
             // }
+            Console.WriteLine("    ");
         }
     }
 }
