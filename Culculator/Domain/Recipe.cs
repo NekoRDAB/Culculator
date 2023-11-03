@@ -12,22 +12,22 @@ namespace Culculator.Domain
         public string Name { get; set; }
         [Column("category")]
         public string Category { get; set; }
-        [Column("ingredient")]
-        public string Ingredient { get; set; }
-        [Column("conditionalUnitAmount")]
-        public double ConditionalUnitAmount { get; set; }
+        [Column("ingredients")]
+        public string Ingredients { get; set; }
+        [Column("portionsAmount")]
+        public double PortionsAmount { get; set; }
         [Column("recipeInfo")]
         public string RecipeInfo { get; set; }
 
         private List<Ingredient> ingredients { get; set; }
         public Recipe() { }
 
-        public Recipe(string name, string category, string ingredient, double conditionalUnitAmount, string recipeInfo)
+        public Recipe(string name, string category, string ingredients, double portionsAmount, string recipeInfo)
         {
             Name = name;
             Category = category;
-            Ingredient = ingredient;
-            ConditionalUnitAmount = conditionalUnitAmount;
+            Ingredients = ingredients;
+            PortionsAmount = portionsAmount;
             RecipeInfo = recipeInfo;
         }
     }

@@ -12,17 +12,17 @@ namespace Culculator.Domain
         public int id { get; set; }
         [Column("name")]
         public string Name { get; set; }
-        [Column("conditionalUnitPrice")]
-        public double ConditionalUnitPrice { get; set; }
+        [Column("price")]
+        public double Price { get; set; }
         
         public Ingredient()
         {
         }
         
-        public Ingredient(string name, double conditionalUnitPrice)
+        public Ingredient(string name, double price)
         {
             Name = name;
-            ConditionalUnitPrice = conditionalUnitPrice;
+            Price = price;
         }
 
         // public double GetPriceFromDB(string name)

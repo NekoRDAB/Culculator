@@ -12,16 +12,16 @@ namespace Culculator
         {
             var egg = new Ingredient("Яйцо", 7);
             var sugar = new Ingredient("Сахар", 0.06);
-            // using (var db = new IngredientsContext())
-            // {
-            //     db.IngredientsDataBase.Add(egg);
-            //     db.IngredientsDataBase.Add(sugar);
-            //     db.SaveChanges();
-            //     // db.IngredientsDB.ExecuteDelete();
-            // }
+            using (var db = new IngredientsContext())
+            {
+                db.IngredientsDataBase.Add(egg);
+                db.IngredientsDataBase.Add(sugar);
+                db.SaveChanges();
+                // db.IngredientsDB.ExecuteDelete();
+            }
             var friedEggRecipe =
                 new Recipe("Яичница", "Простые",
-                    "Яйцо 3; Сосиска 2; Помидор 200", 0, "Вкусная яишенка");
+                    "Яйцо 3; Сосиска 2; Помидор 200", 3, "Вкусная яишенка");
             using (var recipeDB = new RecipesContext())
             {
                 recipeDB.RecipesDataBase.Add(friedEggRecipe);
