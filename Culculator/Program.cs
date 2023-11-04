@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Culculator.DataBase;
-using Culculator.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Culculator.Domain;
 
 namespace Culculator
 {
-    [Table("IngredientsDB")]
     internal class Program
     {
         static void Main(string[] args)
@@ -49,3 +45,4 @@ namespace Culculator
         }
     }
 }
+

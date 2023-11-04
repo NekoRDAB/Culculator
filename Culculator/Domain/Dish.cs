@@ -1,5 +1,3 @@
-using Culculator.DataBase;
-
 namespace Culculator.Domain
 {
     public class Dish

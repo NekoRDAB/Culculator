@@ -10,7 +10,7 @@ namespace Culculator.DataBase
             var root = new FileInfo("RecipesDataBase.db");
             var fullName = root.DirectoryName;
             var newPath = fullName.Replace(@"\bin\Debug\net6.0", @"\RecipesDataBase.db");
-            optionsBuilder.UseSqlite($"Data Source={newPath}");
+            optionsBuilder.UseSqlite(@"Data Source=C:\Users\79521\Desktop\Culculator\Culculator\Culculator\RecipesDataBase.db");
         }
         public DbSet<Recipe> RecipesDataBase { get; set; }
     }

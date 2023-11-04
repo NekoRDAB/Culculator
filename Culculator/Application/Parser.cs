@@ -1,7 +1,5 @@
-using System;
 using Culculator.DataBase;
 using Culculator.Domain;
-
 
 public class Parser
 {

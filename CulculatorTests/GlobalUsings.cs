@@ -1,3 +1,1 @@
-global using NUnit.Framework;
-global using Culculator.Infrastructure;
-global using Culculator.Domain;
+﻿global using NUnit.Framework;
