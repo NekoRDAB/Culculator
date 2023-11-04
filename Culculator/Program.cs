@@ -11,19 +11,33 @@ namespace Culculator
         static void Main(string[] args)
         {
             var parserInstance = new Parser();
-            var egg = parserInstance.GetIngredientFromDB("Яйцо");
-            Console.WriteLine(egg.GetType());
-            Console.WriteLine($"{egg.id}, {egg.Name}, {egg.Price}");
-            var nothing = parserInstance.GetIngredientFromDB("Абракадабра");
-            // var egg = new Ingredient("Яйцо", 7);
-            // var sugar = new Ingredient("Сахар", 0.06);
+            var dishInstance = new Dish();
+            
+            dishInstance.FormRecipe(parserInstance.GetRecipeFromDB("Яичница"));
+            // using (var recipeDB = new RecipesContext())
+            // {
+            //     var recipeName = "Яичница";
+            //     var recipe = recipeDB.RecipesDataBase.FirstOrDefault(i => i.Name == recipeName);
+            //     var ingredients = recipe.Ingredients;
+            //     var a = parserInstance.CollectIngredients(ingredients);
+            //     
+            // }
+
+            // var egg = parserInstance.GetIngredientFromDB("Яйцо");
+            // Console.WriteLine(egg.GetType());
+            // Console.WriteLine($"{egg.id}, {egg.Name}, {egg.Price}");
+            // var nothing = parserInstance.GetIngredientFromDB("Абракадабра");
+
+            // var sausage = new Ingredient("Сосиска", 12);
+            // var tomato = new Ingredient("Помидор", 0.12);
             // using (var db = new IngredientsContext())
             // {
-            //     db.IngredientsDataBase.Add(egg);
-            //     db.IngredientsDataBase.Add(sugar);
+            //     db.IngredientsDataBase.Add(sausage);
+            //     db.IngredientsDataBase.Add(tomato);
             //     db.SaveChanges();
             //     // db.IngredientsDB.ExecuteDelete();
             // }
+
             // var friedEggRecipe =
             //     new Recipe("Яичница", "Простые",
             //         "Яйцо 3; Сосиска 2; Помидор 200", 3, "Вкусная яишенка");
@@ -32,7 +46,6 @@ namespace Culculator
             //     recipeDB.RecipesDataBase.Add(friedEggRecipe);
             //     recipeDB.SaveChanges();
             // }
-            Console.WriteLine("    ");
         }
     }
 }
