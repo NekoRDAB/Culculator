@@ -1,7 +1,7 @@
-using Culculator.Domain;
+using Culculator.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Culculator.DataBase
+namespace Culculator.Infrastructure
 {
     public class RecipesContext : DbContext
     {
@@ -10,8 +10,8 @@ namespace Culculator.DataBase
             var root = new FileInfo("RecipesDataBase.db");
             var fullName = root.DirectoryName;
             var newPath = fullName.Replace(@"\bin\Debug\net6.0", @"\RecipesDataBase.db");
-            optionsBuilder.UseSqlite(@"Data Source=C:\Users\79521\Desktop\Culculator\Culculator\Culculator\RecipesDataBase.db");
+            optionsBuilder.UseSqlite($"Data Source={newPath}");
         }
-        public DbSet<Recipe> RecipesDataBase { get; set; }
+        public DbSet<DishEntry> RecipesDataBase { get; set; }
     }
 }

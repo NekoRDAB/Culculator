@@ -1,24 +1,55 @@
+using System.Diagnostics;
+using Culculator.Infrastructure;
+
 namespace Culculator.Domain
 {
     public class Dish
     {
-        public void FormRecipe(Recipe recipe)
+        public IReadOnlyList<Ingredient> Ingredients { get; private set; }
+        public int NumberOfPortions { get; private set; }
+        public double Price { get; private set; }
+        public string Recipe { get; private set; }
+        public string Name { get; private set; }
+        public string Category { get; private set; }
+        public double PricePerPortion => Price / NumberOfPortions;
+        
+        public Dish(DishEntry recipe)
         {
-            var parserInstance = new Parser();
-
-            var ingredientsDict = parserInstance.CollectIngredients(recipe.Ingredients);
-            var recipePrice = CalculateRecipePrice(ingredientsDict);
-            Console.WriteLine($"> {recipe.Name} - {recipePrice} рублей");
-            foreach (var ingredientPair in ingredientsDict)
-            {
-                Console.WriteLine(
-                    $">> {ingredientPair.Key.Name} {ingredientPair.Value} " +
-                    $"- {ingredientPair.Key.Price * ingredientPair.Value}");
-            }
+           
+            var ingredientsList = CollectIngredients(recipe.Ingredients);
+            Price = ingredientsList.Sum(i => i.Price);
+            Recipe = recipe.RecipeInfo;
+            Name = recipe.Name;
+            Category = recipe.Category;
+            Ingredients = ingredientsList;
         }
 
-        private double CalculateRecipePrice(Dictionary<Ingredient, int> ingredientsDict)
-            => ingredientsDict
-                .Sum(ingredientPair => ingredientPair.Key.Price * ingredientPair.Value);
+        public override string ToString() 
+        {
+            var listedIngredients = String.Join("\n", Ingredients
+                .Select(i => i.ToString())
+                .ToArray());
+            return $"{Name}\n\n{listedIngredients}\n{Recipe}\n\n{Price}руб.\n{NumberOfPortions}\n{PricePerPortion}руб/порция";
+        }
+        
+        private List<Ingredient> CollectIngredients(string ingredientsFromDB)
+        {
+            var ingredientsLists = new List<Ingredient>();
+            var ingredientPairs = ingredientsFromDB.Split(';');
+            var idCounter = 1;
+            foreach (var pair in ingredientPairs)
+            {
+                var parts = pair.Trim().Split(' ');
+
+                var ingredientName = parts[0];
+                var ingredientAmount = int.Parse(parts[1]);
+                var parserInstance = new Parser();
+                var ingredient = parserInstance.GetIngredientFromDB(ingredientName);
+                ingredientsLists.Add(new Ingredient(idCounter++, ingredientName, 
+                    ingredientAmount, "WIP", ingredient.Price));
+            }
+
+            return ingredientsLists;
+        }
     }
 }

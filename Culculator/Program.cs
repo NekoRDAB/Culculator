@@ -1,5 +1,5 @@
 ﻿using Culculator.Domain;
-
+using Culculator.Infrastructure;
 namespace Culculator
 {
     internal class Program
@@ -7,9 +7,9 @@ namespace Culculator
         static void Main(string[] args)
         {
             var parserInstance = new Parser();
-            var dishInstance = new Dish();
             
-            dishInstance.FormRecipe(parserInstance.GetRecipeFromDB("Яичница"));
+            var dish = new Dish(parserInstance.GetRecipeFromDB("Яичница"));
+            Console.WriteLine(dish);
             // using (var recipeDB = new RecipesContext())
             // {
             //     var recipeName = "Яичница";

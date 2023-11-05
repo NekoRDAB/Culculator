@@ -42,17 +42,4 @@ public class ParserTests
         
         Assert.Throws<KeyNotFoundException>(() => parser.GetRecipeFromDB(recipeName));
     }
-
-    [Test]
-    public void CollectIngredients()
-    {
-        var parser = new Parser();
-        var ingredientsFromDB = "Яйцо 3; Сосиска 2; Помидор 200";
-        
-        var ingredientsDict = parser.CollectIngredients(ingredientsFromDB);
-        
-        Assert.IsNotNull(ingredientsDict);
-        Assert.AreEqual(3, ingredientsDict.Count);
-
-    }
 }

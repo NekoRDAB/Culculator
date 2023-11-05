@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Culculator.Infrastructure;
 
-namespace Culculator.Domain
+namespace Culculator.Infrastructure
 {
-    [Table("RecipesDataBase")]
-    public class Recipe
+    // [Table("RecipesDataBase")]
+    public class DishEntry
     {
         [Key]
         public int Id { get; set; }
@@ -19,10 +20,10 @@ namespace Culculator.Domain
         [Column("recipeInfo")]
         public string RecipeInfo { get; set; }
 
-        private List<Ingredient> ingredients { get; set; }
-        public Recipe() { }
+        private List<IngredientEntry> ingredients { get; set; }
+        public DishEntry() { }
 
-        public Recipe(string name, string category, string ingredients, double portionsAmount, string recipeInfo)
+        public DishEntry(string name, string category, string ingredients, double portionsAmount, string recipeInfo)
         {
             Name = name;
             Category = category;

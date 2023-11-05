@@ -1,9 +1,8 @@
-using Culculator.DataBase;
-using Culculator.Domain;
+namespace Culculator.Infrastructure;
 
 public class Parser
 {
-    public Ingredient GetIngredientFromDB(string ingredientName)
+    public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
         using (var ingredientsDB = new IngredientsContext())
         {
@@ -17,7 +16,7 @@ public class Parser
         }
     }
     
-    public Recipe GetRecipeFromDB(string recipeName)
+    public DishEntry GetRecipeFromDB(string recipeName)
     {
         using (var recipeDB = new RecipesContext())
         {
@@ -31,22 +30,5 @@ public class Parser
         }
     }
     
-    public Dictionary<Ingredient, int> CollectIngredients(string ingredientsFromDB)
-    {
-        var ingredientsDictionary = new Dictionary<Ingredient, int>();
-        var ingredientPairs = ingredientsFromDB.Split(';');
-
-        foreach (var pair in ingredientPairs)
-        {
-            var parts = pair.Trim().Split(' ');
-
-            var ingredientName = parts[0];
-            var ingredientAmount = int.Parse(parts[1]);
-
-            var ingredient = GetIngredientFromDB(ingredientName);
-            ingredientsDictionary.Add(ingredient, ingredientAmount);
-        }
-
-        return ingredientsDictionary;
-    }
+    
 }

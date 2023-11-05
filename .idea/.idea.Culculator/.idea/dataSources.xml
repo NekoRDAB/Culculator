@@ -1,36 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="DataBases.db" uuid="83f9cd12-470c-4f42-b225-f2249075c864">
+    <data-source source="LOCAL" name="IngredientsDataBase.db" uuid="44690320-dbce-4e51-8e0d-b0c14ac4523d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/DataBases.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Culculator/IngredientsDataBase.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="IngredientsDataBase" uuid="282352bc-3369-4185-b5c3-a9598f1a2041">
+    <data-source source="LOCAL" name="RecipesDataBase.db" uuid="8cf7e3de-958a-47b2-baef-16a468bf6731">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\79521\Desktop\Culculator\Culculator\Culculator\IngredientsDataBase.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Culculator/RecipesDataBase.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar</url>
-        </library>
-      </libraries>
-    </data-source>
-    <data-source source="LOCAL" name="RecipesDataBase" uuid="d8c7245b-369c-456d-8273-4fca88c6c9ee">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\79521\Desktop\Culculator\Culculator\Culculator\RecipesDataBase.db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar</url>
-        </library>
-      </libraries>
     </data-source>
   </component>
 </project>
