@@ -16,14 +16,14 @@ namespace Culculator.Infrastructure
         [Column("ingredients")]
         public string Ingredients { get; set; }
         [Column("portionsAmount")]
-        public double PortionsAmount { get; set; }
+        public int PortionsAmount { get; set; }
         [Column("recipeInfo")]
         public string RecipeInfo { get; set; }
 
         private List<IngredientEntry> ingredients { get; set; }
         public DishEntry() { }
 
-        public DishEntry(string name, string category, string ingredients, double portionsAmount, string recipeInfo)
+        public DishEntry(string name, string category, string ingredients, int portionsAmount, string recipeInfo)
         {
             Name = name;
             Category = category;

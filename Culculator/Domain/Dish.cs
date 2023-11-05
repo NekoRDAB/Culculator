@@ -22,6 +22,7 @@ namespace Culculator.Domain
             Name = recipe.Name;
             Category = recipe.Category;
             Ingredients = ingredientsList;
+            NumberOfPortions = recipe.PortionsAmount;
         }
 
         public override string ToString() 
@@ -46,7 +47,7 @@ namespace Culculator.Domain
                 var parserInstance = new Parser();
                 var ingredient = parserInstance.GetIngredientFromDB(ingredientName);
                 ingredientsLists.Add(new Ingredient(idCounter++, ingredientName, 
-                    ingredientAmount, "WIP", ingredient.Price));
+                    ingredientAmount, ingredient.MeasurementUnit, ingredient.Price));
             }
 
             return ingredientsLists;
