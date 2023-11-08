@@ -3,11 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-Culculator.assets.cache
-Culculator.GeneratedMSBuildEditorConfig.editorconfig
-Culculator/obj/Debug/net6.0/Culculator.AssemblyInfo.cs
-Culculator/obj/Debug/net6.0/Culculator.AssemblyInfoInputs.cache
-Culculator/obj/Debug/net6.0/Culculator.GeneratedMSBuildEditorConfig.editorconfig
+.cache
+.editorconfig
 
 # User-specific files
 *.rsuser
