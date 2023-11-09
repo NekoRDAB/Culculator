@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using UserInterface.ViewModels;
 using UserInterface.Views;
+using Application = Avalonia.Application;
 
 namespace UserInterface
 {
