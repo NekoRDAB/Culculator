@@ -9,8 +9,8 @@ public class Application
 
     private static HashSet<string> _validCategories = new()
     {
-        "Горячие блюда",
-        "Гарниры",
+        "Завтраки",
+        "Простое",
     };
     
     public static List<Dish> GetAllDishesOfValidCategories()
