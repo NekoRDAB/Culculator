@@ -5,7 +5,7 @@ public class ParserTests
     public void GetIngredientFromDBWhenIngredientExist()
     {
         var parser = new Parser();
-        var ingredientName = "Яйцо";
+        var ingredientName = "Картофель";
         
         var ingredient = parser.GetIngredientFromDB(ingredientName);
         
@@ -26,7 +26,7 @@ public class ParserTests
     public void GetRecipeFromDBWhenRecipeExist()
     {
         var parser = new Parser();
-        var recipeName = "Яичница";
+        var recipeName = "Жареная картошка";
 
         var recipe = parser.GetRecipeFromDB(recipeName);
         

@@ -7,10 +7,9 @@ namespace Culculator.Infrastructure
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var root = new FileInfo("IngredientsDataBase.db");
-            var fullName = root.DirectoryName;
-            var newPath = fullName.Replace(@"\bin\Debug\net6.0", @"\IngredientsDataBase.db");
-            optionsBuilder.UseSqlite($"Data Source={newPath}");
+            var path = Path.Combine("..", "..", "..", "..", @"Culculator\IngredientsDataBase.db");
+            var fullPath = Path.GetFullPath(path);
+            optionsBuilder.UseSqlite($"Data Source={fullPath}");
         }
         public DbSet<IngredientEntry> IngredientsDataBase { get; set; }
     }
