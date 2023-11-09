@@ -1,214 +1,481 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Culculator.Domain;
 using ReactiveUI;
 
 namespace UserInterface.Views;
 
 public partial class MainWindow : Window
 {
-    public static MainWindow _this;
+    static MainWindow _this;
 
     public MainWindow()
     {
+        Environment.CurrentDirectory = Environment.CurrentDirectory.Replace("bin\\Debug\\net6.0", "");
         _this = this;
         InitializeComponent();
+        Width = 900;
+        Height = 600;
         Content = new MainMenu();
     }
-}
 
-public class MainMenu : StackPanel
-{
-    public MainMenu()
+    class MainMenu : StackPanel
     {
-        Margin = new(20);
-        Spacing = 7;
-        Children.Add(new Title());
-        Children.Add(new CategoriesPanel());
-    }
-}
-
-class Title : StackPanel
-{
-    public Title()
-    {
-        Children.Add(new TextBlock
+        public MainMenu()
         {
-            Text = "Culculator", FontSize = 50,
-            TextAlignment = TextAlignment.Center
-        });
-        Spacing = -7;
-        Children.Add(new TextBlock
-        {
-            Text = "Culinary Culculator", FontSize = 15, Foreground = Brushes.LightGray,
-            TextAlignment = TextAlignment.Center
-        });
-        Margin = new Thickness(10);
-    }
-}
+            Margin = new(20);
+            Spacing = 7;
+            Children.Add(new Title());
+            Children.Add(new CategoriesPanel());
+        }
 
-public class CategoriesPanel : StackPanel
-{
-    public CategoriesPanel()
-    {
-        Margin = new(20);
-        Spacing = 10;
-        foreach (var category in Categories.All)
-            Children.Add(new Button
+        class Title : StackPanel
+        {
+            public Title()
             {
-                Width = 270,
-                Height = 60,
-                CornerRadius = new(10),
-                Content = category.Name,
-                FontSize = 16,
-                Command = ReactiveCommand.Create(
-                    () => { MainWindow._this.Content = new DishesMenu(category); })
-            });
-    }
-}
+                Children.Add(new TextBlock
+                {
+                    Text = "Culculator", FontSize = 80,
+                    TextAlignment = TextAlignment.Center
+                });
+                Spacing = -7;
+                Children.Add(new TextBlock
+                {
+                    Text = "Culinary Calculator", FontSize = 25, Foreground = Brushes.LightGray,
+                    TextAlignment = TextAlignment.Center
+                });
+                Margin = new Thickness(10);
+            }
+        }
 
-class CategoryButton : Button // кнопки не отображаются по какой-то причине
-{
-    public CategoryButton(string categoryName)
-    {
-        Width = 270;
-        Height = 70;
-        CornerRadius = new(10);
-        Content = categoryName;
-    }
-}
-
-class DishesMenu : Panel
-{
-    public DishesMenu(Category category)
-    {
-        Children.Add(new DishesList(category));
-        Children.Add(new Button
+        class CategoriesPanel : StackPanel
         {
-            Width = 200,
-            Height = 40,
-            Margin = new(20),
-            Content = "В главное меню",
-            FontSize = 16,
-            Background = null,
-            VerticalAlignment = VerticalAlignment.Bottom,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            CornerRadius = new(10),
-            Command = ReactiveCommand.Create(
-                () => { MainWindow._this.Content = new MainMenu(); })
-        });
-    }
-}
+            public CategoriesPanel()
+            {
+                Margin = new(20);
+                Spacing = 10;
+                foreach (var category in Categories.All)
+                    Children.Add(new CategoryButton(category));
+            }
 
-class DishesList : StackPanel
-{
-    public DishesList(Category category)
-    {
-        Margin = new(20);
-        Spacing = 10;
-        HorizontalAlignment = HorizontalAlignment.Center;
-        foreach (var dish in category.Dishes)
-            Children.Add(new DishBox(dish));
-    }
-}
-
-class DishBox : Panel
-{
-    public DishBox(Dish dish)
-    {
-        Width = 400;
-        Height = 90;
-        Children.Add(new DishBackground(Width, Height));
-        Children.Add(new DishName(dish.Name));
-        Children.Add(new DishPrice(dish.Price));
-        Children.Add(new DishPortionsCount(dish.NumberOfPortions));
-        Children.Add(new DishPricePerPortion(dish.PricePerPortion));
-        Children.Add(new Button
-        {
-            Width = 100,
-            Height = 20,
-            Margin = new(10),
-            FontSize = 10,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Bottom,
-            Padding = new(0),
-            Content = "Ингредиенты"
-        });
-    }
-
-    private class DishBackground : Rectangle
-    {
-        public DishBackground(double width, double height)
-        {
-            Width = width;
-            Height = height;
-            Fill = Brushes.LightGray;
-            RadiusX = 10;
-            RadiusY = 10;
+            class CategoryButton : Panel
+            {
+                public CategoryButton(Category category)
+                {
+                    Children.Add(new Button
+                    {
+                        Width = 330,
+                        Height = 75,
+                        Content = category.Name,
+                        FontSize = 25,
+                        Command = ReactiveCommand.Create(
+                            () => { _this.Content = new DishesMenu(category); })
+                    });
+                }
+            }
         }
     }
 
-    private class DishName : TextBlock
+    class DishesMenu : Panel
     {
-        public DishName(string name)
+        public DishesMenu(Category category)
         {
-            Margin = new(10);
-            Text = name;
-            FontSize = 16;
+            Children.Add(new ScrollViewer { Content = new DishesList(category) });
+            Children.Add(new ReturnButton());
+        }
+
+        class DishesList : StackPanel
+        {
+            public DishesList(Category category)
+            {
+                Margin = new(20);
+                Spacing = 10;
+                HorizontalAlignment = HorizontalAlignment.Center;
+                foreach (var dish in category.Dishes)
+                    Children.Add(new DishBox(category, dish));
+            }
+
+            class DishBox : Panel
+            {
+                public DishBox(Category category, Dish dish)
+                {
+                    Width = 650;
+                    Height = 120;
+                    Children.Add(new DishDescriptionButton(category, dish, Width, Height));
+                    Children.Add(new DishName(dish.Name));
+                    Children.Add(new RightPart(dish));
+                }
+
+                class DishDescriptionButton : Panel
+                {
+                    public DishDescriptionButton(Category category, Dish dish, double width, double height)
+                    {
+                        Children.Add(new Button
+                        {
+                            Width = width,
+                            Height = height,
+                            Command = ReactiveCommand.Create(
+                                () => { _this.Content = new DishDescription(category, dish); })
+                        });
+                    }
+                }
+
+                class DishName : TextBlock
+                {
+                    public DishName(string name)
+                    {
+                        Margin = new(10);
+                        Text = name;
+                        FontWeight = FontWeight.SemiBold;
+                        FontSize = 30;
+                    }
+                }
+
+                class RightPart : StackPanel
+                {
+                    public RightPart(Dish dish)
+                    {
+                        Orientation = Orientation.Horizontal;
+                        HorizontalAlignment = HorizontalAlignment.Right;
+                        Children.Add(new DishShortDescription(dish));
+                        Children.Add(new DishImage(dish));
+                    }
+
+                    class DishShortDescription : Panel
+                    {
+                        public DishShortDescription(Dish dish)
+                        {
+                            Children.Add(new DishPrice(dish.Price));
+                            Children.Add(new DishPortionsCount(dish.NumberOfPortions));
+                            Children.Add(new DishPricePerPortion(dish.PricePerPortion));
+                        }
+
+                        class DishPrice : TextBlock
+                        {
+                            public DishPrice(double price)
+                            {
+                                Margin = new(10);
+                                HorizontalAlignment = HorizontalAlignment.Right;
+                                Text = $"{(int)price} руб.";
+                                FontSize = 22;
+                            }
+                        }
+
+                        class DishPortionsCount : TextBlock
+                        {
+                            public DishPortionsCount(int count)
+                            {
+                                Margin = new(10);
+                                HorizontalAlignment = HorizontalAlignment.Right;
+                                VerticalAlignment = VerticalAlignment.Center;
+                                Foreground = Brushes.Gray;
+                                Text = $"{count} порций";
+                                FontSize = 22;
+                            }
+                        }
+
+                        class DishPricePerPortion : TextBlock
+                        {
+                            public DishPricePerPortion(double price)
+                            {
+                                Margin = new(10);
+                                HorizontalAlignment = HorizontalAlignment.Right;
+                                VerticalAlignment = VerticalAlignment.Bottom;
+                                Foreground = Brushes.Gray;
+                                Text = $"{(int)price} руб. за порцию";
+                                FontSize = 22;
+                            }
+                        }
+                    }
+
+                    class DishImage : Image
+                    {
+                        public DishImage(Dish dish)
+                        {
+                            Margin = new(10);
+                            Width = 150;
+                            Height = 100;
+                            HorizontalAlignment = HorizontalAlignment.Right;
+                            if (dish is DishWithImage dishImage)
+                                try
+                                {
+                                    Source = new Avalonia.Media.Imaging.Bitmap(dishImage.Image)
+                                        .CreateScaledBitmap(new PixelSize((int)Width, (int)Height));
+                                }
+                                catch
+                                {
+                                    Console.WriteLine($"Изображение {dishImage.Image} не найдено");
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        class ReturnButton : Panel
+        {
+            public ReturnButton()
+            {
+                Children.Add(new Button
+                {
+                    Width = 200,
+                    Height = 40,
+                    Margin = new(20),
+                    Content = "В главное меню",
+                    FontSize = 22,
+                    Background = null,
+                    Foreground = Brushes.DarkGray,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Command = ReactiveCommand.Create(
+                        () => { _this.Content = new MainMenu(); })
+                });
+            }
         }
     }
 
-    private class DishPrice : TextBlock
+    class DishDescription : Panel
     {
-        public DishPrice(double price)
+        public DishDescription(Category category, Dish dish)
         {
-            Margin = new(10);
-            HorizontalAlignment = HorizontalAlignment.Right;
-            Text = $"{(int)price} руб.";
+            Children.Add(new DishDescriptionPanels(dish));
+            Children.Add(new ReturnButton(category));
         }
-    }
 
-    private class DishPortionsCount : TextBlock
-    {
-        public DishPortionsCount(int count)
+        class DishDescriptionPanels : StackPanel
         {
-            Margin = new(10);
-            HorizontalAlignment = HorizontalAlignment.Right;
-            VerticalAlignment = VerticalAlignment.Center;
-            Foreground = Brushes.Gray;
-            Text = $"{count} порций";
-        }
-    }
+            public DishDescriptionPanels(Dish dish)
+            {
+                Children.Add(new Top(dish));
+                Children.Add(new Bottom(dish));
+            }
 
-    private class DishPricePerPortion : TextBlock
-    {
-        public DishPricePerPortion(double price)
+            class Top : Panel
+            {
+                public Top(Dish dish)
+                {
+                    Height = 270;
+                    Children.Add(new DishShortInfo(dish));
+                    Children.Add(new DishImage(dish));
+                }
+
+                class DishShortInfo : StackPanel
+                {
+                    public DishShortInfo(Dish dish)
+                    {
+                        Margin = new(20, 10);
+                        Children.Add(new DishName(dish.Name));
+                        Children.Add(new DishPrice(dish.Price));
+                        Children.Add(new DishPortionsCount(dish.NumberOfPortions));
+                        Children.Add(new DishPricePerPortion(dish.PricePerPortion));
+                    }
+
+                    private class DishName : TextBlock
+                    {
+                        public DishName(string name)
+                        {
+                            Margin = new(7);
+                            Text = name;
+                            FontSize = 55;
+                            FontWeight = FontWeight.SemiBold;
+                        }
+                    }
+
+                    private class DishPrice : TextBlock
+                    {
+                        public DishPrice(double price)
+                        {
+                            Margin = new(7, 3);
+                            FontSize = 29;
+                            Text = $"{(int)price} руб.";
+                        }
+                    }
+
+                    private class DishPortionsCount : TextBlock
+                    {
+                        public DishPortionsCount(int count)
+                        {
+                            Margin = new(7, 3);
+                            FontSize = 29;
+                            Foreground = Brushes.Gray;
+                            Text = $"{count} порций";
+                        }
+                    }
+
+                    private class DishPricePerPortion : TextBlock
+                    {
+                        public DishPricePerPortion(double price)
+                        {
+                            Margin = new(7, 3);
+                            FontSize = 29;
+                            Foreground = Brushes.Gray;
+                            Text = $"{(int)price} руб. за порцию";
+                        }
+                    }
+                }
+
+                class DishImage : Image
+                {
+                    public DishImage(Dish dish)
+                    {
+                        Margin = new(28);
+                        Width = 300;
+                        Height = 200;
+                        HorizontalAlignment = HorizontalAlignment.Right;
+                        VerticalAlignment = VerticalAlignment.Top;
+                        if (dish is DishWithImage dishImage)
+                            try
+                            {
+                                Source = new Avalonia.Media.Imaging.Bitmap(dishImage.Image)
+                                    .CreateScaledBitmap(new PixelSize((int)Width, (int)Height));
+                            }
+                            catch
+                            {
+                                Console.WriteLine($"Изображение {dishImage.Image} не найдено");
+                            }
+                    }
+                }
+            }
+
+            class Bottom : Panel
+            {
+                public Bottom(Dish dish)
+                {
+                    Children.Add(new Ingredients(dish));
+                    Children.Add(new Recipe(dish));
+                }
+
+                class Ingredients : StackPanel
+                {
+                    public Ingredients(Dish dish)
+                    {
+                        Margin = new(20, 0);
+                        HorizontalAlignment = HorizontalAlignment.Left;
+                        Width = _this.Width / 2.2;
+                        Children.Add(new Label());
+                        Children.Add(new IngredientsList(dish));
+                    }
+
+                    class Label : TextBlock
+                    {
+                        public Label()
+                        {
+                            Text = "Ингредиенты";
+                            Margin = new(10);
+                            FontSize = 26;
+                            FontWeight = FontWeight.SemiBold;
+                            HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+                    }
+
+                    class IngredientsList : StackPanel
+                    {
+                        public IngredientsList(Dish dish)
+                        {
+                            foreach (var ingredient in dish.Ingredients)
+                                Children.Add(new IngredientDescription(ingredient));
+                        }
+
+                        class IngredientDescription : Panel
+                        {
+                            public IngredientDescription(Ingredient ingredient)
+                            {
+                                Children.Add(new IngredientAndAmount(ingredient));
+                            }
+
+                            class IngredientAndAmount : TextBlock
+                            {
+                                public IngredientAndAmount(Ingredient ingredient)
+                                {
+                                    Margin = new(0);
+                                    Text = ingredient.ToString();
+                                    FontSize = 20;
+                                    TextWrapping = TextWrapping.Wrap;
+                                    HorizontalAlignment = HorizontalAlignment.Center;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                class Recipe : StackPanel
+                {
+                    public Recipe(Dish dish)
+                    {
+                        Margin = new(20, 0);
+                        HorizontalAlignment = HorizontalAlignment.Right;
+                        Width = _this.Width / 2.2;
+                        Children.Add(new Label());
+                        Children.Add(new Steps(dish));
+                    }
+
+                    class Label : TextBlock
+                    {
+                        public Label()
+                        {
+                            Text = "Рецепт";
+                            Margin = new(10);
+                            FontSize = 26;
+                            FontWeight = FontWeight.SemiBold;
+                            HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+                    }
+
+                    class Steps : StackPanel
+                    {
+                        public Steps(Dish dish)
+                        {
+                            foreach (var step in dish.Recipe)
+                                Children.Add(new StepDescription(step.ToString()));
+                        }
+
+                        class StepDescription : Panel
+                        {
+                            public StepDescription(string step)
+                            {
+                                Children.Add(new Step(step));
+                            }
+
+                            class Step : TextBlock
+                            {
+                                public Step(string step)
+                                {
+                                    Margin = new(0);
+                                    Text = step;
+                                    FontSize = 20;
+                                    TextWrapping = TextWrapping.Wrap;
+                                    HorizontalAlignment = HorizontalAlignment.Center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        class ReturnButton : Panel
         {
-            Margin = new(10);
-            HorizontalAlignment = HorizontalAlignment.Right;
-            VerticalAlignment = VerticalAlignment.Bottom;
-            Foreground = Brushes.Gray;
-
-            Text = $"{(int)price} руб. за порцию";
+            public ReturnButton(Category category)
+            {
+                Children.Add(new Button
+                {
+                    Width = 200,
+                    Height = 40,
+                    Margin = new(20),
+                    Content = "В меню блюд",
+                    FontSize = 22,
+                    Background = null,
+                    Foreground = Brushes.DarkGray,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Command = ReactiveCommand.Create(
+                        () => { _this.Content = new DishesMenu(category); })
+                });
+            }
         }
-    }
-}
-
-class ReturnToMainMenuButton : Button
-{
-    public ReturnToMainMenuButton()
-    {
-        Width = 200;
-        Height = 40;
-        Margin = new(20);
-        Content = "В главное меню";
-        FontSize = 16;
-        Background = null;
-        VerticalAlignment = VerticalAlignment.Bottom;
-        HorizontalAlignment = HorizontalAlignment.Left;
-        Command = ReactiveCommand.Create(
-            () => { MainWindow._this.Content = new MainMenu(); });
     }
 }

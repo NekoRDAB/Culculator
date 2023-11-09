@@ -1,8 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Culculator.Domain;
+using static System.Linq.Enumerable;
 
 namespace UserInterface;
+
+public class DishWithImage : Dish
+{
+    public string Image;
+}
 
 public class Category
 {
@@ -21,9 +27,9 @@ public static class Categories
 {
     public static List<Category> All = new()
     {
-        new("Завтраки", new Dish[]
-        {
-            new()
+        new("Завтраки", 
+        
+            Repeat(new DishWithImage()
             {
                 Name = "Овсянка",
                 Category = "Завтраки",
@@ -32,12 +38,13 @@ public static class Categories
                 NumberOfPortions = 1,
                 Ingredients = new Ingredient[]
                 {
-                }
-            },
-        }),
+                },
+                Image = "Assets\\ovsyanka.jpg",
+            }, 10)
+        ),
         new("Мясные блюда", new Dish[]
         {
-            new()
+            new DishWithImage()
             {
                 Name = "Куриные тефтели",
                 Category = "Мясные блюда",
@@ -46,8 +53,9 @@ public static class Categories
                 NumberOfPortions = 6,
                 Ingredients = new[]
                 {
-                    new Ingredient(1, "фарш", 0.5, "кг", 200)
-                }
+                    new Ingredient(1, "фарш", 0.5, "кг", 200),
+                },
+                Image = "Assets\\kurinye-tefteli.jpg",
             },
             new()
             {
