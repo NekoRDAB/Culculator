@@ -8,12 +8,13 @@ namespace Culculator
         {
             var parserInstance = new Parser();
 
-            var recipes = parserInstance.GetRecipeFromDbByCategory("Простые");
+            var recipes = parserInstance.GetRecipeFromDbByCategory("Горячие блюда");
             foreach (var recipe in recipes)
             {
                 var dish = new Dish(recipe);
                 Console.WriteLine(dish);
             }
+            
             
             // using (var recipeDB = new RecipesContext())
             // {
