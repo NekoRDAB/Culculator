@@ -19,8 +19,4 @@
     <PackageReference Include="System.Data.SQLite.Linq" Version="1.0.118" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\" />
-  </ItemGroup>
-
 </Project>

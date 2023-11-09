@@ -26,12 +26,21 @@ public class Parser
         return recipe;
     }
 
-    public List<DishEntry> GetRecipeFromDbByCategory(string category)
+    public List<DishEntry> GetRecipesFromDbByCategory(string category)
     {
         using var recipeDb = new RecipesContext();
         var recipes = recipeDb
             .RecipesDataBase
             .Where(r => r.Category == category)
+            .ToList();
+        return recipes;
+    }
+
+    public List<DishEntry> GetAllRecipesFromDB()
+    {
+        using var recipeDb = new RecipesContext();
+        var recipes = recipeDb
+            .RecipesDataBase
             .ToList();
         return recipes;
     }
