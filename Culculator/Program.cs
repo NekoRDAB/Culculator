@@ -2,19 +2,18 @@
 using Culculator.Infrastructure;
 namespace Culculator
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             var parserInstance = new Parser();
-
+            Console.WriteLine(Environment.CurrentDirectory);
             var recipes = parserInstance.GetRecipesFromDbByCategory("Горячие блюда");
             foreach (var recipe in recipes)
             {
                 var dish = new Dish(recipe);
                 Console.WriteLine(dish);
             }
-            
             
             // using (var recipeDB = new RecipesContext())
             // {
@@ -48,6 +47,12 @@ namespace Culculator
             //     recipeDB.RecipesDataBase.Add(friedEggRecipe);
             //     recipeDB.SaveChanges();
             // }
+        }
+
+        public static string GetPath(string name)
+        {
+            return Path.GetFullPath(
+                Path.Combine("..", "..", "..", "..", @$"Culculator\{name}"));
         }
     }
 }

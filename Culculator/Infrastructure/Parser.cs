@@ -2,9 +2,22 @@ namespace Culculator.Infrastructure;
 
 public class Parser
 {
+    private static IngredientsContext _ingredientsContext;
+    private static RecipesContext _recipesContext;
+    public Parser(string pathToRecipes, string pathToIngredients)
+    {
+        _recipesContext = new RecipesContext(pathToRecipes);
+        _ingredientsContext = new IngredientsContext(pathToIngredients);
+    }
+
+    public Parser()
+    {
+        _recipesContext = new RecipesContext();
+        _ingredientsContext = new IngredientsContext();
+    }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
-        using var ingredientsDB = new IngredientsContext();
+        using var ingredientsDB =  _ingredientsContext;
         var ingredient = ingredientsDB
             .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
@@ -16,7 +29,7 @@ public class Parser
     
     public DishEntry GetRecipeFromDB(string recipeName)
     {
-        using var recipeDB = new RecipesContext();
+        using var recipeDB = _recipesContext;
         var recipe = recipeDB
             .RecipesDataBase
             .FirstOrDefault(i => i.Name == recipeName);
@@ -28,7 +41,7 @@ public class Parser
 
     public List<DishEntry> GetRecipesFromDbByCategory(string category)
     {
-        using var recipeDb = new RecipesContext();
+        using var recipeDb = _recipesContext;
         var recipes = recipeDb
             .RecipesDataBase
             .Where(r => r.Category == category)
@@ -38,7 +51,7 @@ public class Parser
 
     public List<DishEntry> GetAllRecipesFromDB()
     {
-        using var recipeDb = new RecipesContext();
+        using var recipeDb = _recipesContext;
         var recipes = recipeDb
             .RecipesDataBase
             .ToList();

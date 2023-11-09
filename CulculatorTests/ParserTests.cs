@@ -1,4 +1,6 @@
-﻿[TestFixture]
+﻿namespace CulculatorTests;
+
+[TestFixture]
 public class ParserTests
 {
     [Test]

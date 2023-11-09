@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Culculator.Domain;
 using static System.Linq.Enumerable;
@@ -17,6 +19,14 @@ public class DishWithImage : Dish
 
 public class Category
 {
+    private static string _pathToRecipes;
+    private static string _pathToIngredients;
+    static Category()
+    {
+        var dir = Environment.CurrentDirectory;
+        _pathToRecipes =dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
+        _pathToIngredients = dir.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
+    }
     public readonly string Name;
 
     public readonly List<Dish> Dishes;
@@ -30,7 +40,8 @@ public class Category
     public Category(string name)
     {
         Name = name;
-        Dishes = Application.GetDishesByCategory(name);
+        var app = new Application(_pathToRecipes, _pathToIngredients);
+        Dishes = app.GetDishesByCategory(name);
     }
 }
 
@@ -39,7 +50,7 @@ public static class Categories
     public static List<Category> All = new()
     {
         new("Завтраки"),
-        new("Мясные блюда"),
+        new("Горячие блюда"),
         new("Гарниры"),
         new("Перекусы")
     };

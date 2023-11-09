@@ -5,15 +5,21 @@ namespace Culculator.Application;
 
 public class Application
 {
-    private static Parser _parser = new();
+    
+    private Parser _parser;
 
     private static HashSet<string> _validCategories = new()
     {
         "Завтраки",
         "Простое",
     };
+
+    public Application(string pathToRecipes, string pathToIngredients)
+    {
+        _parser = new Parser(pathToRecipes, pathToIngredients);
+    }
     
-    public static List<Dish> GetAllDishesOfValidCategories()
+    public List<Dish> GetAllDishesOfValidCategories()
     {
        return _parser
             .GetAllRecipesFromDB()
@@ -22,7 +28,7 @@ public class Application
             .ToList();
     }
 
-    public static List<Dish> GetDishesByCategory(string category)
+    public List<Dish> GetDishesByCategory(string category)
     {
         return _parser
             .GetRecipesFromDbByCategory(category)
