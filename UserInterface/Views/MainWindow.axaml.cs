@@ -439,12 +439,14 @@ public partial class MainWindow : Window
                         }
                     }
 
-                    class Steps : StackPanel
+                    class Steps : TextBlock
                     {
                         public Steps(Dish dish)
                         {
-                            foreach (var step in dish.Recipe)
-                                Children.Add(new StepDescription(step.ToString()));
+                            Text = string.Join(Environment.NewLine, dish.Recipe);
+                            FontSize = 20;
+                            TextWrapping = TextWrapping.Wrap;
+                            HorizontalAlignment = HorizontalAlignment.Center;
                         }
 
                         class StepDescription : Panel
