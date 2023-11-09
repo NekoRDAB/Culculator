@@ -11,6 +11,17 @@ namespace UserInterface.Views;
 public partial class MainWindow : Window
 {
     static MainWindow _this;
+    
+    class BlackBorder : Border
+    {
+        public BlackBorder(double width, double height, int thickness)
+        {
+            BorderThickness = new Thickness(thickness);
+            BorderBrush = Brushes.DarkSlateGray;
+            Width = width;
+            Height = height;
+        }
+    }
 
     public MainWindow()
     {
@@ -50,7 +61,7 @@ public partial class MainWindow : Window
                 Margin = new Thickness(10);
             }
         }
-
+        
         class CategoriesPanel : StackPanel
         {
             public CategoriesPanel()
@@ -65,6 +76,7 @@ public partial class MainWindow : Window
             {
                 public CategoryButton(Category category)
                 {
+                    
                     Children.Add(new Button
                     {
                         Width = 330,
@@ -74,6 +86,7 @@ public partial class MainWindow : Window
                         Command = ReactiveCommand.Create(
                             () => { _this.Content = new DishesMenu(category); })
                     });
+                    Children.Add(new BlackBorder(330, 75, 1));
                 }
             }
         }
@@ -120,6 +133,7 @@ public partial class MainWindow : Window
                             Command = ReactiveCommand.Create(
                                 () => { _this.Content = new DishDescription(category, dish); })
                         });
+                        Children.Add(new BlackBorder(width, height, 1));
                     }
                 }
 
