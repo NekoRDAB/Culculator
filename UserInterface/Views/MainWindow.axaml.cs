@@ -388,7 +388,7 @@ public partial class MainWindow : Window
                             Margin = new(10);
                             FontSize = 26;
                             FontWeight = FontWeight.SemiBold;
-                            HorizontalAlignment = HorizontalAlignment.Center;
+                            HorizontalAlignment = HorizontalAlignment.Left;
                         }
                     }
 
@@ -415,7 +415,7 @@ public partial class MainWindow : Window
                                     Text = ingredient.ToString();
                                     FontSize = 20;
                                     TextWrapping = TextWrapping.Wrap;
-                                    HorizontalAlignment = HorizontalAlignment.Center;
+                                    HorizontalAlignment = HorizontalAlignment.Left;
                                 }
                             }
                         }
