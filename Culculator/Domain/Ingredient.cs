@@ -2,24 +2,24 @@
 
 public struct Ingredient
 {
-    public readonly int IdInRecipe;
+    private readonly int _idInRecipe;
     public readonly double Amount;
     public readonly string Measurement;
     public readonly string Name;
-    public double Price => Math.Round(price * Amount, 2);
-    private double price = 0;
+    public double Price => Math.Round(_price * Amount, 2);
+    private readonly double _price = 0;
     public Ingredient(int id, string name, double amount, 
         string measurement, double price)
     {
-        IdInRecipe = id;
+        _idInRecipe = id;
         Name = name;
         Amount = amount;
         Measurement = measurement;
-        this.price = price;
+        _price = price;
     }
 
     public override string ToString()
     {
-        return $"{IdInRecipe}.{Name}, {Amount} {Measurement} - {Price}руб.";
+        return $"{_idInRecipe}.{Name}, {Amount} {Measurement} - {Price}руб.";
     }
 }

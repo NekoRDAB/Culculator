@@ -19,17 +19,5 @@ namespace Culculator.Infrastructure
         public int PortionsAmount { get; set; }
         [Column("recipeInfo")]
         public string RecipeInfo { get; set; }
-
-        private List<IngredientEntry> ingredients { get; set; }
-        public DishEntry() { }
-
-        public DishEntry(string name, string category, string ingredients, int portionsAmount, string recipeInfo)
-        {
-            Name = name;
-            Category = category;
-            Ingredients = ingredients;
-            PortionsAmount = portionsAmount;
-            RecipeInfo = recipeInfo;
-        }
     }
 }
