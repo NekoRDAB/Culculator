@@ -52,9 +52,30 @@ public class ParserTests
         var category = "TestCategory";
         using (var db = new RecipesContextSQLite())
         {
-            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 1", Category = category, Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock"});
-            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 2", Category = category, Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock" });
-            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 3", Category = "Гарниры", Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock" });
+            db.RecipesDataBase.Add(new DishEntry
+            {
+                Name = "Recipe 1",
+                Category = category, 
+                Ingredients = "mock", 
+                PortionsAmount = 1, 
+                RecipeInfo = "mock"
+            });
+            db.RecipesDataBase.Add(new DishEntry
+            {
+                Name = "Recipe 2", 
+                Category = category, 
+                Ingredients = "mock", 
+                PortionsAmount = 1,
+                RecipeInfo = "mock"
+            });
+            db.RecipesDataBase.Add(new DishEntry
+            {
+                Name = "Recipe 3",
+                Category = "Гарниры", 
+                Ingredients = "mock",
+                PortionsAmount = 1, 
+                RecipeInfo = "mock"
+            });
             db.SaveChanges();
         }
 
