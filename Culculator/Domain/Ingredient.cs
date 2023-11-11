@@ -1,4 +1,6 @@
-﻿namespace Culculator.Domain;
+﻿using Culculator.Infrastructure;
+
+namespace Culculator.Domain;
 
 public struct Ingredient
 {
@@ -16,6 +18,18 @@ public struct Ingredient
         Amount = amount;
         Measurement = measurement;
         _price = price;
+    }
+
+    public Ingredient(int id, string ingredientEntryString, Parser parser)
+    {
+        var parts = ingredientEntryString.Trim().Split(' ');
+        _idInRecipe = id;
+        Name = parts[0];
+        Amount = int.Parse(parts[1]); ;
+        var ingredientEntry = parser.GetIngredientFromDB(Name);
+        Name = Name.Replace("_", " ");
+        _price = ingredientEntry.Price;
+        Measurement = ingredientEntry.MeasurementUnit;
     }
 
     public override string ToString()

@@ -219,12 +219,12 @@ public partial class MainWindow : Window
                             if (dish is DishWithImage dishImage)
                                 try
                                 {
-                                    Source = new Avalonia.Media.Imaging.Bitmap(dishImage.Image)
+                                    Source = new Avalonia.Media.Imaging.Bitmap(dishImage.PathToImage)
                                         .CreateScaledBitmap(new PixelSize((int)Width, (int)Height));
                                 }
                                 catch
                                 {
-                                    Console.WriteLine($"Изображение {dishImage.Image} не найдено");
+                                    Console.WriteLine($"Изображение {dishImage.PathToImage} не найдено");
                                 }
                         }
                     }
@@ -350,12 +350,12 @@ public partial class MainWindow : Window
                         if (dish is DishWithImage dishImage)
                             try
                             {
-                                Source = new Avalonia.Media.Imaging.Bitmap(dishImage.Image)
+                                Source = new Avalonia.Media.Imaging.Bitmap(dishImage.PathToImage)
                                     .CreateScaledBitmap(new PixelSize((int)Width, (int)Height));
                             }
                             catch
                             {
-                                Console.WriteLine($"Изображение {dishImage.Image} не найдено");
+                                Console.WriteLine($"Изображение {dishImage.PathToImage} не найдено");
                             }
                     }
                 }

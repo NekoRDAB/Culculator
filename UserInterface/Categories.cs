@@ -9,11 +9,11 @@ namespace UserInterface;
 
 public class DishWithImage : Dish
 {
-    public string Image;
+    public string PathToImage;
 
-    public DishWithImage(DishEntry dishEntry, string image) : base(dishEntry)
+    public DishWithImage(DishEntry dishEntry, Parser parser,  string pathToImage) : base(dishEntry, parser)
     {
-        Image = image;
+        PathToImage = pathToImage;
     }
 }
 

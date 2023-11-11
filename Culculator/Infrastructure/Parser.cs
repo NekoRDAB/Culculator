@@ -23,8 +23,7 @@ public class Parser
     }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
-        using var ingredientsDB =  _ingredientsContext;
-        var ingredient = ingredientsDB
+        var ingredient = _ingredientsContext
             .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
 
@@ -35,8 +34,7 @@ public class Parser
     
     public DishEntry GetRecipeFromDB(string recipeName)
     {
-        using var recipeDB = _recipesContext;
-        var recipe = recipeDB
+        var recipe = _recipesContext
             .RecipesDataBase
             .FirstOrDefault(i => i.Name == recipeName);
 
@@ -47,8 +45,7 @@ public class Parser
 
     public List<DishEntry> GetRecipesFromDbByCategory(string category)
     {
-        using var recipeDb = _recipesContext;
-        var recipes = recipeDb
+        var recipes = _recipesContext
             .RecipesDataBase
             .Where(r => r.Category == category)
             .ToList();
@@ -57,8 +54,7 @@ public class Parser
 
     public List<DishEntry> GetAllRecipesFromDB()
     {
-        using var recipeDb = _recipesContext;
-        var recipes = recipeDb
+        var recipes = _recipesContext
             .RecipesDataBase
             .ToList();
         return recipes;

@@ -5,18 +5,18 @@ namespace Culculator.Domain
 {
     public class Dish
     {
-        public IReadOnlyList<Ingredient> Ingredients { get; private set; }
-        public int NumberOfPortions { get; private set; }
-        public double Price { get; private set; }
-        public string Recipe { get; private set; }
-        public string Name { get; private set; }
-        public string Category { get; private set; }
+        public readonly IReadOnlyList<Ingredient> Ingredients;
+        public readonly int NumberOfPortions;
+        public readonly double Price;
+        public readonly string Recipe;
+        public readonly string Name;
+        public readonly string Category;
         public double PricePerPortion => Price / NumberOfPortions;
         
-        public Dish(DishEntry recipe)
+        public Dish(DishEntry recipe, Parser parser)
         {
            
-            var ingredientsList = CollectIngredients(recipe.Ingredients);
+            var ingredientsList = CollectIngredients(recipe.Ingredients, parser);
             Price = ingredientsList.Sum(i => i.Price);
             Recipe = recipe.RecipeInfo;
             Name = recipe.Name;
@@ -33,24 +33,14 @@ namespace Culculator.Domain
             return $"{Name}\n\n{listedIngredients}\n{Recipe}\n\n{Price}руб.\n{NumberOfPortions}\n{PricePerPortion}руб/порция";
         }
         
-        private List<Ingredient> CollectIngredients(string ingredientsFromDB)
+        private List<Ingredient> CollectIngredients(string ingredientsFromDB, Parser parser)
         {
-            var ingredientsLists = new List<Ingredient>();
             var ingredientPairs = ingredientsFromDB.Split(';');
             var idCounter = 1;
-            foreach (var pair in ingredientPairs)
-            {
-                var parts = pair.Trim().Split(' ');
 
-                var ingredientName = parts[0];
-                var ingredientAmount = int.Parse(parts[1]);
-                var parserInstance = new Parser();
-                var ingredient = parserInstance.GetIngredientFromDB(ingredientName);
-                ingredientsLists.Add(new Ingredient(idCounter++, ingredientName, 
-                    ingredientAmount, ingredient.MeasurementUnit, ingredient.Price));
-            }
-
-            return ingredientsLists;
+            return ingredientPairs
+                .Select(p => new Ingredient(idCounter++, p, parser))
+                .ToList();
         }
     }
 }

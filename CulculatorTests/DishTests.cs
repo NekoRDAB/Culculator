@@ -21,7 +21,7 @@ public class DishTests
         [Test]
         public void DishConstructor_ShouldSetPropertiesCorrectly()
         {
-            var dish = new Dish(_dishEntry);
+            var dish = new Dish(_dishEntry, new Parser());
             
             Assert.AreEqual(_dishEntry.Name, dish.Name);
             Assert.AreEqual(_dishEntry.Category, dish.Category);
@@ -35,7 +35,7 @@ public class DishTests
         [Test]
         public void ToString_ShouldReturnCorrectStringRepresentation()
         {
-            var dish = new Dish(_dishEntry);
+            var dish = new Dish(_dishEntry, new Parser());
             
             var result = dish.ToString();
             
@@ -54,7 +54,7 @@ public class DishTests
         [Test]
         public void CollectIngredients_ShouldReturnCorrectListOfIngredients()
         {
-            var dish = new Dish(_dishEntry);
+            var dish = new Dish(_dishEntry, new Parser());
             var expectedIngredients = new[]
             {
                 new Ingredient(1, "Ingredient 1", 100, "г", 10),

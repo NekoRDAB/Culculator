@@ -29,7 +29,7 @@ public class Application
        return _parser
             .GetAllRecipesFromDB()
             .Where(d => _validCategories.Contains(d.Category))
-            .Select(d => new Dish(d))
+            .Select(d => new Dish(d, _parser))
             .ToList();
     }
 
@@ -37,7 +37,7 @@ public class Application
     {
         return _parser
             .GetRecipesFromDbByCategory(category)
-            .Select(d => new Dish(d))
+            .Select(d => new Dish(d, _parser))
             .ToList();
     }
 }
