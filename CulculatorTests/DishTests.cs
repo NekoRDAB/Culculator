@@ -10,11 +10,11 @@ public class DishTests
         {
             _dishEntry = new DishEntry
             {
-                Name = "Test Dish",
-                Category = "Test Category",
-                RecipeInfo = "Test Recipe",
-                Ingredients = "Ingredient 1; Ingredient 2; Ingredient 3",
-                PortionsAmount = 2
+                Name = "Овсяная каша на молоке",
+                Category = "Завтраки",
+                RecipeInfo = "Варите овсянку с молоком на молоке 20 минут постоянно помешивая.",
+                Ingredients = "Овсянка 150; Молоко 500",
+                PortionsAmount = 3
             };
         }
 
@@ -27,9 +27,9 @@ public class DishTests
             Assert.AreEqual(_dishEntry.Category, dish.Category);
             Assert.AreEqual(_dishEntry.RecipeInfo, dish.Recipe);
             Assert.AreEqual(_dishEntry.PortionsAmount, dish.NumberOfPortions);
-            Assert.AreEqual(600, dish.Price);
-            Assert.AreEqual(300, dish.PricePerPortion);
-            Assert.AreEqual(3, dish.Ingredients.Count);
+            Assert.AreEqual(45, dish.Price);
+            Assert.AreEqual(15, dish.PricePerPortion);
+            Assert.AreEqual(2, dish.Ingredients.Count);
         }
 
         [Test]
@@ -39,14 +39,13 @@ public class DishTests
             
             var result = dish.ToString();
             
-            var expectedString = $"Test Dish\n\n" +
-                $"Ingredient 1: 100 г\n" +
-                $"Ingredient 2: 200 г\n" +
-                $"Ingredient 3: 300 г\n" +
-                $"Test Recipe\n\n" +
-                $"600руб.\n" +
-                $"2\n" +
-                $"300руб/порция";
+            var expectedString = $"Овсяная каша на молоке\n\n" +
+                $"1.Овсянка, 150 Гр. - 15руб.\n" +
+                $"2.Молоко, 500 Мл. - 30руб.\n" +
+                $"Варите овсянку с молоком на молоке 20 минут постоянно помешивая.\n\n" +
+                $"45руб.\n" +
+                $"3\n" +
+                $"15руб/порция";
             
             Assert.AreEqual(expectedString, result);
         }
@@ -57,9 +56,8 @@ public class DishTests
             var dish = new Dish(_dishEntry);
             var expectedIngredients = new[]
             {
-                new Ingredient(1, "Ingredient 1", 100, "г", 10),
-                new Ingredient(2, "Ingredient 2", 200, "г", 20),
-                new Ingredient(3, "Ingredient 3", 300, "г", 30)
+                new Ingredient(1, "Овсянка", 150, "Гр.", 0.1),
+                new Ingredient(2, "Молоко", 500, "Мл.", 0.06),
             };
             
             var ingredients = dish.Ingredients.ToArray();

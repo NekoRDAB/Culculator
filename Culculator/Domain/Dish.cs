@@ -15,7 +15,6 @@ namespace Culculator.Domain
         
         public Dish(DishEntry recipe)
         {
-           
             var ingredientsList = CollectIngredients(recipe.Ingredients);
             Price = ingredientsList.Sum(i => i.Price);
             Recipe = recipe.RecipeInfo;
