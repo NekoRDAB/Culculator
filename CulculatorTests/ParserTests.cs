@@ -8,9 +8,9 @@ public class ParserTests
     {
         var parser = new Parser();
         var ingredientName = "Картофель";
-        
+
         var ingredient = parser.GetIngredientFromDB(ingredientName);
-        
+
         Assert.IsNotNull(ingredient);
         Assert.AreEqual(ingredientName, ingredient.Name);
     }
@@ -31,7 +31,7 @@ public class ParserTests
         var recipeName = "Жареная картошка";
 
         var recipe = parser.GetRecipeFromDB(recipeName);
-        
+
         Assert.IsNotNull(recipe);
         Assert.AreEqual(recipeName, recipe.Name);
     }
@@ -41,7 +41,36 @@ public class ParserTests
     {
         var parser = new Parser();
         var recipeName = "Абракадабра";
-        
+
         Assert.Throws<KeyNotFoundException>(() => parser.GetRecipeFromDB(recipeName));
+    }
+
+    [Test]
+    public void GetRecipesFromDbByCategory()
+    {
+        var parser = new Parser();
+        var category = "TestCategory";
+        using (var db = new RecipesContextSQLite())
+        {
+            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 1", Category = category, Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock"});
+            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 2", Category = category, Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock" });
+            db.RecipesDataBase.Add(new DishEntry() { Name = "Recipe 3", Category = "Гарниры", Ingredients = "mock", PortionsAmount = 1, RecipeInfo = "mock" });
+            db.SaveChanges();
+        }
+
+        var result = parser.GetRecipesFromDbByCategory(category);
+        Assert.IsNotNull(result);
+        Assert.AreEqual(2, result.Count);
+        Assert.IsTrue(result.All(r => r.Category == category));
+
+        using (var dbContext = new RecipesContextSQLite())
+        {
+            var testRecipes = dbContext.RecipesDataBase
+                .Where(r => r.Name.StartsWith("Recipe"))
+                .ToList();
+
+            dbContext.RecipesDataBase.RemoveRange(testRecipes);
+            dbContext.SaveChanges();
+        }
     }
 }
