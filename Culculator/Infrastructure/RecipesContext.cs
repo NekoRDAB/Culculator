@@ -5,12 +5,21 @@ namespace Culculator.Infrastructure
 {
     public class RecipesContext : DbContext
     {
+        private static string _path = Path.GetFullPath(
+            Path.Combine("..", "..", "..", "..", @"Culculator\RecipesDataBase.db"));
+
+        public RecipesContext(string path)
+        {
+            _path = path;
+        }
+
+        public RecipesContext()
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var root = new FileInfo("RecipesDataBase.db");
-            var fullName = root.DirectoryName;
-            var newPath = fullName.Replace(@"\bin\Debug\net6.0", @"\RecipesDataBase.db");
-            optionsBuilder.UseSqlite($"Data Source={newPath}");
+            optionsBuilder.UseSqlite($"Data Source={_path}");
         }
         public DbSet<DishEntry> RecipesDataBase { get; set; }
     }

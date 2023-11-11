@@ -13,7 +13,7 @@ namespace Culculator.Infrastructure
         [Column("price")]
         public double Price { get; private set; }
         
-        [Column("MeasurementUnit")]
+        [Column("measurementUnit")]
         public string MeasurementUnit { get; private set; }
     }
 }

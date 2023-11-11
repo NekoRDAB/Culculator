@@ -6,7 +6,7 @@ public struct Ingredient
     public readonly double Amount;
     public readonly string Measurement;
     public readonly string Name;
-    public double Price => price * Amount;
+    public double Price => Math.Round(price * Amount, 2);
     private double price = 0;
     public Ingredient(int id, string name, double amount, 
         string measurement, double price)
