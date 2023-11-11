@@ -18,6 +18,11 @@ public class Application
     {
         _parser = new Parser(pathToRecipes, pathToIngredients);
     }
+
+    public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext)
+    {
+        _parser = new Parser(recipesContext, ingredientContext);
+    }
     
     public List<Dish> GetAllDishesOfValidCategories()
     {

@@ -40,7 +40,8 @@ public class Category
     public Category(string name)
     {
         Name = name;
-        var app = new Application(_pathToRecipes, _pathToIngredients);
+        var app = new Application(new RecipesContextSQLite(_pathToRecipes), 
+            new IngredientsContextSQLite(_pathToIngredients));
         Dishes = app.GetDishesByCategory(name);
     }
 }
@@ -103,15 +104,4 @@ public static class Categories
     //     new("Гарниры", new Dish[] { }),
     //     new("Перекусы", new Dish[] { })
     // };
-}
-
-public class Dish1
-{
-    public IReadOnlyList<Ingredient> Ingredients;
-    public int NumberOfPortions;
-    public double Price;
-    public string Recipe;
-    public string Name;
-    public string Category;
-    public double PricePerPortion => Price / NumberOfPortions;
 }

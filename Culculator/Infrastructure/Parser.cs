@@ -2,18 +2,24 @@ namespace Culculator.Infrastructure;
 
 public class Parser
 {
-    private static IngredientsContext _ingredientsContext;
-    private static RecipesContext _recipesContext;
+    private static IIngredientContext _ingredientsContext;
+    private static IRecipesContext _recipesContext;
     public Parser(string pathToRecipes, string pathToIngredients)
     {
-        _recipesContext = new RecipesContext(pathToRecipes);
-        _ingredientsContext = new IngredientsContext(pathToIngredients);
+        _recipesContext = new RecipesContextSQLite(pathToRecipes);
+        _ingredientsContext = new IngredientsContextSQLite(pathToIngredients);
+    }
+
+    public Parser(IRecipesContext recipesContext, IIngredientContext ingredientContext)
+    {
+        _recipesContext = recipesContext;
+        _ingredientsContext = ingredientContext;
     }
 
     public Parser()
     {
-        _recipesContext = new RecipesContext();
-        _ingredientsContext = new IngredientsContext();
+        _recipesContext = new RecipesContextSQLite();
+        _ingredientsContext = new IngredientsContextSQLite();
     }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {

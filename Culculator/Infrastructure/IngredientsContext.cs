@@ -3,17 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Culculator.Infrastructure
 {
-    public class IngredientsContext : DbContext
+    public class IngredientsContextSQLite : DbContext, IIngredientContext
     {
         private static string _path = Path.GetFullPath(
             Path.Combine("..", "..", "..", "..", @"Culculator\IngredientsDataBase.db"));
 
-        public IngredientsContext(string path)
+        public IngredientsContextSQLite(string path)
         {
             _path = path;
         }
 
-        public IngredientsContext()
+        public IngredientsContextSQLite()
         {
             
         }
