@@ -143,8 +143,11 @@ public partial class MainWindow : Window
                     {
                         Margin = new(10);
                         Text = name;
-                        FontWeight = FontWeight.SemiBold;
                         FontSize = 30;
+                        MaxWidth = 420;  
+                        FontWeight = FontWeight.SemiBold;
+                        TextWrapping = TextWrapping.Wrap;
+                        HorizontalAlignment = HorizontalAlignment.Left;
                     }
                 }
 
@@ -155,7 +158,7 @@ public partial class MainWindow : Window
                         Orientation = Orientation.Horizontal;
                         HorizontalAlignment = HorizontalAlignment.Right;
                         Children.Add(new DishShortDescription(dish));
-                        Children.Add(new DishImage(dish));
+                        // Children.Add(new DishImage(dish));
                     }
 
                     class DishShortDescription : Panel
@@ -274,7 +277,7 @@ public partial class MainWindow : Window
                 {
                     Height = 270;
                     Children.Add(new DishShortInfo(dish));
-                    Children.Add(new DishImage(dish));
+                    // Children.Add(new DishImage(dish));
                 }
 
                 class DishShortInfo : StackPanel
@@ -294,8 +297,11 @@ public partial class MainWindow : Window
                         {
                             Margin = new(7);
                             Text = name;
-                            FontSize = 55;
+                            FontSize = 40;
+                            MaxWidth = 1200;  
                             FontWeight = FontWeight.SemiBold;
+                            TextWrapping = TextWrapping.Wrap;
+                            HorizontalAlignment = HorizontalAlignment.Left;
                         }
                     }
 
