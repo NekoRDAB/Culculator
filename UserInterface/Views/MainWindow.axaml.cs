@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -189,8 +190,21 @@ public partial class MainWindow : Window
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Center;
                                 Foreground = Brushes.Gray;
-                                Text = $"{count} порций";
+                                Text = $"{count} {DisplayPortionsNumber(count)}";
                                 FontSize = 22;
+                            }
+
+                            private string DisplayPortionsNumber(int count)
+                            {
+                                switch (count)
+                                {
+                                    case 1:
+                                        return "порция";
+                                    case 2: case 3: case 4:
+                                        return "порции";
+                                    default:
+                                        return "порций";
+                                }
                             }
                         }
 
