@@ -408,7 +408,7 @@ public partial class MainWindow : Window
                             Margin = new(7, 3);
                             FontSize = 29;
                             Foreground = Brushes.Gray;
-                            Text = $"{DisplayPortionsNumber(count)} порций";
+                            Text = $"{count} {DisplayPortionsNumber(count)}";
                         }
 
                         private string DisplayPortionsNumber(int count)
