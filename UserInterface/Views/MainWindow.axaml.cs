@@ -524,8 +524,8 @@ public partial class MainWindow : Window
                             {
                                 public IngredientAndAmount(Ingredient ingredient)
                                 {
-                                    Margin = new(0);
-                                    Text = ingredient.ToString();
+                                    Margin = new(5);
+                                    Text = $"• {ingredient.ToString()}";
                                     FontSize = 20;
                                     TextWrapping = TextWrapping.Wrap;
                                     HorizontalAlignment = HorizontalAlignment.Left;
@@ -627,7 +627,7 @@ public partial class MainWindow : Window
                     VerticalAlignment = VerticalAlignment.Bottom,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     Command = ReactiveCommand.Create(
-                        () => { _this.Content = new DishesMenu(category, false); })
+                        () => { _this.Content = new DishesMenu(category, ascendingOrder); })
                 });
             }
         }
