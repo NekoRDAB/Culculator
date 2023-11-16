@@ -40,12 +40,12 @@ public class Categories
     public Categories(string pathToRecipes, string pathToIngredients)
     {
         Category.SetPaths(pathToRecipes, pathToIngredients);
-        All = new()
+        All = new List<Category>
         {
-            new Category("Завтраки"),
-            new Category("Горячие блюда"),
-            new Category("Гарниры"),
-            new Category("Перекусы")
+            new("Завтраки"),
+            new("Горячие блюда"),
+            new("Гарниры"),
+            new("Перекусы")
         };
     }
 }
