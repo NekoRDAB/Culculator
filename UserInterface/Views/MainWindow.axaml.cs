@@ -6,6 +6,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Culculator.Domain;
 using ReactiveUI;
+using Category = Culculator.Application.Categories.Category;
 
 namespace UserInterface.Views;
 
@@ -69,7 +70,11 @@ public partial class MainWindow : Window
             {
                 Margin = new(20);
                 Spacing = 10;
-                foreach (var category in Categories.All)
+                var dir = Environment.CurrentDirectory;
+                var pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
+                var pathToIngredients = dir.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
+                var categories = new Categories(pathToRecipes, pathToIngredients);
+                foreach (var category in categories.All)
                     Children.Add(new CategoryButton(category));
             }
 

@@ -20,7 +20,7 @@ public struct Ingredient
         _price = price;
     }
 
-    public Ingredient(int id, string ingredientEntryString, Parser parser)
+    public Ingredient(int id, string ingredientEntryString, IParser parser)
     {
         var parts = ingredientEntryString.Trim().Split(' ');
         _idInRecipe = id;
