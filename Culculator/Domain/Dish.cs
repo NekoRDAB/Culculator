@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using Culculator.Infrastructure;
 
 namespace Culculator.Domain
@@ -41,6 +42,25 @@ namespace Culculator.Domain
             return ingredientPairs
                 .Select(p => new Ingredient(idCounter++, p, parser))
                 .ToList();
+        }
+        
+        public string FormatRecipe()
+        {
+            var recipeSteps = Recipe.Split('.');
+    
+            var formattedRecipe = new StringBuilder();
+    
+            for (var i = 0; i < recipeSteps.Length; i++)
+            {
+                var stepNumber = (i + 1).ToString();
+                var stepText = recipeSteps[i].Trim();
+                if (!string.IsNullOrEmpty(stepText))
+                {
+                    formattedRecipe.AppendLine($"{stepNumber}. {stepText}");
+                }
+            }
+
+            return formattedRecipe.ToString();
         }
     }
 }
