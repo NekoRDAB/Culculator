@@ -71,7 +71,7 @@ public class ParserTests
             db.RecipesDataBase.Add(new DishEntry
             {
                 Name = "Recipe 3",
-                Category = "Гарниры", 
+                Category = "Тест", 
                 Ingredients = "mock",
                 PortionsAmount = 1, 
                 RecipeInfo = "mock"

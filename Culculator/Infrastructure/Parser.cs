@@ -1,6 +1,6 @@
 namespace Culculator.Infrastructure;
 
-public class Parser
+public class Parser : IParser
 {
     private static IIngredientContext _ingredientsContext;
     private static IRecipesContext _recipesContext;

@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 using ReactiveUI;
+using Category = Culculator.Application.Categories.Category;
 
 namespace UserInterface.Views;
 
@@ -71,7 +72,11 @@ public partial class MainWindow : Window
             {
                 Margin = new(defaultMargin);
                 Spacing = 10;
-                foreach (var category in Categories.All)
+                var dir = Environment.CurrentDirectory;
+                var pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
+                var pathToIngredients = dir.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
+                var categories = new Categories(pathToRecipes, pathToIngredients);
+                foreach (var category in categories.All)
                     Children.Add(new CategoryButton(category));
             }
 
@@ -200,21 +205,8 @@ public partial class MainWindow : Window
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Center;
                                 Foreground = Brushes.Gray;
-                                Text = $"{count} {DisplayPortionsNumber(count)}";
+                                Text = count.FormatPortionsNumber();
                                 FontSize = 22;
-                            }
-
-                            private string DisplayPortionsNumber(int count)
-                            {
-                                switch (count % 10)
-                                {
-                                    case 1 when count % 100 != 11:
-                                        return "порция";
-                                    case >= 2 and <= 4 when !(count % 100 >= 12 && count % 100 <= 14):
-                                        return "порции";
-                                    default:
-                                        return "порций";
-                                }
                             }
                         }
 

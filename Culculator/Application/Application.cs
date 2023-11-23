@@ -6,7 +6,7 @@ namespace Culculator.Application;
 public class Application
 {
     
-    private Parser _parser;
+    private IParser _parser;
 
     private static HashSet<string> _validCategories = new()
     {
@@ -22,6 +22,11 @@ public class Application
     public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext)
     {
         _parser = new Parser(recipesContext, ingredientContext);
+    }
+
+    public Application(IParser parser)
+    {
+        _parser = parser;
     }
     
     public List<Dish> GetAllDishesOfValidCategories()
