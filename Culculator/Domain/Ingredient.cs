@@ -34,6 +34,6 @@ public struct Ingredient
 
     public override string ToString()
     {
-        return $"{_idInRecipe}.{Name}, {Amount} {Measurement} - {Price}руб.";
+        return $"{Name}, {Amount} {Measurement} - {Price}руб.";
     }
 }

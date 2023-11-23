@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using Culculator.Domain;
 using ReactiveUI;
 using Category = Culculator.Application.Categories.Category;
 
@@ -12,8 +11,11 @@ namespace UserInterface.Views;
 
 public partial class MainWindow : Window
 {
+    private static bool ascendingOrder;
+    private static double defaultMargin = 20;
+    private static double textBlockMargin = 10;
     static MainWindow _this;
-    
+
     class BlackBorder : Border
     {
         public BlackBorder(double width, double height, int thickness)
@@ -39,7 +41,7 @@ public partial class MainWindow : Window
     {
         public MainMenu()
         {
-            Margin = new(20);
+            Margin = new Thickness(defaultMargin);
             Spacing = 7;
             Children.Add(new Title());
             Children.Add(new CategoriesPanel());
@@ -60,15 +62,15 @@ public partial class MainWindow : Window
                     Text = "Culinary Calculator", FontSize = 25, Foreground = Brushes.LightGray,
                     TextAlignment = TextAlignment.Center
                 });
-                Margin = new Thickness(10);
+                Margin = new Thickness(textBlockMargin);
             }
         }
-        
+
         class CategoriesPanel : StackPanel
         {
             public CategoriesPanel()
             {
-                Margin = new(20);
+                Margin = new(defaultMargin);
                 Spacing = 10;
                 var dir = Environment.CurrentDirectory;
                 var pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
@@ -82,7 +84,6 @@ public partial class MainWindow : Window
             {
                 public CategoryButton(Category category)
                 {
-                    
                     Children.Add(new Button
                     {
                         Width = 330,
@@ -104,17 +105,26 @@ public partial class MainWindow : Window
         {
             Children.Add(new ScrollViewer { Content = new DishesList(category) });
             Children.Add(new ReturnButton());
+            Children.Add(new SortButton(category));
         }
 
         class DishesList : StackPanel
         {
             public DishesList(Category category)
             {
-                Margin = new(20);
+                Margin = new Thickness(defaultMargin);
                 Spacing = 10;
                 HorizontalAlignment = HorizontalAlignment.Center;
-                foreach (var dish in category.Dishes)
-                    Children.Add(new DishBox(category, dish));
+                if (ascendingOrder)
+                {
+                    foreach (var dish in category.Dishes.OrderBy(d => d.PricePerPortion))
+                        Children.Add(new DishBox(category, dish));
+                }
+                else
+                {
+                    foreach (var dish in category.Dishes.OrderByDescending(d => d.PricePerPortion))
+                        Children.Add(new DishBox(category, dish));
+                }
             }
 
             class DishBox : Panel
@@ -147,10 +157,10 @@ public partial class MainWindow : Window
                 {
                     public DishName(string name)
                     {
-                        Margin = new(10);
+                        Margin = new Thickness(textBlockMargin);
                         Text = name;
                         FontSize = 30;
-                        MaxWidth = 420;  
+                        MaxWidth = 420;
                         FontWeight = FontWeight.SemiBold;
                         TextWrapping = TextWrapping.Wrap;
                         HorizontalAlignment = HorizontalAlignment.Left;
@@ -180,7 +190,7 @@ public partial class MainWindow : Window
                         {
                             public DishPrice(double price)
                             {
-                                Margin = new(10);
+                                Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 Text = $"{(int)price} руб.";
                                 FontSize = 22;
@@ -191,7 +201,7 @@ public partial class MainWindow : Window
                         {
                             public DishPortionsCount(int count)
                             {
-                                Margin = new(10);
+                                Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Center;
                                 Foreground = Brushes.Gray;
@@ -204,7 +214,7 @@ public partial class MainWindow : Window
                         {
                             public DishPricePerPortion(double price)
                             {
-                                Margin = new(10);
+                                Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Bottom;
                                 Foreground = Brushes.Gray;
@@ -218,7 +228,7 @@ public partial class MainWindow : Window
                     {
                         public DishImage(Dish dish)
                         {
-                            Margin = new(10);
+                            Margin = new Thickness(textBlockMargin);
                             Width = 150;
                             Height = 100;
                             HorizontalAlignment = HorizontalAlignment.Right;
@@ -245,11 +255,10 @@ public partial class MainWindow : Window
             {
                 Children.Add(new Button
                 {
-                    Width = 200,
-                    Height = 40,
-                    Margin = new(20),
-                    Content = "В главное меню",
-                    FontSize = 22,
+                    Width = 120,
+                    Height = 50,
+                    Content = "🏠",
+                    FontSize = 30,
                     Background = null,
                     Foreground = Brushes.DarkGray,
                     VerticalAlignment = VerticalAlignment.Bottom,
@@ -257,6 +266,54 @@ public partial class MainWindow : Window
                     Command = ReactiveCommand.Create(
                         () => { _this.Content = new MainMenu(); })
                 });
+            }
+        }
+
+        class SortButton : Panel
+        {
+            private readonly Category _currentCategory;
+
+            public SortButton(Category currentCategory)
+            {
+                _currentCategory = currentCategory;
+                Children.Add(new Button
+                {
+                    Width = 100,
+                    Height = 40,
+                    Margin = new Thickness(defaultMargin),
+                    FontSize = 27,
+                    Background = null,
+                    Foreground = Brushes.DarkGray,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Command = ReactiveCommand.Create(ToggleSortOrder),
+                    Content = CreateSortButtonContent()
+                });
+            }
+            
+            private object CreateSortButtonContent()
+            {
+                var sortSymbol = ascendingOrder ? "▲" : "▼";
+                return new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Children =
+                    {
+                        new TextBlock
+                        {
+                            Text = sortSymbol,
+                            FontWeight = FontWeight.Bold,
+                        }
+                    }
+                };
+            }
+            
+            private void ToggleSortOrder()
+            {
+                ascendingOrder = !ascendingOrder;
+                ((Button)Children[0]).Content = CreateSortButtonContent();
+
+                _this.Content = new DishesMenu(_currentCategory);
             }
         }
     }
@@ -281,7 +338,6 @@ public partial class MainWindow : Window
             {
                 public Top(Dish dish)
                 {
-                    Height = 270;
                     Children.Add(new DishShortInfo(dish));
                     // Children.Add(new DishImage(dish));
                 }
@@ -290,24 +346,41 @@ public partial class MainWindow : Window
                 {
                     public DishShortInfo(Dish dish)
                     {
-                        Margin = new(20, 10);
+                        Margin = new Thickness(20, 10);
+                        Spacing = 10;
                         Children.Add(new DishName(dish.Name));
-                        Children.Add(new DishPrice(dish.Price));
-                        Children.Add(new DishPortionsCount(dish.NumberOfPortions));
-                        Children.Add(new DishPricePerPortion(dish.PricePerPortion));
+                        Children.Add(new RoundBorder(1)
+                        {
+                            Child = new TextBlock
+                            {
+                                Margin = new Thickness(textBlockMargin),
+                                Text = new DishPrice(dish.Price).Text
+                                       + "\n" + new DishPortionsCount(dish.NumberOfPortions).Text
+                                       + "\n" + new DishPricePerPortion(dish.PricePerPortion).Text,
+                                FontSize = 30,
+                                FontWeight = FontWeight.SemiBold,
+                                TextWrapping = TextWrapping.Wrap,
+                                HorizontalAlignment = HorizontalAlignment.Left
+                            }
+                        });
                     }
 
-                    private class DishName : TextBlock
+                    private class DishName : Panel
                     {
                         public DishName(string name)
                         {
-                            Margin = new(7);
-                            Text = name;
-                            FontSize = 40;
-                            MaxWidth = 1200;  
-                            FontWeight = FontWeight.SemiBold;
-                            TextWrapping = TextWrapping.Wrap;
-                            HorizontalAlignment = HorizontalAlignment.Left;
+                            Children.Add(new RoundBorder(1)
+                            {
+                                Child = new TextBlock
+                                {
+                                    Margin = new Thickness(textBlockMargin),
+                                    Text = name,
+                                    FontSize = 30,
+                                    FontWeight = FontWeight.SemiBold,
+                                    TextWrapping = TextWrapping.Wrap,
+                                    HorizontalAlignment = HorizontalAlignment.Left
+                                }
+                            });
                         }
                     }
 
@@ -315,7 +388,7 @@ public partial class MainWindow : Window
                     {
                         public DishPrice(double price)
                         {
-                            Margin = new(7, 3);
+                            Margin = new Thickness(7, 3);
                             FontSize = 29;
                             Text = $"{(int)price} руб.";
                         }
@@ -325,10 +398,23 @@ public partial class MainWindow : Window
                     {
                         public DishPortionsCount(int count)
                         {
-                            Margin = new(7, 3);
+                            Margin = new Thickness(7, 3);
                             FontSize = 29;
                             Foreground = Brushes.Gray;
-                            Text = $"{count} порций";
+                            Text = $"{count} {DisplayPortionsNumber(count)}";
+                        }
+
+                        private string DisplayPortionsNumber(int count)
+                        {
+                            switch (count % 10)
+                            {
+                                case 1 when count % 100 != 11:
+                                    return "порция";
+                                case >= 2 and <= 4 when !(count % 100 >= 12 && count % 100 <= 14):
+                                    return "порции";
+                                default:
+                                    return "порций";
+                            }
                         }
                     }
 
@@ -336,7 +422,7 @@ public partial class MainWindow : Window
                     {
                         public DishPricePerPortion(double price)
                         {
-                            Margin = new(7, 3);
+                            Margin = new Thickness(7, 3);
                             FontSize = 29;
                             Foreground = Brushes.Gray;
                             Text = $"{(int)price} руб. за порцию";
@@ -348,7 +434,7 @@ public partial class MainWindow : Window
                 {
                     public DishImage(Dish dish)
                     {
-                        Margin = new(28);
+                        Margin = new Thickness(defaultMargin);
                         Width = 300;
                         Height = 200;
                         HorizontalAlignment = HorizontalAlignment.Right;
@@ -367,23 +453,35 @@ public partial class MainWindow : Window
                 }
             }
 
-            class Bottom : Panel
+            class Bottom : Grid
             {
                 public Bottom(Dish dish)
                 {
-                    Children.Add(new Ingredients(dish));
-                    Children.Add(new Recipe(dish));
+                    ColumnDefinitions = new ColumnDefinitions("*,*");
+
+                    var ingredients = new Ingredients(dish);
+                    var recipe = new Recipe(dish);
+
+                    Children.Add(ingredients);
+                    Children.Add(recipe);
+
+                    SetColumn(ingredients, 0);
+                    SetColumn(recipe, 1);
+                    
+                    ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Auto);
+                    ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                 }
 
                 class Ingredients : StackPanel
                 {
                     public Ingredients(Dish dish)
                     {
-                        Margin = new(20, 0);
-                        HorizontalAlignment = HorizontalAlignment.Left;
-                        Width = _this.Width / 2.2;
-                        Children.Add(new Label());
-                        Children.Add(new IngredientsList(dish));
+                        Margin = new Thickness(20, 0);
+                        HorizontalAlignment = HorizontalAlignment.Stretch;
+                        Children.Add(new RoundBorder(1)
+                        {
+                            Child = new IngredientsList(dish)
+                        });
                     }
 
                     class Label : TextBlock
@@ -391,10 +489,9 @@ public partial class MainWindow : Window
                         public Label()
                         {
                             Text = "Ингредиенты";
-                            Margin = new(10);
-                            FontSize = 26;
+                            Margin = new Thickness(textBlockMargin);
+                            FontSize = 30;
                             FontWeight = FontWeight.SemiBold;
-                            HorizontalAlignment = HorizontalAlignment.Left;
                         }
                     }
 
@@ -402,6 +499,7 @@ public partial class MainWindow : Window
                     {
                         public IngredientsList(Dish dish)
                         {
+                            Children.Add(new Label());
                             foreach (var ingredient in dish.Ingredients)
                                 Children.Add(new IngredientDescription(ingredient));
                         }
@@ -417,11 +515,10 @@ public partial class MainWindow : Window
                             {
                                 public IngredientAndAmount(Ingredient ingredient)
                                 {
-                                    Margin = new(0);
-                                    Text = ingredient.ToString();
+                                    Margin = new Thickness(5);
+                                    Text = $"• {ingredient.ToString()}";
                                     FontSize = 20;
                                     TextWrapping = TextWrapping.Wrap;
-                                    HorizontalAlignment = HorizontalAlignment.Left;
                                 }
                             }
                         }
@@ -432,56 +529,45 @@ public partial class MainWindow : Window
                 {
                     public Recipe(Dish dish)
                     {
-                        Margin = new(20, 0);
-                        HorizontalAlignment = HorizontalAlignment.Right;
-                        Width = _this.Width / 2.2;
-                        Children.Add(new Label());
-                        Children.Add(new Steps(dish));
-                    }
-
-                    class Label : TextBlock
-                    {
-                        public Label()
+                        HorizontalAlignment = HorizontalAlignment.Stretch;
+                        Margin = new Thickness(20, 0);
+                        
+                        var labelTextBlock = new TextBlock
                         {
-                            Text = "Рецепт";
-                            Margin = new(10);
-                            FontSize = 26;
-                            FontWeight = FontWeight.SemiBold;
-                            HorizontalAlignment = HorizontalAlignment.Center;
-                        }
-                    }
+                            FontWeight = FontWeight.SemiBold,
+                            Text = "Рецепт",
+                            FontSize = 30,
+                            TextWrapping = TextWrapping.Wrap,
+                            Margin = new Thickness(textBlockMargin),
+                        };
 
-                    class Steps : TextBlock
-                    {
-                        public Steps(Dish dish)
+                        var recipeTextBlock = new TextBlock
                         {
-                            Text = string.Join(Environment.NewLine, dish.Recipe);
-                            FontSize = 20;
-                            TextWrapping = TextWrapping.Wrap;
-                            HorizontalAlignment = HorizontalAlignment.Center;
-                        }
+                            Text = dish.FormatRecipe(),
+                            FontSize = 20,
+                            TextWrapping = TextWrapping.Wrap,
+                            Margin = new Thickness(5),
+                        };
 
-                        class StepDescription : Panel
+                        Children.Add(new RoundBorder(1)
                         {
-                            public StepDescription(string step)
+                            Child = new StackPanel
                             {
-                                Children.Add(new Step(step));
+                                Children = { labelTextBlock, recipeTextBlock }
                             }
-
-                            class Step : TextBlock
-                            {
-                                public Step(string step)
-                                {
-                                    Margin = new(0);
-                                    Text = step;
-                                    FontSize = 20;
-                                    TextWrapping = TextWrapping.Wrap;
-                                    HorizontalAlignment = HorizontalAlignment.Center;
-                                }
-                            }
-                        }
+                        });
                     }
                 }
+            }
+        }
+
+        class RoundBorder : Border
+        {
+            public RoundBorder(int thickness)
+            {
+                BorderThickness = new Thickness(thickness);
+                BorderBrush = Brushes.DarkSlateGray;
+                CornerRadius = new CornerRadius(10); 
             }
         }
 
@@ -493,7 +579,7 @@ public partial class MainWindow : Window
                 {
                     Width = 200,
                     Height = 40,
-                    Margin = new(20),
+                    Margin = new Thickness(defaultMargin),
                     Content = "В меню блюд",
                     FontSize = 22,
                     Background = null,
