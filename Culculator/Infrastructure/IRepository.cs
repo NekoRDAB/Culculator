@@ -1,6 +1,6 @@
 ﻿namespace Culculator.Infrastructure;
 
-public interface IParser
+public interface IRepository
 {
     public IngredientEntry GetIngredientFromDB(string ingredientName);
     public DishEntry GetRecipeFromDB(string recipeName);

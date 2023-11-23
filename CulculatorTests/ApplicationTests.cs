@@ -9,13 +9,13 @@ public class ApplicationTests
     [SetUp]
     public void Setup()
     {
-        _parserMock = new Mock<IParser>();
+        _parserMock = new Mock<IRepository>();
 
         _application = new Application(_parserMock.Object);
     }
 
     private Application _application;
-    private Mock<IParser> _parserMock;
+    private Mock<IRepository> _parserMock;
 
     [Test]
     public void GetAllDishesOfValidCategories_NoValidCategoriesExist_ReturnsEmptyList()
@@ -67,14 +67,14 @@ public class ApplicationTests
         public void Setup()
         {
             _dishEntry = new DishEntry { Name = "Pasta", Ingredients = "", Category = "Завтраки" };
-            _parserMock = new Parser();
+            _repositoryMock = new Repository();
             _pathToImage = "path/to/image";
 
-            _dishWithImage = new DishWithImage(_dishEntry, _parserMock, _pathToImage);
+            _dishWithImage = new DishWithImage(_dishEntry, _repositoryMock, _pathToImage);
         }
 
         private DishEntry _dishEntry;
-        private Parser _parserMock;
+        private Repository _repositoryMock;
         private string _pathToImage;
         private DishWithImage _dishWithImage;
         

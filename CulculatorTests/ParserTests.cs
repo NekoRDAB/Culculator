@@ -6,7 +6,7 @@ public class ParserTests
     [Test]
     public void GetIngredientFromDBWhenIngredientExist()
     {
-        var parser = new Parser();
+        var parser = new Repository();
         var ingredientName = "Картофель";
 
         var ingredient = parser.GetIngredientFromDB(ingredientName);
@@ -18,7 +18,7 @@ public class ParserTests
     [Test]
     public void GetIngredientFromDBWhenIngredientDoesntExist()
     {
-        var parser = new Parser();
+        var parser = new Repository();
         var ingredientName = "Абракадабра";
 
         Assert.Throws<KeyNotFoundException>(() => parser.GetIngredientFromDB(ingredientName));
@@ -27,7 +27,7 @@ public class ParserTests
     [Test]
     public void GetRecipeFromDBWhenRecipeExist()
     {
-        var parser = new Parser();
+        var parser = new Repository();
         var recipeName = "Жареная картошка";
 
         var recipe = parser.GetRecipeFromDB(recipeName);
@@ -39,7 +39,7 @@ public class ParserTests
     [Test]
     public void GetRecipeFromDBWhenRecipeDoesntExist()
     {
-        var parser = new Parser();
+        var parser = new Repository();
         var recipeName = "Абракадабра";
 
         Assert.Throws<KeyNotFoundException>(() => parser.GetRecipeFromDB(recipeName));
@@ -48,7 +48,7 @@ public class ParserTests
     [Test]
     public void GetRecipesFromDbByCategory()
     {
-        var parser = new Parser();
+        var parser = new Repository();
         var category = "TestCategory";
         using (var db = new RecipesContextSQLite())
         {

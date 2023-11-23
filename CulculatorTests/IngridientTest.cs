@@ -13,7 +13,7 @@ public class IngridientTest
     [Test]
     public void TestCreationFromBD()
     {
-        var ingredient = new Ingredient(2, "Фарш 3", new Parser());
+        var ingredient = new Ingredient(2, "Фарш 3", new Repository());
         Assert.AreEqual(new Ingredient(2, "Фарш", 3, "Гр.", 0.3), ingredient);
     }
 }

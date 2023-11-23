@@ -6,7 +6,7 @@ namespace Culculator
     {
         public static void Main()
         {
-            var parserInstance = new Parser();
+            var parserInstance = new Repository();
             Console.WriteLine(Environment.CurrentDirectory);
             var recipes = parserInstance.GetRecipesFromDbByCategory("Горячие блюда");
             foreach (var recipe in recipes)

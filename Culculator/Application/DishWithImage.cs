@@ -7,7 +7,9 @@ public class DishWithImage : Dish
 {
     public string PathToImage;
 
-    public DishWithImage(DishEntry dishEntry, Parser parser, string pathToImage) : base(dishEntry, parser)
+    public DishWithImage(IReadOnlyList<Ingredient> ingredients, int numberOfPortions, 
+        string recipe, string name, string category, string pathToImage) 
+        : base(ingredients, numberOfPortions, recipe, name, category)
     {
         PathToImage = pathToImage;
     }

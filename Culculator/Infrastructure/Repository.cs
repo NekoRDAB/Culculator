@@ -1,22 +1,22 @@
 namespace Culculator.Infrastructure;
 
-public class Parser : IParser
+public class Repository : IRepository
 {
     private static IIngredientContext _ingredientsContext;
     private static IRecipesContext _recipesContext;
-    public Parser(string pathToRecipes, string pathToIngredients)
+    public Repository(string pathToRecipes, string pathToIngredients)
     {
         _recipesContext = new RecipesContextSQLite(pathToRecipes);
         _ingredientsContext = new IngredientsContextSQLite(pathToIngredients);
     }
 
-    public Parser(IRecipesContext recipesContext, IIngredientContext ingredientContext)
+    public Repository(IRecipesContext recipesContext, IIngredientContext ingredientContext)
     {
         _recipesContext = recipesContext;
         _ingredientsContext = ingredientContext;
     }
 
-    public Parser()
+    public Repository()
     {
         _recipesContext = new RecipesContextSQLite();
         _ingredientsContext = new IngredientsContextSQLite();

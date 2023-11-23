@@ -20,13 +20,13 @@ public struct Ingredient
         _price = price;
     }
 
-    public Ingredient(int id, string ingredientEntryString, IParser parser)
+    public Ingredient(int id, string ingredientEntryString, IRepository repository)
     {
         var parts = ingredientEntryString.Trim().Split(' ');
         _idInRecipe = id;
         Name = parts[0];
         Amount = int.Parse(parts[1]); ;
-        var ingredientEntry = parser.GetIngredientFromDB(Name);
+        var ingredientEntry = repository.GetIngredientFromDB(Name);
         Name = Name.Replace("_", " ");
         _price = ingredientEntry.Price;
         Measurement = ingredientEntry.MeasurementUnit;

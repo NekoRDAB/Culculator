@@ -6,7 +6,7 @@ namespace Culculator.Application;
 public class Application
 {
     
-    private IParser _parser;
+    private IRepository _repository;
 
     private static HashSet<string> _validCategories = new()
     {
@@ -16,33 +16,33 @@ public class Application
 
     public Application(string pathToRecipes, string pathToIngredients)
     {
-        _parser = new Parser(pathToRecipes, pathToIngredients);
+        _repository = new Repository(pathToRecipes, pathToIngredients);
     }
 
     public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext)
     {
-        _parser = new Parser(recipesContext, ingredientContext);
+        _repository = new Repository(recipesContext, ingredientContext);
     }
 
-    public Application(IParser parser)
+    public Application(IRepository repository)
     {
-        _parser = parser;
+        _repository = repository;
     }
     
     public List<Dish> GetAllDishesOfValidCategories()
     {
-       return _parser
+       return _repository
             .GetAllRecipesFromDB()
             .Where(d => _validCategories.Contains(d.Category))
-            .Select(d => new Dish(d, _parser))
+            .Select(d => new Dish(d, _repository))
             .ToList();
     }
 
     public List<Dish> GetDishesByCategory(string category)
     {
-        return _parser
+        return _repository
             .GetRecipesFromDbByCategory(category)
-            .Select(d => new Dish(d, _parser))
+            .Select(d => new Dish(d, _repository))
             .ToList();
     }
 }
