@@ -7,14 +7,14 @@ namespace Culculator.Infrastructure
     public class IngredientEntry
     {
         [Key]
-        public int id { get; private set; }
+        public int id { get; set; }
         [Column("name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
         [Column("price")]
-        public double Price { get; private set; }
+        public double Price { get; set; }
         
         [Column("measurementUnit")]
-        public string MeasurementUnit { get; private set; }
+        public string MeasurementUnit { get; set; }
     }
 }
 

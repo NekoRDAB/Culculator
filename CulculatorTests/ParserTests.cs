@@ -1,97 +1,55 @@
-﻿namespace CulculatorTests;
+﻿using NUnit.Framework;
+using Moq;
+using Culculator.Domain;
+using Culculator.Infrastructure;
+using Culculator.Application;
+using System.Collections.Generic;
 
 [TestFixture]
 public class ParserTests
 {
     [Test]
-    public void GetIngredientFromDBWhenIngredientExist()
+    public void ParseIngredient_ShouldParseIngredientEntryString()
     {
-        var parser = new Repository();
-        var ingredientName = "Картофель";
-
-        var ingredient = parser.GetIngredientFromDB(ingredientName);
-
-        Assert.IsNotNull(ingredient);
-        Assert.AreEqual(ingredientName, ingredient.Name);
+        var ingredientEntryString = "Tomato 5";
+        var repository = new Mock<IRepository>();
+        repository.Setup(r => r.GetIngredientFromDB("Tomato"))
+            .Returns(new IngredientEntry { Name = "Tomato", Price = 2.50, MeasurementUnit = "piece" });
+        
+        var ingredient = Parser.ParseIngredient(1, ingredientEntryString, repository.Object);
+        
+        Assert.AreEqual("Tomato", ingredient.Name);
+        Assert.AreEqual(5, ingredient.Amount);
+        Assert.AreEqual("piece", ingredient.Measurement);
+        Assert.AreEqual(2.50 * 5, ingredient.Price);
     }
 
     [Test]
-    public void GetIngredientFromDBWhenIngredientDoesntExist()
+    public void ParseIngredients_ShouldParseDishEntryIngredients()
     {
-        var parser = new Repository();
-        var ingredientName = "Абракадабра";
-
-        Assert.Throws<KeyNotFoundException>(() => parser.GetIngredientFromDB(ingredientName));
-    }
-
-    [Test]
-    public void GetRecipeFromDBWhenRecipeExist()
-    {
-        var parser = new Repository();
-        var recipeName = "Жареная картошка";
-
-        var recipe = parser.GetRecipeFromDB(recipeName);
-
-        Assert.IsNotNull(recipe);
-        Assert.AreEqual(recipeName, recipe.Name);
-    }
-
-    [Test]
-    public void GetRecipeFromDBWhenRecipeDoesntExist()
-    {
-        var parser = new Repository();
-        var recipeName = "Абракадабра";
-
-        Assert.Throws<KeyNotFoundException>(() => parser.GetRecipeFromDB(recipeName));
-    }
-
-    [Test]
-    public void GetRecipesFromDbByCategory()
-    {
-        var parser = new Repository();
-        var category = "TestCategory";
-        using (var db = new RecipesContextSQLite())
-        {
-            db.RecipesDataBase.Add(new DishEntry
-            {
-                Name = "Recipe 1",
-                Category = category, 
-                Ingredients = "mock", 
-                PortionsAmount = 1, 
-                RecipeInfo = "mock"
-            });
-            db.RecipesDataBase.Add(new DishEntry
-            {
-                Name = "Recipe 2", 
-                Category = category, 
-                Ingredients = "mock", 
-                PortionsAmount = 1,
-                RecipeInfo = "mock"
-            });
-            db.RecipesDataBase.Add(new DishEntry
-            {
-                Name = "Recipe 3",
-                Category = "Тест", 
-                Ingredients = "mock",
-                PortionsAmount = 1, 
-                RecipeInfo = "mock"
-            });
-            db.SaveChanges();
-        }
-
-        var result = parser.GetRecipesFromDbByCategory(category);
-        Assert.IsNotNull(result);
-        Assert.AreEqual(2, result.Count);
-        Assert.IsTrue(result.All(r => r.Category == category));
-
-        using (var dbContext = new RecipesContextSQLite())
-        {
-            var testRecipes = dbContext.RecipesDataBase
-                .Where(r => r.Name.StartsWith("Recipe"))
-                .ToList();
-
-            dbContext.RecipesDataBase.RemoveRange(testRecipes);
-            dbContext.SaveChanges();
-        }
+        var dishEntry = new DishEntry { Ingredients = "Tomato 5; Onion 2; Garlic 3" };
+        var repository = new Mock<IRepository>();
+        repository.Setup(r => r.GetIngredientFromDB(It.IsAny<string>()))
+            .Returns<string>(name =>
+                new IngredientEntry { Name = name, Price = 1.0, MeasurementUnit = "piece" });
+        
+        var ingredients = Parser.ParseIngredients(dishEntry, repository.Object);
+        
+        Assert.AreEqual(3, ingredients.Count);
+        
+        Assert.AreEqual("Tomato", ingredients[0].Name);
+        Assert.AreEqual(5, ingredients[0].Amount);
+        Assert.AreEqual("piece", ingredients[0].Measurement);
+        Assert.AreEqual(1.0 * 5, ingredients[0].Price);
+        
+        Assert.AreEqual("Onion", ingredients[1].Name);
+        Assert.AreEqual(2, ingredients[1].Amount);
+        Assert.AreEqual("piece", ingredients[1].Measurement);
+        Assert.AreEqual(1.0 * 2, ingredients[1].Price);
+        
+        Assert.AreEqual("Garlic", ingredients[2].Name);
+        Assert.AreEqual(3, ingredients[2].Amount);
+        Assert.AreEqual("piece", ingredients[2].Measurement);
+        Assert.AreEqual(1.0 * 3, ingredients[2].Price);
     }
 }

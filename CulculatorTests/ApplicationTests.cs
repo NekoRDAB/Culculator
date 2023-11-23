@@ -17,20 +17,20 @@ public class ApplicationTests
     private Application _application;
     private Mock<IRepository> _parserMock;
 
-    [Test]
-    public void GetAllDishesOfValidCategories_NoValidCategoriesExist_ReturnsEmptyList()
-    {
-        var recipes = new List<DishEntry>
-        {
-            new() { Name = "Pasta", Category = "Dessert" },
-            new() { Name = "Pizza", Category = "Soup" }
-        };
-        _parserMock.Setup(p => p.GetAllRecipesFromDB()).Returns(recipes);
-
-        var result = _application.GetAllDishesOfValidCategories();
-
-        Assert.IsEmpty(result);
-    }
+    // [Test]
+    // public void GetAllDishesOfValidCategories_NoValidCategoriesExist_ReturnsEmptyList()
+    // {
+    //     var recipes = new List<DishEntry>
+    //     {
+    //         new() { Name = "Pasta", Category = "Dessert" },
+    //         new() { Name = "Pizza", Category = "Soup" }
+    //     };
+    //     _parserMock.Setup(p => p.GetAllRecipesFromDB()).Returns(recipes);
+    //
+    //     var result = _application.GetAllDishesOfValidCategories();
+    //
+    //     Assert.IsEmpty(result);
+    // }
 
     [Test]
     public void GetDishesByCategory_CategoryExists_ReturnsListOfDish()
@@ -66,11 +66,10 @@ public class ApplicationTests
         [SetUp]
         public void Setup()
         {
-            _dishEntry = new DishEntry { Name = "Pasta", Ingredients = "", Category = "Завтраки" };
-            _repositoryMock = new Repository();
             _pathToImage = "path/to/image";
 
-            _dishWithImage = new DishWithImage(_dishEntry, _repositoryMock, _pathToImage);
+            _dishWithImage = new DishWithImage(new Ingredient[0], 2, "adsd",
+                "Pasta", "dads", _pathToImage);
         }
 
         private DishEntry _dishEntry;

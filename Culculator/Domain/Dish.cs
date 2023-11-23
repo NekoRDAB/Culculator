@@ -33,17 +33,6 @@ namespace Culculator.Domain
             return $"{Name}\n\n{listedIngredients}\n{Recipe}\n\n{Price}руб.\n{NumberOfPortions}\n{PricePerPortion}руб/порция";
         }
         
-        private List<Ingredient> CollectIngredients(string ingredientsFromDB, IRepository repository)
-        {
-            var ingredientPairs = ingredientsFromDB.Split(';');
-            var idCounter = 1;
-
-            return ingredientPairs
-                .Where(p => p != "" && p != " ")
-                .Select(p => new Ingredient(idCounter++, p, repository))
-                .ToList();
-        }
-        
         public string FormatRecipe()
         {
             var recipeSteps = Recipe.Split('.');
