@@ -1,5 +1,4 @@
 ﻿using Moq;
-using Category = Culculator.Application.Categories.Category;
 
 namespace CulculatorTests;
 
@@ -110,7 +109,7 @@ public class ApplicationTests
                 "Перекусы"
             };
             
-            var categories = new Categories(Path.GetFullPath(
+            var categories = new PreDeterminedCategories(Path.GetFullPath(
                 Path.Combine("..", "..", "..", "..", @"Culculator\RecipesDataBase.db")),
                 Path.GetFullPath(
                     Path.Combine("..", "..", "..", "..", @"Culculator\IngredientsDataBase.db")));

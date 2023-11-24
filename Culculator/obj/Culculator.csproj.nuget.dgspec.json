@@ -61,6 +61,18 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
+            "Ninject": {
+              "target": "Package",
+              "version": "[4.0.0-beta.1, )"
+            },
+            "Ninject.Extensions.Conventions": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "Ninject.Extensions.Factory": {
+              "target": "Package",
+              "version": "[3.3.3, )"
+            },
             "Stub.System.Data.SQLite.Core.NetFramework": {
               "target": "Package",
               "version": "[1.0.118, )"

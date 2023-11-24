@@ -3,9 +3,6 @@ using Culculator.Infrastructure;
 
 namespace Culculator.Application;
 
-
-public class Categories
-{
     public class Category
     {
         private static string _pathToRecipes;
@@ -35,18 +32,3 @@ public class Categories
             Dishes = _application.GetDishesByCategory(name);
         }
     }
-
-    
-    public List<Category> All;
-    public Categories(string pathToRecipes, string pathToIngredients)
-    {
-        Category.SetPaths(pathToRecipes, pathToIngredients);
-        All = new List<Category>
-        {
-            new("Завтраки"),
-            new("Горячие блюда"),
-            new("Гарниры"),
-            new("Перекусы")
-        };
-    }
-}
