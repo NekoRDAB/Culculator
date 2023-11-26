@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using ReactiveUI;
@@ -180,8 +181,9 @@ public partial class MainWindow : Window
                     {
                         public DishShortDescription(Dish dish)
                         {
-                            Children.Add(new DishPrice(dish.Price));
-                            Children.Add(new DishPortionsCount(dish.NumberOfPortions));
+                            var priceTextBlock = new DishPrice(dish.Price);
+                            Children.Add(priceTextBlock);
+                            Children.Add(new InputPortionsCount(dish, priceTextBlock));
                             Children.Add(new DishPricePerPortion(dish.PricePerPortion));
                         }
 
@@ -191,20 +193,7 @@ public partial class MainWindow : Window
                             {
                                 Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
-                                Text = $"{(int)price} руб.";
-                                FontSize = 22;
-                            }
-                        }
-
-                        class DishPortionsCount : TextBlock
-                        {
-                            public DishPortionsCount(int count)
-                            {
-                                Margin = new Thickness(textBlockMargin);
-                                HorizontalAlignment = HorizontalAlignment.Right;
-                                VerticalAlignment = VerticalAlignment.Center;
-                                Foreground = Brushes.Gray;
-                                Text = count.FormatPortionsNumber();
+                                Text = $"{Math.Round(price, 2)} руб.";
                                 FontSize = 22;
                             }
                         }
@@ -217,8 +206,64 @@ public partial class MainWindow : Window
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Bottom;
                                 Foreground = Brushes.Gray;
-                                Text = $"{(int)price} руб. за порцию";
+                                Text = $"{Math.Round(price, 2)} руб. за порцию";
                                 FontSize = 22;
+                            }
+                        }
+                    }
+
+                    class InputPortionsCount : Border
+                    {
+                        private readonly Dish _dish;
+                        private readonly TextBlock _priceTextBlock;
+
+                        public InputPortionsCount(Dish dish, TextBlock priceTextBlock)
+                        {
+                            _dish = dish;
+                            _priceTextBlock = priceTextBlock;
+                            var textBox = new TextBox
+                            {
+                                Margin = new Thickness(5),
+                                HorizontalAlignment = HorizontalAlignment.Right,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Foreground = Brushes.Gray,
+                                Text = dish.NumberOfPortions.ToString(),
+                                FontSize = 22,
+                                MaxLength = 3
+                            };
+                            textBox.KeyUp += (sender, args) =>
+                            {
+                                if (args.Key == Key.Enter)
+                                    RecalculateTotalPrice();
+                            };
+
+                            textBox.KeyDown += (sender, args) => { args.Handled = !IsNumeric(args.Key); };
+
+                            Child = textBox;
+                        }
+
+                        private bool IsNumeric(Key key)
+                        {
+                            if (key == Key.D0 || key == Key.NumPad0)
+                            {
+                                var textBox = (TextBox)Child;
+                                if (textBox.Text.Length == 0 || textBox.CaretIndex == 0)
+                                    return false;
+                            }
+
+                            return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
+                        }
+
+                        private void RecalculateTotalPrice()
+                        {
+                            if (double.TryParse(((TextBox)Child).Text, out double newPortionCount))
+                            {
+                                var coef = newPortionCount / _dish.NumberOfPortions;
+                                _dish.Price = _dish.PricePerPortion * newPortionCount;
+                                _dish.NumberOfPortions = (int)newPortionCount;
+                                _priceTextBlock.Text = $"{Math.Round(_dish.Price, 2)} руб.";
+                                foreach (var ingredient in _dish.Ingredients)
+                                    ingredient.Amount *= coef;
                             }
                         }
                     }
@@ -289,7 +334,7 @@ public partial class MainWindow : Window
                     Content = CreateSortButtonContent()
                 });
             }
-            
+
             private object CreateSortButtonContent()
             {
                 var sortSymbol = ascendingOrder ? "▲" : "▼";
@@ -306,7 +351,7 @@ public partial class MainWindow : Window
                     }
                 };
             }
-            
+
             private void ToggleSortOrder()
             {
                 ascendingOrder = !ascendingOrder;
@@ -466,7 +511,7 @@ public partial class MainWindow : Window
 
                     SetColumn(ingredients, 0);
                     SetColumn(recipe, 1);
-                    
+
                     ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Auto);
                     ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                 }
@@ -530,7 +575,7 @@ public partial class MainWindow : Window
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch;
                         Margin = new Thickness(20, 0);
-                        
+
                         var labelTextBlock = new TextBlock
                         {
                             FontWeight = FontWeight.SemiBold,
@@ -566,7 +611,7 @@ public partial class MainWindow : Window
             {
                 BorderThickness = new Thickness(thickness);
                 BorderBrush = Brushes.DarkSlateGray;
-                CornerRadius = new CornerRadius(10); 
+                CornerRadius = new CornerRadius(10);
             }
         }
 
