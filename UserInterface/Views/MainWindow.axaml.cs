@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -32,6 +33,7 @@ public partial class MainWindow : Window
         Environment.CurrentDirectory = Environment.CurrentDirectory.Replace("bin\\Debug\\net6.0", "");
         _this = this;
         InitializeComponent();
+        Background = new SolidColorBrush(Colors.Linen);
         Width = 900;
         Height = 600;
         Content = new MainMenu();
@@ -99,10 +101,21 @@ public partial class MainWindow : Window
         }
     }
 
+    public static Color CategoryColor;
     class DishesMenu : Panel
     {
+        private static readonly Dictionary<string, Color> CategoryColors = new Dictionary<string, Color>
+        {
+            { "Гарниры", Colors.AntiqueWhite},
+            { "Завтраки", Colors.MintCream },
+            {"Мясные блюда", Colors.LavenderBlush},
+            {"Перекусы", Colors.Lavender}
+            
+        };
         public DishesMenu(Category category)
         {
+            CategoryColor = CategoryColors[category.Name];
+            Background = new SolidColorBrush(CategoryColor);
             Children.Add(new ScrollViewer { Content = new DishesList(category) });
             Children.Add(new ReturnButton());
             Children.Add(new SortButton(category));
@@ -193,7 +206,7 @@ public partial class MainWindow : Window
                             {
                                 Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
-                                Text = $"{Math.Round(price, 2)} руб. за порцию";
+                                Text = $"{Math.Round(price, 2)} руб.";
                                 FontSize = 22;
                             }
                         }
@@ -205,7 +218,6 @@ public partial class MainWindow : Window
                                 Margin = new Thickness(textBlockMargin);
                                 HorizontalAlignment = HorizontalAlignment.Right;
                                 VerticalAlignment = VerticalAlignment.Bottom;
-                                Foreground = Brushes.Gray;
                                 Text = $"{Math.Round(price, 2)} руб. за порцию";
                                 FontSize = 22;
                             }
@@ -373,6 +385,7 @@ public partial class MainWindow : Window
         {
             public DishDescriptionPanels(Dish dish)
             {
+                Background = new SolidColorBrush(CategoryColor);
                 Children.Add(new Top(dish));
                 Children.Add(new Bottom(dish));
             }
