@@ -2,10 +2,10 @@
 
 namespace Culculator.Domain;
 
-public class Ingredient
+public struct Ingredient
 {
     private readonly int _idInRecipe;
-    public double Amount;
+    public readonly double Amount;
     public readonly string Measurement;
     public readonly string Name;
     public double Price => Math.Round(_price * Amount, 2);
@@ -22,6 +22,6 @@ public class Ingredient
 
     public override string ToString()
     {
-        return $"{Name}, {(int)Amount} {Measurement} - {Price}руб.";
+        return $"{Name}, {Amount} {Measurement} - {Price}руб.";
     }
 }
