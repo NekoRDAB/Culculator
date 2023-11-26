@@ -510,7 +510,7 @@ public partial class MainWindow : Window
 
                     SetColumn(ingredients, 0);
                     SetColumn(recipe, 1);
-                    
+
                     ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Auto);
                     ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                 }
@@ -554,14 +554,22 @@ public partial class MainWindow : Window
                                 Children.Add(new IngredientAndAmount(ingredient));
                             }
 
-                            class IngredientAndAmount : TextBlock
+                            class IngredientAndAmount : StackPanel
                             {
                                 public IngredientAndAmount(Ingredient ingredient)
                                 {
+                                    Orientation = Orientation.Horizontal;
                                     Margin = new Thickness(5);
-                                    Text = $"• {ingredient.ToString()}";
-                                    FontSize = 20;
-                                    TextWrapping = TextWrapping.Wrap;
+                                    
+                                    Children.Add(new CheckBox());
+                                    
+                                    var ingredientTextBlock = new TextBlock
+                                    {
+                                        Text = $"• {ingredient}",
+                                        FontSize = 20,
+                                        TextWrapping = TextWrapping.Wrap
+                                    };
+                                    Children.Add(ingredientTextBlock);
                                 }
                             }
                         }
@@ -589,7 +597,7 @@ public partial class MainWindow : Window
                             Text = dish.FormatRecipe(),
                             FontSize = 20,
                             TextWrapping = TextWrapping.Wrap,
-                            Margin = new Thickness(5),
+                            Margin = new Thickness(7),
                         };
 
                         Children.Add(new RoundBorder(1)

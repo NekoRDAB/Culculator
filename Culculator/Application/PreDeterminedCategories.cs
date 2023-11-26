@@ -13,7 +13,7 @@ public class PreDeterminedCategories : ICategories
         All = new List<Category>
         {
             new("Завтраки"),
-            new("Горячие блюда"),
+            new("Мясные блюда"),
             new("Гарниры"),
             new("Перекусы")
         };
