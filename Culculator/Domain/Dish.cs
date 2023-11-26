@@ -7,8 +7,8 @@ namespace Culculator.Domain
     public class Dish
     {
         public readonly IReadOnlyList<Ingredient> Ingredients;
-        public readonly int NumberOfPortions;
-        public readonly double Price;
+        public int NumberOfPortions;
+        public double Price;
         public readonly string Recipe;
         public readonly string Name;
         public readonly string Category;
