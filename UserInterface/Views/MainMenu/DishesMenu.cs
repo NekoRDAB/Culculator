@@ -24,6 +24,7 @@ class DishesMenu : Panel
         Children.Add(new ScrollViewer
             { Content = new DishesList(mainWindow, category, ascendingOrder, categoryColor) });
         Children.Add(new ReturnButton(mainWindow, ascendingOrder, categoryColor));
+        Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
         Children.Add(new SortButton(mainWindow, category, ascendingOrder, categoryColor));
     }
 }
