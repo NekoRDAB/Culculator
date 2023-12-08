@@ -7714,19 +7714,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\egorp\\.nuget\\packages\\": {}
+    "C:\\Users\\79521\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj",
+      "projectUniqueName": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
       "projectName": "Culculator",
-      "projectPath": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj",
-      "packagesPath": "C:\\Users\\egorp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\obj\\",
+      "projectPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
+      "packagesPath": "C:\\Users\\79521\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\egorp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\79521\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7817,7 +7817,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -7826,7 +7826,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Stub.System.Data.SQLite.Core.NetFramework 1.0.118' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "message": "Пакет \"Stub.System.Data.SQLite.Core.NetFramework 1.0.118\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
       "libraryId": "Stub.System.Data.SQLite.Core.NetFramework",
       "targetGraphs": [
         "net6.0"
@@ -7836,7 +7836,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'System.Data.SQLite.Linq 1.0.118' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "message": "Пакет \"System.Data.SQLite.Linq 1.0.118\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
       "libraryId": "System.Data.SQLite.Linq",
       "targetGraphs": [
         "net6.0"

@@ -1,3 +1,5 @@
+using Culculator.Domain;
+
 namespace Culculator.Infrastructure;
 
 public class Repository : IRepository
@@ -56,6 +58,14 @@ public class Repository : IRepository
     {
         var recipes = _recipesContext
             .RecipesDataBase
+            .ToList();
+        return recipes;
+    }
+
+    public List<IngredientEntry> GetIngredients()
+    {
+        var recipes = _ingredientsContext
+            .IngredientsDataBase
             .ToList();
         return recipes;
     }

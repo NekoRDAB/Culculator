@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj": {}
+    "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj": {
+    "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj",
+        "projectUniqueName": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
         "projectName": "Culculator",
-        "projectPath": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\Culculator.csproj",
-        "packagesPath": "C:\\Users\\egorp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\egorp\\OneDrive\\Документы\\GitHub\\Culculator\\Culculator\\obj\\",
+        "projectPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
+        "packagesPath": "C:\\Users\\79521\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\egorp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\79521\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -105,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
