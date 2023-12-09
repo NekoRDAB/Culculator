@@ -6,10 +6,11 @@ public class Repository : IRepository
 {
     private static IIngredientContext _ingredientsContext;
     private static IRecipesContext _recipesContext;
-    public Repository(string pathToRecipes, string pathToIngredients)
+    public Repository(string pathToRecipes, string pathToIngredients, 
+        IIngredientContextFactory ingredientContextFactory, IRecipeContextFactory recipeContextFactory)
     {
-        _recipesContext = new RecipesContextSQLite(pathToRecipes);
-        _ingredientsContext = new IngredientsContextSQLite(pathToIngredients);
+        _recipesContext = recipeContextFactory.Create(pathToRecipes);
+        _ingredientsContext = ingredientContextFactory.Create(pathToIngredients);
     }
 
     public Repository(IRecipesContext recipesContext, IIngredientContext ingredientContext)

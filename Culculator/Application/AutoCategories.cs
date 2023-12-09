@@ -6,10 +6,11 @@ public class AutoCategories : ICategories
 {
     public List<Category> All { get; }
     
-    public AutoCategories(string pathToRecipes, string pathToIngredients)
+    public AutoCategories(string pathToRecipes, string pathToIngredients, 
+        IRecipesContext recipesDB, IApplicationFactory applicationFactory)
     {
-        Category.SetPaths(pathToRecipes, pathToIngredients);
-        var recipesDB = new RecipesContextSQLite(pathToRecipes);
+        var application = applicationFactory.Create(pathToRecipes, pathToIngredients);
+        Category.SetPaths(pathToRecipes, pathToIngredients, application);
         All = recipesDB
             .RecipesDataBase
             .Select(d => d.Category)

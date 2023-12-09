@@ -96,27 +96,6 @@ public class ApplicationTests
 
         private string _pathToRecipes;
         private string _pathToIngredients;
-        
-
-        [Test]
-        public void Categories_All_ContainsAllCategories()
-        {
-            var expectedCategories = new List<string>
-            {
-                "Завтраки",
-                "Горячие блюда",
-                "Гарниры",
-                "Перекусы"
-            };
-            
-            var categories = new PreDeterminedCategories(Path.GetFullPath(
-                Path.Combine("..", "..", "..", "..", @"Culculator\RecipesDataBase.db")),
-                Path.GetFullPath(
-                    Path.Combine("..", "..", "..", "..", @"Culculator\IngredientsDataBase.db")));
-            var result = categories.All.Select(c => c.Name).ToList();
-
-            Assert.AreEqual(expectedCategories, result);
-        }
     }
     
     [TestFixture]

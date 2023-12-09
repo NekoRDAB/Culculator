@@ -7,16 +7,10 @@ public class Application
 {
     
     private IRepository _repository;
-
-    // private static HashSet<string> _validCategories = new()
-    // {
-    //     "Завтраки",
-    //     "Простое",
-    // };
-
-    public Application(string pathToRecipes, string pathToIngredients)
+    
+    public Application(string pathToRecipes, string pathToIngredients, IRepositoryFactory factory)
     {
-        _repository = new Repository(pathToRecipes, pathToIngredients);
+        _repository = factory.Create(pathToRecipes, pathToIngredients);
     }
 
     public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext)
@@ -28,15 +22,6 @@ public class Application
     {
         _repository = repository;
     }
-    
-    // public List<Dish> GetAllDishesOfValidCategories()
-    // {
-    //    return _repository
-    //         .GetAllRecipesFromDB()
-    //         .Where(d => _validCategories.Contains(d.Category))
-    //         .Select(d => new Dish(d, _repository))
-    //         .ToList();
-    // }
 
     public List<Dish> GetDishesByCategory(string category)
     {

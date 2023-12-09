@@ -12,12 +12,11 @@ namespace Culculator.Application;
         public readonly List<Dish> Dishes;
         public readonly string Name;
 
-        internal static void SetPaths(string pathToRecipes, string pathToIngredients)
+        internal static void SetPaths(string pathToRecipes, string pathToIngredients, Application application)
         {
             _pathToRecipes = pathToRecipes;
             _pathToIngredients = pathToIngredients;
-            _application = new Application(new RecipesContextSQLite(_pathToRecipes),
-                new IngredientsContextSQLite(_pathToIngredients));
+            _application = application;
         }
 
         public Category(string name, IEnumerable<Dish> dishes)

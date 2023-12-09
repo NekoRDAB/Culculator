@@ -13,7 +13,15 @@ public static class ContainerConfigurer
     {
         var kernel = new StandardKernel();
         kernel.Bind<ICategories>().To<AutoCategories>();
+        kernel.Bind<IIngredientContext>().To<IngredientsContextSQLite>();
+        kernel.Bind<IRecipesContext>().To<RecipesContextSQLite>();
+        kernel.Bind<Application>().ToSelf();
+        kernel.Bind<IRepository>().To<Repository>();
         kernel.Bind<ICategoriesFactory>().ToFactory();
+        kernel.Bind<IIngredientContextFactory>().ToFactory();
+        kernel.Bind<IRecipeContextFactory>().ToFactory();
+        kernel.Bind<IApplicationFactory>().ToFactory();
+        kernel.Bind<IRepositoryFactory>().ToFactory();
         return kernel;
     }
 
