@@ -2,5 +2,5 @@
 
 public interface ICategoriesFactory
 {
-    public ICategories Create(string pathToRecipes, string pathToIngredients);
+    public ICategories Create(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes);
 }

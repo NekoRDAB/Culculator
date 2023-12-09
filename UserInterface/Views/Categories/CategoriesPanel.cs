@@ -16,8 +16,9 @@ public class CategoriesPanel : StackPanel
         var dir = Environment.CurrentDirectory;
         var pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
         var pathToIngredients = dir.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
+        var pathToAddedRecipes = dir.Replace("UserInterface", "Culculator\\AddedRecipesDataBase.db");
         //var categories = new AutoCategories(pathToRecipes, pathToIngredients);
-        foreach (var category in _categories.Create(pathToRecipes, pathToIngredients).All)
+        foreach (var category in _categories.Create(pathToRecipes, pathToIngredients, pathToAddedRecipes).All)
             Children.Add(new CategoryButton(mainWindow, category, ascendingOrder, categoryColor));
     }
 }

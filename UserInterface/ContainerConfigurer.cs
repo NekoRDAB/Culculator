@@ -15,6 +15,7 @@ public static class ContainerConfigurer
         kernel.Bind<ICategories>().To<AutoCategories>();
         kernel.Bind<IIngredientContext>().To<IngredientsContextSQLite>();
         kernel.Bind<IRecipesContext>().To<RecipesContextSQLite>();
+        kernel.Bind<IAddedRecipeContext>().To<AddedRecipeContext>();
         kernel.Bind<Application>().ToSelf();
         kernel.Bind<IRepository>().To<Repository>();
         kernel.Bind<ICategoriesFactory>().ToFactory();
@@ -22,6 +23,7 @@ public static class ContainerConfigurer
         kernel.Bind<IRecipeContextFactory>().ToFactory();
         kernel.Bind<IApplicationFactory>().ToFactory();
         kernel.Bind<IRepositoryFactory>().ToFactory();
+        kernel.Bind<IAddedRecipeContextFactory>().ToFactory();
         return kernel;
     }
 

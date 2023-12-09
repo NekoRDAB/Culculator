@@ -12,10 +12,8 @@ namespace Culculator.Application;
         public readonly List<Dish> Dishes;
         public readonly string Name;
 
-        internal static void SetPaths(string pathToRecipes, string pathToIngredients, Application application)
+        internal static void SetPaths(Application application)
         {
-            _pathToRecipes = pathToRecipes;
-            _pathToIngredients = pathToIngredients;
             _application = application;
         }
 

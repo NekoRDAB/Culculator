@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -247,17 +248,36 @@ public class AddRecipeButton : Panel
                     () =>
                     {
                         var ingredients = new List<Ingredient>();
+                        var ingr = new StringBuilder();
+                 
                         foreach (var kvp in selectedIngredients)
                         {
                             ingredients.Add(new Ingredient(kvp.Key.id, kvp.Key.Name, kvp.Value, kvp.Key.MeasurementUnit, kvp.Key.Price));
+                            
+                            ingr.Append(kvp.Key.Name + " " + kvp.Value);
+
+                            if (!kvp.Equals(selectedIngredients.Last()))
+                            {
+                                ingr.Append("; ");
+                            }
                         }
 
-                        category.Dishes.Add(
-                            new(ingredients,
-                                int.Parse(count.Text), recipe.Text, recipeTextBox.Text, category.Name
-                            ));
+                        var repository = new Repository();
+                        var dish = new Dish(ingredients, int.Parse(count.Text),
+                            recipe.Text, recipeTextBox.Text, category.Name);
+                        var newDishEntry = new DishEntry
+                        {
+                            Name = dish.Name,
+                            Category = dish.Category,
+                            Ingredients = ingr.ToString(), 
+                            PortionsAmount = dish.NumberOfPortions,
+                            RecipeInfo = dish.Recipe
+                        };
+                        repository.AddRecipeToPersonalDB(newDishEntry);
+                        category.Dishes.Add(dish);
                         mainWindow.Content = new DishesMenu(mainWindow, category, false, categoryColor);
                         Console.WriteLine(category.Dishes.Count);
+
                     })
             });
         }

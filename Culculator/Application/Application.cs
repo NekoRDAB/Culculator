@@ -8,14 +8,15 @@ public class Application
     
     private IRepository _repository;
     
-    public Application(string pathToRecipes, string pathToIngredients, IRepositoryFactory factory)
+    public Application(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes, IRepositoryFactory factory)
     {
-        _repository = factory.Create(pathToRecipes, pathToIngredients);
+        _repository = factory.Create(pathToRecipes, pathToIngredients, pathToAddedRecipes);
     }
 
-    public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext)
+    public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext
+        , IAddedRecipeContext addedRecipeContext)
     {
-        _repository = new Repository(recipesContext, ingredientContext);
+        _repository = new Repository(recipesContext, ingredientContext, addedRecipeContext);
     }
 
     public Application(IRepository repository)

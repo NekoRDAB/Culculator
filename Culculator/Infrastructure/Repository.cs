@@ -6,23 +6,29 @@ public class Repository : IRepository
 {
     private static IIngredientContext _ingredientsContext;
     private static IRecipesContext _recipesContext;
-    public Repository(string pathToRecipes, string pathToIngredients, 
-        IIngredientContextFactory ingredientContextFactory, IRecipeContextFactory recipeContextFactory)
+    private static IAddedRecipeContext _addedRecipesContext;
+    public Repository(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes, 
+        IIngredientContextFactory ingredientContextFactory, IRecipeContextFactory recipeContextFactory,
+        IAddedRecipeContextFactory addedRecipeContextFactory)
     {
         _recipesContext = recipeContextFactory.Create(pathToRecipes);
         _ingredientsContext = ingredientContextFactory.Create(pathToIngredients);
+        _addedRecipesContext = addedRecipeContextFactory.Create(pathToAddedRecipes);
     }
 
-    public Repository(IRecipesContext recipesContext, IIngredientContext ingredientContext)
+    public Repository(IRecipesContext recipesContext, IIngredientContext ingredientContext
+        , IAddedRecipeContext addedRecipeContext)
     {
         _recipesContext = recipesContext;
         _ingredientsContext = ingredientContext;
+        _addedRecipesContext = addedRecipeContext;
     }
 
     public Repository()
     {
         _recipesContext = new RecipesContextSQLite();
         _ingredientsContext = new IngredientsContextSQLite();
+        _addedRecipesContext = new AddedRecipeContext();
     }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
@@ -52,7 +58,11 @@ public class Repository : IRepository
             .RecipesDataBase
             .Where(r => r.Category == category)
             .ToList();
-        return recipes;
+        var addedRecipes = _addedRecipesContext
+            .AddedRecipesDataBase
+            .Where(r => r.Category == category)
+            .ToList();
+        return recipes.Concat(addedRecipes).ToList();
     }
 
     public List<DishEntry> GetAllRecipesFromDB()
@@ -69,5 +79,11 @@ public class Repository : IRepository
             .IngredientsDataBase
             .ToList();
         return recipes;
+    }
+
+    public void AddRecipeToPersonalDB(DishEntry dish)
+    {
+        _addedRecipesContext.AddedRecipesDataBase.Add(dish);
+        _addedRecipesContext.SaveChanges();
     }
 }

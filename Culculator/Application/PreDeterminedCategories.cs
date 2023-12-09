@@ -10,7 +10,7 @@ public class PreDeterminedCategories : ICategories
     public PreDeterminedCategories(string pathToRecipes, string pathToIngredients, 
         IRecipesContext recipesDB, Application application)
     {
-        Category.SetPaths(pathToRecipes, pathToIngredients, application);
+        Category.SetPaths(application);
         All = new List<Category>
         {
             new("Завтраки"),
