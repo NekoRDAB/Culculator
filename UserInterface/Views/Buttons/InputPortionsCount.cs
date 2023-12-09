@@ -29,8 +29,7 @@ class InputPortionsCount : Border
 
         textBox.KeyUp += (sender, args) =>
         {
-            if (args.Key == Key.Enter)
-                RecalculateTotalPrice();
+            RecalculateTotalPrice();
         };
 
         textBox.KeyDown += (sender, args) => { args.Handled = !IsNumeric(args.Key); };

@@ -61,14 +61,14 @@ public class AddRecipeButton : Panel
             recipeNameTextBox = new TextBox
             {
                 Width = 200,
-                Text = "Введите название рецепта"
+                Watermark = "Введите название рецепта"
             };
             stackPanel.Children.Add(recipeNameTextBox);
 
             portionsCountTextBox = new TextBox
             {
                 Width = 200,
-                Text = "Введите количество порций"
+                Watermark = "Введите количество порций"
             };
             portionsCountTextBox.TextChanged += (sender, args) =>
             {
@@ -217,7 +217,7 @@ public class AddRecipeButton : Panel
                 Width = 600,
                 Height = 400,
                 Margin = new Thickness(0, 30, 50, 30),
-                Text = "Введите описание рецепта",
+                Watermark = "Введите описание рецепта",
                 HorizontalAlignment = HorizontalAlignment.Right
             };
             stackPanel.Children.Add(recipeInfoTextBox);
