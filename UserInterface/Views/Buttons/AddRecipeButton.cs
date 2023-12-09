@@ -96,12 +96,50 @@ public class AddRecipeButton : Panel
                 PlaceholderText = "Выберите ингредиент",
                 VerticalAlignment = VerticalAlignment.Top,
             };
-            foreach (var ingredient in availableIngredients)
+
+            var searchTextBox = new TextBox();
+            var allIngredients = availableIngredients.Select(ingredient => ingredient.Name).ToList();
+            allIngredients.Sort();
+            foreach (var ingredient in allIngredients)
             {
-                ingredientsBox.Items.Add(ingredient.Name);
+                ingredientsBox.Items.Add(ingredient);
             }
 
-            selectedIngredientsPanel.Children.Add(ingredientsBox);
+            ingredientsBox.DropDownOpened += (sender, a) =>
+            {
+                if (searchTextBox.Text == null)
+                {
+                    ingredientsBox.Items.Clear();
+                    foreach (var ingr in allIngredients)
+                    {
+                        ingredientsBox.Items.Add(ingr);
+                    }
+                }
+                else
+                {
+                    var searchText = searchTextBox.Text.ToLower();
+                    var filteredIngredients = allIngredients
+                        .Where(ingredient => ingredient.ToLower().Contains(searchText))
+                        .ToList();
+                    ingredientsBox.Items.Clear();
+                    foreach (var ingr in filteredIngredients)
+                    {
+                        ingredientsBox.Items.Add(ingr);
+                    }
+                }
+            };
+
+
+            var stp = new StackPanel()
+            {
+                Orientation = Orientation.Vertical,
+            };
+
+            stp.Children.Add(ingredientsBox);
+            stp.Children.Add(searchTextBox);
+
+            selectedIngredientsPanel.Children.Add(stp);
+
 
             var addButton = new Button
             {
@@ -124,6 +162,12 @@ public class AddRecipeButton : Panel
                     {
                         var ingredientPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
+                        ingredientsBox.Items.Clear();
+                        searchTextBox.Text = "";
+                        foreach (var ingr in allIngredients)
+                        {
+                            ingredientsBox.Items.Add(ingr);
+                        }
 
                         var textBlock = new TextBlock
                         {
