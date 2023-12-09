@@ -493,15 +493,19 @@
           "System.Xml.XDocument": "4.3.0"
         }
       },
-      "Ninject/4.0.0-beta.1": {
+      "Ninject/3.3.3": {
         "type": "package",
+        "dependencies": {
+          "System.Reflection.Emit.ILGeneration": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
         "compile": {
-          "lib/net6.0/Ninject.dll": {
+          "lib/netstandard2.0/Ninject.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/Ninject.dll": {
+          "lib/netstandard2.0/Ninject.dll": {
             "related": ".xml"
           }
         }
@@ -1724,7 +1728,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {
+          "ref/netstandard1.0/System.Reflection.Emit.Lightweight.dll": {
             "related": ".xml"
           }
         },
@@ -3175,20 +3179,18 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Ninject/4.0.0-beta.1": {
-      "sha512": "nLUSEPhzXRYrw5PKB6wQIOTWN2dgvlvjjzr1QaQC1Bq8J/ca2wKdURoUWwFwAuQjG4hxP7aEeBscmPCF/OgYBQ==",
+    "Ninject/3.3.3": {
+      "sha512": "GdYkRUQwaf3+yhEVDLr1XkPqBUY0sqlnd6YVlMpSujEmazMFPi5o3OlZ9HeCYJUHZvaZfOEyIeVw9xo2cq8u9w==",
       "type": "package",
-      "path": "ninject/4.0.0-beta.1",
+      "path": "ninject/3.3.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net46/Ninject.dll",
-        "lib/net46/Ninject.xml",
-        "lib/net6.0/Ninject.dll",
-        "lib/net6.0/Ninject.xml",
+        "lib/net45/Ninject.dll",
+        "lib/net45/Ninject.xml",
         "lib/netstandard2.0/Ninject.dll",
         "lib/netstandard2.0/Ninject.xml",
-        "ninject.4.0.0-beta.1.nupkg.sha512",
+        "ninject.3.3.3.nupkg.sha512",
         "ninject.nuspec"
       ]
     },
@@ -7703,7 +7705,6 @@
       "Microsoft.EntityFrameworkCore >= 7.0.13",
       "Microsoft.EntityFrameworkCore.Sqlite >= 7.0.13",
       "Microsoft.EntityFrameworkCore.Sqlite.Core >= 7.0.13",
-      "Ninject >= 4.0.0-beta.1",
       "Ninject.Extensions.Conventions >= 3.3.0",
       "Ninject.Extensions.Factory >= 3.3.3",
       "Stub.System.Data.SQLite.Core.NetFramework >= 1.0.118",
@@ -7714,19 +7715,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\79521\\.nuget\\packages\\": {}
+    "C:\\Users\\cooluser\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
+      "projectUniqueName": "C:\\Users\\cooluser\\C# projects\\Culculator\\Culculator\\Culculator.csproj",
       "projectName": "Culculator",
-      "projectPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\Culculator.csproj",
-      "packagesPath": "C:\\Users\\79521\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\79521\\Desktop\\Проекты\\Culculator\\Culculator\\Culculator\\obj\\",
+      "projectPath": "C:\\Users\\cooluser\\C# projects\\Culculator\\Culculator\\Culculator.csproj",
+      "packagesPath": "C:\\Users\\cooluser\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\cooluser\\C# projects\\Culculator\\Culculator\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\79521\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cooluser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7734,6 +7740,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7767,10 +7774,6 @@
           "Microsoft.EntityFrameworkCore.Sqlite.Core": {
             "target": "Package",
             "version": "[7.0.13, )"
-          },
-          "Ninject": {
-            "target": "Package",
-            "version": "[4.0.0-beta.1, )"
           },
           "Ninject.Extensions.Conventions": {
             "target": "Package",
@@ -7812,12 +7815,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.23, 6.0.23]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.23, 6.0.23]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.23, 6.0.23]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.23, 6.0.23]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.2.23502.2\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -7826,7 +7847,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Пакет \"Stub.System.Data.SQLite.Core.NetFramework 1.0.118\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "message": "Package 'Stub.System.Data.SQLite.Core.NetFramework 1.0.118' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
       "libraryId": "Stub.System.Data.SQLite.Core.NetFramework",
       "targetGraphs": [
         "net6.0"
@@ -7836,7 +7857,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Пакет \"System.Data.SQLite.Linq 1.0.118\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "message": "Package 'System.Data.SQLite.Linq 1.0.118' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
       "libraryId": "System.Data.SQLite.Linq",
       "targetGraphs": [
         "net6.0"

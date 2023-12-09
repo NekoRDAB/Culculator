@@ -4,21 +4,20 @@ using Avalonia.Media;
 
 namespace UserInterface.Views;
 
-class CategoriesPanel : StackPanel
+public class CategoriesPanel : StackPanel
 {
-    static string pathToRecipes = Environment.CurrentDirectory.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
-    static string pathToIngredients = Environment.CurrentDirectory.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
-    static AutoCategories categories = new (pathToRecipes, pathToIngredients);
+    static ICategoriesFactory _categories;
     
-    public CategoriesPanel(MainWindow mainWindow, bool ascendingOrder, Color categoryColor)
+    public CategoriesPanel(MainWindow mainWindow, ICategoriesFactory categories, bool ascendingOrder, Color categoryColor)
     {
+        _categories = categories;
         Margin = new(20);
         Spacing = 10;
         var dir = Environment.CurrentDirectory;
         var pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db");
         var pathToIngredients = dir.Replace("UserInterface", "Culculator\\IngredientsDataBase.db");
         //var categories = new AutoCategories(pathToRecipes, pathToIngredients);
-        foreach (var category in categories.All)
+        foreach (var category in _categories.Create(pathToRecipes, pathToIngredients).All)
             Children.Add(new CategoryButton(mainWindow, category, ascendingOrder, categoryColor));
     }
 }
