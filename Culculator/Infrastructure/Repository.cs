@@ -29,7 +29,6 @@ public class Repository : IRepository
         var ingredient = _ingredientsContext
             .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
-
         if (ingredient == null)
             throw new KeyNotFoundException($"Ингредиент с названием {ingredientName} не найден");
         return ingredient;
