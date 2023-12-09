@@ -74,7 +74,7 @@ public class AddRecipeButton : Panel
                 var textBox = (TextBox)sender;
                 if (!IsNumeric(textBox.Text))
                 {
-                    textBox.Watermark = "0";
+                    textBox.Text = "0";
                 }
             };
             stackPanel.Children.Add(portionsCountTextBox);
