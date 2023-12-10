@@ -17,14 +17,15 @@ public enum SortType
     DescendingByTotalPrice
 }
 
-class SortButton : Panel
+public class SortButton : Panel
 {
     private readonly Category _currentCategory;
     private MainWindow mainWindow;
     private SortType sortType;
     private Color categoryColor;
 
-    public SortButton(MainWindow mainWindow, Category currentCategory, SortType sortType, Color categoryColor)
+    public SortButton(MainWindow mainWindow, ISortMethod[] sortMethods, Category currentCategory,
+        SortType sortType, Color categoryColor)
     {
         this.mainWindow = mainWindow;
         _currentCategory = currentCategory;
@@ -40,15 +41,14 @@ class SortButton : Panel
             VerticalAlignment = VerticalAlignment.Top,
             HorizontalAlignment = HorizontalAlignment.Left
         };
-        
-        var sortTypesDict = new Dictionary<SortType, string>()
+
+        var sortTypesDict = new Dictionary<string, Func<Category, Category>>();
+        foreach (var sortMethod in sortMethods)
         {
-            { SortType.AscendingByTotalPrice, "Цена ↑" },
-            { SortType.DescendingByTotalPrice, "Цена ↓" },
-            { SortType.AscendingByPortionPrice, "Цена за порцию ↑" },
-            { SortType.DescendingByPortionPrice, "Цена за порцию ↓" },
-        };
-        foreach (var sort in sortTypesDict.Values)
+            sortTypesDict[sortMethod.AscendingSortDescription] = sortMethod.SortAscending;
+            sortTypesDict[sortMethod.DescendingSortDescription] = sortMethod.SortDescending;
+        }
+        foreach (var sort in sortTypesDict.Keys)
         {
             sortBox.Items.Add(sort);
         }
@@ -72,8 +72,12 @@ class SortButton : Panel
 
         applySortButton.Click += (sender, args) =>
         {
-            var selectedSortOption = sortTypesDict.FirstOrDefault(x => x.Value == sortBox.SelectedItem?.ToString()).Key;
-            mainWindow.Content = new DishesMenu(mainWindow, _currentCategory, selectedSortOption, categoryColor);
+            if (sortBox.SelectedItem != null)
+            {
+                var sortedCategory = sortTypesDict[(string)sortBox.SelectedItem](currentCategory);
+                mainWindow.Content = new DishesMenu(mainWindow, sortedCategory,
+                    SortType.AscendingByPortionPrice, categoryColor);
+            }
         };
     }
 }

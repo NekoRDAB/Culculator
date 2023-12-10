@@ -25,6 +25,6 @@ class DishesMenu : Panel
             { Content = new DishesList(mainWindow, category, sortType, categoryColor) });
         Children.Add(new ReturnButton(mainWindow, sortType, categoryColor));
         Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
-        Children.Add(new SortButton(mainWindow, category, sortType, categoryColor));
+        Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, sortType, categoryColor));
     }
 }
