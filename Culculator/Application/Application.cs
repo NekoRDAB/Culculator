@@ -8,9 +8,9 @@ public class Application
     
     private IRepository _repository;
     
-    public Application(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes, IRepositoryFactory factory)
+    public Application(string pathToRecipes, string pathToAddedRecipes, IRepositoryFactory factory)
     {
-        _repository = factory.Create(pathToRecipes, pathToIngredients, pathToAddedRecipes);
+        _repository = factory.Create(pathToRecipes, pathToAddedRecipes);
     }
 
     public Application(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)

@@ -2,5 +2,5 @@
 
 public interface IRepositoryFactory
 {
-    public IRepository Create(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes);
+    public IRepository Create(string pathToRecipes, string pathToAddedRecipes);
 }

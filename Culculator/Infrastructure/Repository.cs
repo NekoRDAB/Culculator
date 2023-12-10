@@ -6,7 +6,7 @@ public class Repository : IRepository
 {
     private static IRecipesContext _recipesContext;
     private static IAddedRecipeContext _addedRecipesContext;
-    public Repository(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes, 
+    public Repository(string pathToRecipes, string pathToAddedRecipes, 
         IRecipeContextFactory recipeContextFactory, IAddedRecipeContextFactory addedRecipeContextFactory)
     {
         _recipesContext = recipeContextFactory.Create(pathToRecipes);

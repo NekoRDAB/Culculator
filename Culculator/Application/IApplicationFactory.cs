@@ -2,5 +2,5 @@
 
 public interface IApplicationFactory
 {
-    public Application Create(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes);
+    public Application Create(string pathToRecipes, string pathToAddedRecipes);
 }
