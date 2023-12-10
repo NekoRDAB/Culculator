@@ -4,35 +4,29 @@ namespace Culculator.Infrastructure;
 
 public class Repository : IRepository
 {
-    private static IIngredientContext _ingredientsContext;
     private static IRecipesContext _recipesContext;
     private static IAddedRecipeContext _addedRecipesContext;
     public Repository(string pathToRecipes, string pathToIngredients, string pathToAddedRecipes, 
-        IIngredientContextFactory ingredientContextFactory, IRecipeContextFactory recipeContextFactory,
-        IAddedRecipeContextFactory addedRecipeContextFactory)
+        IRecipeContextFactory recipeContextFactory, IAddedRecipeContextFactory addedRecipeContextFactory)
     {
         _recipesContext = recipeContextFactory.Create(pathToRecipes);
-        _ingredientsContext = ingredientContextFactory.Create(pathToIngredients);
         _addedRecipesContext = addedRecipeContextFactory.Create(pathToAddedRecipes);
     }
 
-    public Repository(IRecipesContext recipesContext, IIngredientContext ingredientContext
-        , IAddedRecipeContext addedRecipeContext)
+    public Repository(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)
     {
         _recipesContext = recipesContext;
-        _ingredientsContext = ingredientContext;
         _addedRecipesContext = addedRecipeContext;
     }
 
     public Repository()
     {
         _recipesContext = new RecipesContextSQLite();
-        _ingredientsContext = new IngredientsContextSQLite();
         _addedRecipesContext = new AddedRecipeContext();
     }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
-        var ingredient = _ingredientsContext
+        var ingredient = _recipesContext
             .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
         if (ingredient == null)
@@ -74,7 +68,7 @@ public class Repository : IRepository
 
     public List<IngredientEntry> GetIngredients()
     {
-        var recipes = _ingredientsContext
+        var recipes = _recipesContext
             .IngredientsDataBase
             .ToList();
         return recipes;

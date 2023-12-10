@@ -13,10 +13,9 @@ public class Application
         _repository = factory.Create(pathToRecipes, pathToIngredients, pathToAddedRecipes);
     }
 
-    public Application(IRecipesContext recipesContext, IIngredientContext ingredientContext
-        , IAddedRecipeContext addedRecipeContext)
+    public Application(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)
     {
-        _repository = new Repository(recipesContext, ingredientContext, addedRecipeContext);
+        _repository = new Repository(recipesContext, addedRecipeContext);
     }
 
     public Application(IRepository repository)

@@ -22,5 +22,6 @@ namespace Culculator.Infrastructure
             optionsBuilder.UseSqlite($"Data Source={_path}");
         }
         public DbSet<DishEntry> RecipesDataBase { get; set; }
+        public DbSet<IngredientEntry> IngredientsDataBase { get; set; }
     }
 }
