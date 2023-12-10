@@ -5,10 +5,10 @@ namespace UserInterface.Views;
 
 class DishDescription : Panel
 {
-    public DishDescription(MainWindow mainWindow, Category category, Dish dish, bool ascendingOrder,
+    public DishDescription(MainWindow mainWindow, Category category, Dish dish, SortType sortType,
         Color categoryColor)
     {
         Children.Add(new DishDescriptionPanels(dish, categoryColor));
-        Children.Add(new ReturnToDishesMenuButton(mainWindow, category, ascendingOrder, categoryColor));
+        Children.Add(new ReturnToDishesMenuButton(mainWindow, category, sortType, categoryColor));
     }
 }

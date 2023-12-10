@@ -1,25 +1,30 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using ReactiveUI;
 using UserInterface.Views;
 
 class ReturnButton : Panel
 {
-    public ReturnButton(MainWindow mainWindow, bool ascendingOrder, Color categoryColor)
+    public ReturnButton(MainWindow mainWindow, SortType sortType, Color categoryColor)
     {
         Children.Add(new Button
         {
-            Width = 120,
+            Width = 100,
             Height = 50,
-            Content = "🏠",
-            FontSize = 30,
-            Background = null,
+            Content = new Image
+            {
+                Source = new Bitmap("Images/ReturnButton.png"),
+                Width = 50,  
+                Height = 50,
+            },
+            Background = Brushes.Transparent,
             Foreground = Brushes.DarkGray,
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Command = ReactiveCommand.Create(
-                () => { mainWindow.Content = new MainMenu(mainWindow, ascendingOrder, categoryColor); })
+                () => { mainWindow.Content = new MainMenu(mainWindow, sortType, categoryColor); })
         });
     }
 }

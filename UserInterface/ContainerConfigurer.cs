@@ -27,11 +27,11 @@ public static class ContainerConfigurer
         return kernel;
     }
 
-    public static CategoriesPanel GetCategoriesPanel(MainWindow mainWindow, bool ascendingOrder, Color categoryColor)
+    public static CategoriesPanel GetCategoriesPanel(MainWindow mainWindow, SortType sortType, Color categoryColor)
     {
         var container = ConfigureKernel();
         return container.Get<CategoriesPanel>(new ConstructorArgument("mainWindow", mainWindow),
-            new ConstructorArgument("ascendingOrder", ascendingOrder),
+            new ConstructorArgument("sortType", sortType),
             new ConstructorArgument("categoryColor", categoryColor));
     }
 }

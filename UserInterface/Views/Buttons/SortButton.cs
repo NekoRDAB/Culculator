@@ -1,4 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -6,56 +9,71 @@ using ReactiveUI;
 
 namespace UserInterface.Views;
 
+public enum SortType
+{
+    AscendingByPortionPrice,
+    DescendingByPortionPrice,
+    AscendingByTotalPrice,
+    DescendingByTotalPrice
+}
+
 class SortButton : Panel
 {
     private readonly Category _currentCategory;
     private MainWindow mainWindow;
-    private bool ascendingOrder;
+    private SortType sortType;
     private Color categoryColor;
 
-    public SortButton(MainWindow mainWindow, Category currentCategory, bool ascendingOrder, Color categoryColor)
+    public SortButton(MainWindow mainWindow, Category currentCategory, SortType sortType, Color categoryColor)
     {
         this.mainWindow = mainWindow;
         _currentCategory = currentCategory;
-        this.ascendingOrder = ascendingOrder;
+        this.sortType = sortType;
         this.categoryColor = categoryColor;
-        Children.Add(new Button
+
+        var sortBox = new ComboBox()
         {
-            Width = 100,
+            Width = 135,
             Height = 40,
-            Margin = new Thickness(20),
-            FontSize = 27,
+            FontSize = 15,
+            PlaceholderText = "Сортировка",
+            VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = HorizontalAlignment.Left
+        };
+        
+        var sortTypesDict = new Dictionary<SortType, string>()
+        {
+            { SortType.AscendingByTotalPrice, "Цена ↑" },
+            { SortType.DescendingByTotalPrice, "Цена ↓" },
+            { SortType.AscendingByPortionPrice, "Цена за порцию ↑" },
+            { SortType.DescendingByPortionPrice, "Цена за порцию ↓" },
+        };
+        foreach (var sort in sortTypesDict.Values)
+        {
+            sortBox.Items.Add(sort);
+        }
+        
+        var applySortButton = new Button
+        {
+            Width = 135,
+            Height = 40,
+            Content = "Применить",
+            FontSize = 15,
             Background = null,
             Foreground = Brushes.DarkGray,
             VerticalAlignment = VerticalAlignment.Top,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            Command = ReactiveCommand.Create(ToggleSortOrder),
-            Content = CreateSortButtonContent()
-        });
-    }
-
-    private object CreateSortButtonContent()
-    {
-        var sortSymbol = ascendingOrder ? "▲" : "▼";
-        return new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            Children =
-            {
-                new TextBlock
-                {
-                    Text = sortSymbol,
-                    FontWeight = FontWeight.Bold,
-                }
-            }
+            HorizontalAlignment = HorizontalAlignment.Left
         };
-    }
 
-    private void ToggleSortOrder()
-    {
-        ascendingOrder = !ascendingOrder;
-        ((Button)Children[0]).Content = CreateSortButtonContent();
+        var panel = new StackPanel();
+        panel.Children.Add(sortBox);
+        panel.Children.Add(applySortButton);
+        Children.Add(panel);
 
-        mainWindow.Content = new DishesMenu(mainWindow, _currentCategory, ascendingOrder, categoryColor);
+        applySortButton.Click += (sender, args) =>
+        {
+            var selectedSortOption = sortTypesDict.FirstOrDefault(x => x.Value == sortBox.SelectedItem?.ToString()).Key;
+            mainWindow.Content = new DishesMenu(mainWindow, _currentCategory, selectedSortOption, categoryColor);
+        };
     }
 }

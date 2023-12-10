@@ -24,6 +24,6 @@ public partial class MainWindow : Window
         Background = new SolidColorBrush(Colors.Linen);
         Width = 900;
         Height = 600;
-        Content = new MainMenu(_this, ascendingOrder, categoryColor);
+        Content = new MainMenu(_this, SortType.AscendingByTotalPrice, categoryColor);
     }
 }

@@ -6,7 +6,7 @@ namespace UserInterface.Views;
 
 class CategoryButton : Panel
 {
-    public CategoryButton(MainWindow mainWindow, Category category, bool ascendingOrder, Color categoryColor)
+    public CategoryButton(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
     {
         Children.Add(new Button
         {
@@ -15,7 +15,7 @@ class CategoryButton : Panel
             Content = category.Name,
             FontSize = 25,
             Command = ReactiveCommand.Create(
-                () => { mainWindow.Content = new DishesMenu(mainWindow, category, ascendingOrder, categoryColor); })
+                () => { mainWindow.Content = new DishesMenu(mainWindow, category, sortType, categoryColor); })
         });
         Children.Add(new BlackBorder(330, 75, 1));
     }

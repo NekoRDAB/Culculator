@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using ReactiveUI;
-using UserInterface.Views;
 
 namespace UserInterface.Views;
 
@@ -17,12 +18,15 @@ public class AddRecipeButton : Panel
     {
         Children.Add(new Button
         {
-            Width = 120,
+            Width = 100,
             Height = 50,
-            Content = "+",
-            FontSize = 40,
-            Background = null,
-            Foreground = Brushes.Black,
+            Content = new Image
+            {
+                Source = new Bitmap("Images/AddButton.png"),
+                Width = 50,  
+                Height = 50,
+            },
+            Background = Brushes.Transparent,
             VerticalContentAlignment = VerticalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Right,
@@ -30,18 +34,19 @@ public class AddRecipeButton : Panel
             {
                 var recipeParameters = new AddRecipeParameters();
                 var addReturnButton = new AddAndReturnButton(mainWindow, category, categoryColor, recipeParameters.recipeNameTextBox, recipeParameters.selectedIngredients, recipeParameters.recipeInfoTextBox, recipeParameters.portionsCountTextBox);
-                mainWindow.Content = new AddRecipeWindow(recipeParameters, addReturnButton);
-                Console.WriteLine(category.Dishes.Count);
+                var returnButton = new ReturnButton(mainWindow, category, categoryColor);
+                mainWindow.Content = new AddRecipeWindow(recipeParameters, addReturnButton,returnButton);
             })
         });
     }
 
     class AddRecipeWindow : Panel
     {
-        public AddRecipeWindow(AddRecipeParameters recipeParameters, AddAndReturnButton addReturnButton)
+        public AddRecipeWindow(AddRecipeParameters recipeParameters, AddAndReturnButton addReturnButton, ReturnButton returnButton)
         {
             Children.Add(recipeParameters);
             Children.Add(addReturnButton);
+            Children.Add(returnButton);
         }
     }
 
@@ -230,6 +235,29 @@ public class AddRecipeButton : Panel
         }
     }
 
+    class ReturnButton : Panel
+    {
+        public ReturnButton(MainWindow mainWindow, Category category, Color categoryColor)
+        {
+            Children.Add(new Button
+            {
+                Width = 100,
+                Height = 50,
+                Content = new Image
+                {
+                    Source = new Bitmap("Images/ReturnButton.png"),
+                    Width = 50,
+                    Height = 50,
+                },
+                Background = Brushes.Transparent,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Command = ReactiveCommand.Create(
+                    () => { mainWindow.Content = new DishesMenu(mainWindow, category, SortType.AscendingByTotalPrice, categoryColor); }
+                )
+            });
+        }
+    }
 
     class AddAndReturnButton : Panel
     {
@@ -237,12 +265,15 @@ public class AddRecipeButton : Panel
         {
             Children.Add(new Button
             {
-                Width = 220,
+                Width = 100,
                 Height = 50,
-                Content = "Добавить рецепт",
-                FontSize = 20,
-                Background = null,
-                Foreground = Brushes.DarkGray,
+                Content = new Image
+                {
+                    Source = new Bitmap("Images/AddButton.png"),
+                    Width = 50,  
+                    Height = 50,
+                },
+                Background = Brushes.Transparent,
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 Command = ReactiveCommand.Create(
@@ -276,9 +307,7 @@ public class AddRecipeButton : Panel
                         };
                         repository.AddRecipeToPersonalDB(newDishEntry);
                         category.Dishes.Add(dish);
-                        mainWindow.Content = new DishesMenu(mainWindow, category, false, categoryColor);
-                        Console.WriteLine(category.Dishes.Count);
-
+                        mainWindow.Content = new DishesMenu(mainWindow, category, SortType.AscendingByTotalPrice, categoryColor);
                     })
             });
         }

@@ -7,7 +7,7 @@ namespace UserInterface.Views;
 class DishesMenu : Panel
 {
     private static Color categoryColor;
-    private static bool ascendingOrder;
+    private static string sortType;
 
     private static readonly Dictionary<string, Color> CategoryColors = new()
     {
@@ -17,14 +17,14 @@ class DishesMenu : Panel
         { "Перекусы", Colors.Lavender }
     };
 
-    public DishesMenu(MainWindow mainWindow, Category category, bool ascendingOrder, Color categoryColor)
+    public DishesMenu(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
     {
         categoryColor = CategoryColors[category.Name];
         Background = new SolidColorBrush(categoryColor);
         Children.Add(new ScrollViewer
-            { Content = new DishesList(mainWindow, category, ascendingOrder, categoryColor) });
-        Children.Add(new ReturnButton(mainWindow, ascendingOrder, categoryColor));
+            { Content = new DishesList(mainWindow, category, sortType, categoryColor) });
+        Children.Add(new ReturnButton(mainWindow, sortType, categoryColor));
         Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
-        Children.Add(new SortButton(mainWindow, category, ascendingOrder, categoryColor));
+        Children.Add(new SortButton(mainWindow, category, sortType, categoryColor));
     }
 }
