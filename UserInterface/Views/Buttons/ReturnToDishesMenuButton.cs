@@ -12,13 +12,13 @@ class ReturnToDishesMenuButton : Panel
     {
         Children.Add(new Button
         {
-            Width = 200,
-            Height = 40,
+            Width = 50,
+            Height = 50,
             Margin = new Thickness(20),
-            Content = "В меню блюд",
-            FontSize = 22,
+            Content = "\ud83e\udc14",
+            FontSize = 40,
             Background = null,
-            Foreground = Brushes.DarkGray,
+            Foreground = Brushes.Black,
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Command = ReactiveCommand.Create(

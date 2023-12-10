@@ -19,10 +19,11 @@ public class AddRecipeButton : Panel
         {
             Width = 120,
             Height = 50,
-            Content = "Добавить",
-            FontSize = 20,
+            Content = "+",
+            FontSize = 40,
             Background = null,
-            Foreground = Brushes.DarkGray,
+            Foreground = Brushes.Black,
+            VerticalContentAlignment = VerticalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Right,
             Command = ReactiveCommand.Create(() =>
