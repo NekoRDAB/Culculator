@@ -32,20 +32,18 @@ public static class ContainerConfigurer
         return kernel;
     }
 
-    public static CategoriesPanel GetCategoriesPanel(MainWindow mainWindow, SortType sortType, Color categoryColor)
+    public static CategoriesPanel GetCategoriesPanel(MainWindow mainWindow, Color categoryColor)
     {
         var container = ConfigureKernel();
         return container.Get<CategoriesPanel>(new ConstructorArgument("mainWindow", mainWindow),
-            new ConstructorArgument("sortType", sortType),
             new ConstructorArgument("categoryColor", categoryColor));
     }
 
-    public static SortButton GetSortButton(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
+    public static SortButton GetSortButton(MainWindow mainWindow, Category category, Color categoryColor)
     {
         var container = ConfigureKernel();
         return container.Get<SortButton>(new ConstructorArgument("mainWindow", mainWindow),
             new ConstructorArgument("currentCategory", category),
-            new ConstructorArgument("sortType", sortType),
             new ConstructorArgument("categoryColor", categoryColor));
     }
 }

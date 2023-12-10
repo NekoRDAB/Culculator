@@ -253,7 +253,7 @@ public class AddRecipeButton : Panel
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Command = ReactiveCommand.Create(
-                    () => { mainWindow.Content = new DishesMenu(mainWindow, category, SortType.AscendingByTotalPrice, categoryColor); }
+                    () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); }
                 )
             });
         }
@@ -307,7 +307,7 @@ public class AddRecipeButton : Panel
                         };
                         repository.AddRecipeToPersonalDB(newDishEntry);
                         category.Dishes.Add(dish);
-                        mainWindow.Content = new DishesMenu(mainWindow, category, SortType.AscendingByTotalPrice, categoryColor);
+                        mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor);
                     })
             });
         }

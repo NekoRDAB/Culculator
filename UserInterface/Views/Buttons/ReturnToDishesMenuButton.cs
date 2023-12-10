@@ -9,7 +9,7 @@ namespace UserInterface.Views;
 
 class ReturnToDishesMenuButton : Panel
 {
-    public ReturnToDishesMenuButton(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
+    public ReturnToDishesMenuButton(MainWindow mainWindow, Category category, Color categoryColor)
     {
         Children.Add(new Button
         {
@@ -25,7 +25,7 @@ class ReturnToDishesMenuButton : Panel
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Command = ReactiveCommand.Create(
-                () => { mainWindow.Content = new DishesMenu(mainWindow, category, sortType, categoryColor); })
+                () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); })
         });
     }
 }

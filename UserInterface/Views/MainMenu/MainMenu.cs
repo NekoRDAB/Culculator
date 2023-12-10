@@ -6,11 +6,11 @@ namespace UserInterface.Views;
 
 public class MainMenu : StackPanel
 {
-    public MainMenu(MainWindow mainWindow, SortType sortType, Color categoryColor)
+    public MainMenu(MainWindow mainWindow, Color categoryColor)
     {
         Margin = new Thickness(20);
         Spacing = 7;
         Children.Add(new Title());
-        Children.Add(ContainerConfigurer.GetCategoriesPanel(mainWindow, sortType, categoryColor));
+        Children.Add(ContainerConfigurer.GetCategoriesPanel(mainWindow, categoryColor));
     }
 }

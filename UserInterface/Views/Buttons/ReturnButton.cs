@@ -7,7 +7,7 @@ using UserInterface.Views;
 
 class ReturnButton : Panel
 {
-    public ReturnButton(MainWindow mainWindow, SortType sortType, Color categoryColor)
+    public ReturnButton(MainWindow mainWindow, Color categoryColor)
     {
         Children.Add(new Button
         {
@@ -24,7 +24,7 @@ class ReturnButton : Panel
             VerticalAlignment = VerticalAlignment.Bottom,
             HorizontalAlignment = HorizontalAlignment.Left,
             Command = ReactiveCommand.Create(
-                () => { mainWindow.Content = new MainMenu(mainWindow, sortType, categoryColor); })
+                () => { mainWindow.Content = new MainMenu(mainWindow, categoryColor); })
         });
     }
 }

@@ -9,27 +9,17 @@ using ReactiveUI;
 
 namespace UserInterface.Views;
 
-public enum SortType
-{
-    AscendingByPortionPrice,
-    DescendingByPortionPrice,
-    AscendingByTotalPrice,
-    DescendingByTotalPrice
-}
 
 public class SortButton : Panel
 {
     private readonly Category _currentCategory;
     private MainWindow mainWindow;
-    private SortType sortType;
     private Color categoryColor;
 
-    public SortButton(MainWindow mainWindow, ISortMethod[] sortMethods, Category currentCategory,
-        SortType sortType, Color categoryColor)
+    public SortButton(MainWindow mainWindow, ISortMethod[] sortMethods, Category currentCategory, Color categoryColor)
     {
         this.mainWindow = mainWindow;
         _currentCategory = currentCategory;
-        this.sortType = sortType;
         this.categoryColor = categoryColor;
 
         var sortBox = new ComboBox()
@@ -75,8 +65,7 @@ public class SortButton : Panel
             if (sortBox.SelectedItem != null)
             {
                 var sortedCategory = sortTypesDict[(string)sortBox.SelectedItem](currentCategory);
-                mainWindow.Content = new DishesMenu(mainWindow, sortedCategory,
-                    SortType.AscendingByPortionPrice, categoryColor);
+                mainWindow.Content = new DishesMenu(mainWindow, sortedCategory,categoryColor);
             }
         };
     }

@@ -17,14 +17,14 @@ class DishesMenu : Panel
         { "Перекусы", Colors.Lavender }
     };
 
-    public DishesMenu(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
+    public DishesMenu(MainWindow mainWindow, Category category, Color categoryColor)
     {
         categoryColor = CategoryColors[category.Name];
         Background = new SolidColorBrush(categoryColor);
         Children.Add(new ScrollViewer
-            { Content = new DishesList(mainWindow, category, sortType, categoryColor) });
-        Children.Add(new ReturnButton(mainWindow, sortType, categoryColor));
+            { Content = new DishesList(mainWindow, category, categoryColor) });
+        Children.Add(new ReturnButton(mainWindow, categoryColor));
         Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
-        Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, sortType, categoryColor));
+        Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, categoryColor));
     }
 }

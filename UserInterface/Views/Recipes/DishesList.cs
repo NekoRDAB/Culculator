@@ -8,12 +8,12 @@ namespace UserInterface.Views;
 
 class DishesList : StackPanel
 {
-    public DishesList(MainWindow mainWindow, Category category, SortType sortType, Color categoryColor)
+    public DishesList(MainWindow mainWindow, Category category, Color categoryColor)
     {
         Margin = new Thickness(20);
         Spacing = 10;
         HorizontalAlignment = HorizontalAlignment.Center;
         foreach (var dish in category.Dishes)
-            Children.Add(new DishBox(mainWindow, category, dish, sortType, categoryColor));
+            Children.Add(new DishBox(mainWindow, category, dish,  categoryColor));
     }
 }
