@@ -19,7 +19,7 @@ public class RepositoryTests
     public void GetIngredientFromDBWhenIngredientDoesntExist()
     {
         var parser = new Repository();
-        var ingredientName = "Абракадабра";
+        var ingredientName = "NotAnIngredient";
 
         Assert.Throws<KeyNotFoundException>(() => parser.GetIngredientFromDB(ingredientName));
     }

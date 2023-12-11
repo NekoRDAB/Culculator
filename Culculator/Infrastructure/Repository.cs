@@ -28,12 +28,10 @@ public class Repository : IRepository
     {
         var ingredient = _addedRecipesContext
             .AddedIngredientsDataBase
+            .FirstOrDefault(i => i.Name == ingredientName) ?? _recipesContext
+            .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
-        if (ingredient == null)
-            ingredient = _recipesContext
-                .IngredientsDataBase
-                .FirstOrDefault(i => i.Name == ingredientName);
-        else if(ingredient == null)
+        if(ingredient == null)
             throw new KeyNotFoundException($"Ингредиент с названием {ingredientName} не найден");
         return ingredient;
     }
