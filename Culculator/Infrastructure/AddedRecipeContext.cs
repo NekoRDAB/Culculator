@@ -21,6 +21,8 @@ public class AddedRecipeContext : DbContext, IAddedRecipeContext
         optionsBuilder.UseSqlite($"Data Source={_path}");
     }
     public DbSet<DishEntry> AddedRecipesDataBase { get; set; }
+    public DbSet<IngredientEntry> AddedIngredientsDataBase { get; set; }
+
     public void SaveChanges()
     {
         base.SaveChanges();

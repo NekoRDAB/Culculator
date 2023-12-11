@@ -30,6 +30,10 @@ public class Repository : IRepository
             .IngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
         if (ingredient == null)
+            ingredient = _addedRecipesContext
+                .AddedIngredientsDataBase
+                .FirstOrDefault(i => i.Name == ingredientName);
+        else if(ingredient == null)
             throw new KeyNotFoundException($"Ингредиент с названием {ingredientName} не найден");
         return ingredient;
     }
@@ -68,15 +72,24 @@ public class Repository : IRepository
 
     public List<IngredientEntry> GetIngredients()
     {
-        var recipes = _recipesContext
+        var ingredient = _recipesContext
             .IngredientsDataBase
             .ToList();
-        return recipes;
+        var addedIngredients = _addedRecipesContext
+            .AddedIngredientsDataBase
+            .ToList();
+        return ingredient.Concat(addedIngredients).ToList();
     }
 
     public void AddRecipeToPersonalDB(DishEntry dish)
     {
         _addedRecipesContext.AddedRecipesDataBase.Add(dish);
+        _addedRecipesContext.SaveChanges();
+    }
+
+    public void AddIngredientToPersonalDB(IngredientEntry ingredientEntry)
+    {
+        _addedRecipesContext.AddedIngredientsDataBase.Add(ingredientEntry);
         _addedRecipesContext.SaveChanges();
     }
 }

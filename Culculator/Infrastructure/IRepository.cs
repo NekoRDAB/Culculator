@@ -8,4 +8,6 @@ public interface IRepository
     public List<DishEntry> GetRecipesFromDbByCategory(string category);
 
     public List<DishEntry> GetAllRecipesFromDB();
+    public void AddRecipeToPersonalDB(DishEntry dish);
+    public void AddIngredientToPersonalDB(IngredientEntry ingredientEntry);
 }

@@ -4,6 +4,7 @@ using Ninject.Extensions.Conventions;
 using Ninject.Extensions.Factory;
 using Ninject.Parameters;
 using UserInterface.Views;
+using UserInterface.Views.IngredientAddition;
 
 namespace UserInterface;
 
@@ -43,5 +44,11 @@ public static class ContainerConfigurer
         return container.Get<SortButton>(new ConstructorArgument("mainWindow", mainWindow),
             new ConstructorArgument("currentCategory", category),
             new ConstructorArgument("categoryColor", categoryColor));
+    }
+
+    public static IngredientInput GetIngredientInput(MainWindow mainWindow)
+    {
+        var container = ConfigureKernel();
+        return container.Get<IngredientInput>(new ConstructorArgument("parent", mainWindow));
     }
 }
