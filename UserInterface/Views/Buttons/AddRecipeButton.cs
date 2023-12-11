@@ -111,6 +111,24 @@ public class AddRecipeButton : Panel
             {
                 ingredientsBox.Items.Add(ingredient);
             }
+            
+            searchTextBox.KeyUp +=  (sender, a) =>
+            {
+                ingredientsBox.IsDropDownOpen = true;
+                if(searchTextBox.Text != "")
+                {
+                    var searchText = searchTextBox.Text.ToLower();
+                    var filteredIngredients = allIngredients
+                        .Where(ingredient => ingredient.ToLower().Contains(searchText))
+                        .Where(ingredient => ingredient != "")
+                        .ToList();
+                    ingredientsBox.Items.Clear();
+                    foreach (var ingr in filteredIngredients)
+                    {
+                        ingredientsBox.Items.Add(ingr);
+                    }
+                }
+            };
 
             ingredientsBox.DropDownOpened += (sender, a) =>
             {
@@ -127,6 +145,7 @@ public class AddRecipeButton : Panel
                     var searchText = searchTextBox.Text.ToLower();
                     var filteredIngredients = allIngredients
                         .Where(ingredient => ingredient.ToLower().Contains(searchText))
+                        .Where(ingredient => ingredient != "")
                         .ToList();
                     ingredientsBox.Items.Clear();
                     foreach (var ingr in filteredIngredients)
@@ -142,8 +161,9 @@ public class AddRecipeButton : Panel
                 Orientation = Orientation.Vertical,
             };
 
-            stp.Children.Add(ingredientsBox);
             stp.Children.Add(searchTextBox);
+            stp.Children.Add(ingredientsBox);
+            
 
             selectedIngredientsPanel.Children.Add(stp);
 
