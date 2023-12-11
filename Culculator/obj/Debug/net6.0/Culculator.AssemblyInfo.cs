@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Culculator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c8680baa2aff9a56fbc12dae2a893ed8fea4ea6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Culculator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Culculator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

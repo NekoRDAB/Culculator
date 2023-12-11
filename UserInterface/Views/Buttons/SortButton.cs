@@ -29,8 +29,10 @@ public class SortButton : Panel
             FontSize = 15,
             PlaceholderText = "Сортировка",
             VerticalAlignment = VerticalAlignment.Top,
-            HorizontalAlignment = HorizontalAlignment.Left
+            HorizontalAlignment = HorizontalAlignment.Left,
+            
         };
+        
 
         var sortTypesDict = new Dictionary<string, Func<Category, Category>>();
         foreach (var sortMethod in sortMethods)
@@ -42,25 +44,11 @@ public class SortButton : Panel
         {
             sortBox.Items.Add(sort);
         }
-        
-        var applySortButton = new Button
-        {
-            Width = 135,
-            Height = 40,
-            Content = "Применить",
-            FontSize = 15,
-            Background = null,
-            Foreground = Brushes.DarkGray,
-            VerticalAlignment = VerticalAlignment.Top,
-            HorizontalAlignment = HorizontalAlignment.Left
-        };
 
         var panel = new StackPanel();
         panel.Children.Add(sortBox);
-        panel.Children.Add(applySortButton);
         Children.Add(panel);
-
-        applySortButton.Click += (sender, args) =>
+        sortBox.SelectionChanged += (sender, args) =>
         {
             if (sortBox.SelectedItem != null)
             {
