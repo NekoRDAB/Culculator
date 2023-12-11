@@ -18,13 +18,13 @@ public class AddRecipeButton : Panel
     {
         Children.Add(new Button
         {
-            Width = 100,
-            Height = 50,
+            Width = 70,
+            Height = 40,
             Content = new Image
             {
                 Source = new Bitmap("Images/AddButton.png"),
-                Width = 50,  
-                Height = 50,
+                Width = 30,  
+                Height = 30,
             },
             Background = Brushes.Transparent,
             VerticalContentAlignment = VerticalAlignment.Stretch,
@@ -261,13 +261,13 @@ public class AddRecipeButton : Panel
         {
             Children.Add(new Button
             {
-                Width = 100,
-                Height = 50,
+                Width = 70,
+                Height = 40,
                 Content = new Image
                 {
                     Source = new Bitmap("Images/ReturnButton.png"),
-                    Width = 50,
-                    Height = 50,
+                    Width = 30,
+                    Height = 30,
                 },
                 Background = Brushes.Transparent,
                 VerticalAlignment = VerticalAlignment.Bottom,
@@ -285,13 +285,13 @@ public class AddRecipeButton : Panel
         {
             Children.Add(new Button
             {
-                Width = 100,
-                Height = 50,
+                Width = 70,
+                Height = 40,
                 Content = new Image
                 {
                     Source = new Bitmap("Images/AddButton.png"),
-                    Width = 50,  
-                    Height = 50,
+                    Width = 30,  
+                    Height = 30,
                 },
                 Background = Brushes.Transparent,
                 VerticalAlignment = VerticalAlignment.Bottom,
