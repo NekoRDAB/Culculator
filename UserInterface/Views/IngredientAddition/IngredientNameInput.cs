@@ -1,67 +1,134 @@
-﻿using System.Linq;
+﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Layout;
 using ReactiveUI;
-using SkiaSharp;
 
-namespace UserInterface.Views.IngredientAddition;
-
-public class IngredientInput : Panel
+namespace UserInterface.Views.IngredientAddition
 {
-    private MainWindow _parent;
-    public IngredientInput(MainWindow parent, IRepository repository)
+    public class IngredientInput : Panel
     {
-        VerticalAlignment = VerticalAlignment.Center;
-        _parent = parent;
-        Height = 100;
-        Width = 500;
-        var name = new TextBox
+        private MainWindow _parent;
+
+        public IngredientInput(MainWindow parent, IRepository repository)
         {
-            Name = "IngredientName",
-            Watermark = "Введите название ингредиента",
-            Width = 200,
-            Height = 40,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top
-        };
-        Children.Add(name);
-        var price = new TextBox
-        {
-            Name = "Price",
-            Watermark = "Введите цену за единицу ингредиента",
-            Width = 100,
-            Height = 40,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Top
-        };
-        Children.Add(price);
-        var measurementUnit = new TextBox
-        {
-            Name = "MeasurementUnit",
-            Watermark = "Введите единицу измерения",
-            HorizontalAlignment = HorizontalAlignment.Right,
-            Width = 100,
-            Height = 40,
-            VerticalAlignment = VerticalAlignment.Top
-        };
-        Children.Add(measurementUnit);
-        Children.Add(new Button
-        {
-            VerticalAlignment = VerticalAlignment.Bottom,
-            Width = 200,
-            Height = 40,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Content = "Добавить",
-            Command = ReactiveCommand.Create(
-                () =>
+            VerticalAlignment = VerticalAlignment.Center;
+            _parent = parent;
+            Height = 100;
+            Width = 800;
+
+            var mainStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Vertical,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            
+            var horizontalStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+            
+            var name = new TextBox
+            {
+                Watermark = "Название",
+                Width = 300,
+                Height = 50,
+                FontSize = 20,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(5)
+            };
+            horizontalStackPanel.Children.Add(name);
+
+            var price = new TextBox
+            {
+                Watermark = "Цена",
+                Width = 200,
+                Height = 50,
+                FontSize = 20,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(5)
+            };
+
+            price.KeyDown += (sender, e) =>
+            {
+                e.Handled = !IsNumeric(e.Key);
+            };
+            horizontalStackPanel.Children.Add(price);
+
+            var measurementUnit = new ComboBox
+            {
+                Name = "MeasurementUnit",
+                Width = 100,
+                Height = 50,
+                FontSize = 20,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(5)
+            };
+            measurementUnit.Items.Add("Кг");
+            measurementUnit.Items.Add("Л");
+            measurementUnit.Items.Add("Шт");
+            measurementUnit.SelectedItem = "Шт";
+
+            horizontalStackPanel.Children.Add(measurementUnit);
+
+            mainStackPanel.Children.Add(horizontalStackPanel);
+
+            mainStackPanel.Children.Add(new Button
+            {
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Width = 200,
+                Height = 40,
+                Content = "Добавить",
+                Margin = new Thickness(10),
+                Command = ReactiveCommand.Create(() =>
                 {
                     repository.AddIngredientToPersonalDB(new IngredientEntry
                     {
                         Name = name.Text ?? " ",
-                        Price = int.Parse(price.Text ?? "0"),
-                        MeasurementUnit = measurementUnit.Text ?? "шт."
+                        Price = GetPrice(price.Text, measurementUnit.SelectedItem.ToString()),
+                        MeasurementUnit = GetMeasurementUnit(measurementUnit.SelectedItem.ToString())
                     });
                 })
-        });
+            });
+
+            Children.Add(mainStackPanel);
+        }
+
+        private double GetPrice(string price, string measurementUnit)
+        {
+            if (price == null)
+                return 0;
+            switch (measurementUnit)
+            {
+                case "Шт":
+                    return int.Parse(price);
+                case "Кг":
+                case "Л":
+                    return double.Parse(price) / 1000;
+                default:
+                    return 0;
+            }
+        }
+
+        private string GetMeasurementUnit(string measurementUnit)
+        {
+            return measurementUnit switch
+            {
+                "Кг" => "Гр.",
+                "Л" => "Мл.",
+                _ => "Шт."
+            };
+        }
+        
+        private bool IsNumeric(Key key)
+        {
+            return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
+        }
     }
 }

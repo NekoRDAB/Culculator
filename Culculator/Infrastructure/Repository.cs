@@ -26,12 +26,12 @@ public class Repository : IRepository
     }
     public IngredientEntry GetIngredientFromDB(string ingredientName)
     {
-        var ingredient = _recipesContext
-            .IngredientsDataBase
+        var ingredient = _addedRecipesContext
+            .AddedIngredientsDataBase
             .FirstOrDefault(i => i.Name == ingredientName);
         if (ingredient == null)
-            ingredient = _addedRecipesContext
-                .AddedIngredientsDataBase
+            ingredient = _recipesContext
+                .IngredientsDataBase
                 .FirstOrDefault(i => i.Name == ingredientName);
         else if(ingredient == null)
             throw new KeyNotFoundException($"Ингредиент с названием {ingredientName} не найден");
