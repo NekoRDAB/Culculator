@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Castle.Core.Internal;
-using Culculator.Application.Extentions;
+using Culculator.Application.Extensions;
 
 namespace UserInterface.Views;
 

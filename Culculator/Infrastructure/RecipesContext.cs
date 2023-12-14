@@ -8,9 +8,9 @@ namespace Culculator.Infrastructure
         private static string _path = Path.GetFullPath(
             Path.Combine("..", "..", "..", "..", @"Culculator\RecipesDataBase.db"));
 
-        public RecipesContextSQLite(string path)
+        public RecipesContextSQLite(RecipeContextPathProvider provider)
         {
-            _path = path;
+            _path = provider.PathToDefaultDB;
         }
 
         public RecipesContextSQLite()

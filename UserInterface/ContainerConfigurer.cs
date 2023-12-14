@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using System;
+using Avalonia.Media;
 using Ninject;
 using Ninject.Extensions.Conventions;
 using Ninject.Extensions.Factory;
@@ -10,19 +11,27 @@ namespace UserInterface;
 
 public static class ContainerConfigurer
 {
+    private static readonly string pathToRecipes;
+    private static readonly string pathToAddedRecipes;
+    static ContainerConfigurer()
+    {
+        var dir = Environment.CurrentDirectory;
+        pathToRecipes = dir.Replace("UserInterface", "Culculator\\RecipesDataBase.db")
+            .Replace("\\bin\\Release\\net6.0", "");
+        pathToAddedRecipes = dir.Replace("UserInterface", "Culculator\\AddedRecipesDataBase.db")
+            .Replace("\\bin\\Release\\net6.0", "");
+    }
     private static StandardKernel ConfigureKernel()
     {
+        
         var kernel = new StandardKernel();
         kernel.Bind<ICategories>().To<AutoCategories>();
         kernel.Bind<IRecipesContext>().To<RecipesContextSQLite>();
         kernel.Bind<IAddedRecipeContext>().To<AddedRecipeContext>();
         kernel.Bind<Application>().ToSelf();
         kernel.Bind<IRepository>().To<Repository>();
-        kernel.Bind<ICategoriesFactory>().ToFactory();
-        kernel.Bind<IRecipeContextFactory>().ToFactory();
-        kernel.Bind<IApplicationFactory>().ToFactory();
-        kernel.Bind<IRepositoryFactory>().ToFactory();
-        kernel.Bind<IAddedRecipeContextFactory>().ToFactory();
+        kernel.Bind<RecipeContextPathProvider>()
+            .ToConstant(new RecipeContextPathProvider(pathToRecipes, pathToAddedRecipes));
         kernel.Bind(x => x
             .FromAssemblyContaining<ISortMethod>()
             .SelectAllClasses()

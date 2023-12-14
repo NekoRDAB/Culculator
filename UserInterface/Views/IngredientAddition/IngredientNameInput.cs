@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using Culculator.Application.Extensions;
 using ReactiveUI;
 
 namespace UserInterface.Views.IngredientAddition

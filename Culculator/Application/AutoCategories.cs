@@ -6,10 +6,8 @@ public class AutoCategories : ICategories
 {
     public List<Category> All { get; }
     
-    public AutoCategories(string pathToRecipes, string pathToAddedRecipes, 
-        IRecipesContext recipesDB, IApplicationFactory applicationFactory)
+    public AutoCategories(IRecipesContext recipesDB, Application application)
     {
-        var application = applicationFactory.Create(pathToRecipes, pathToAddedRecipes);
         Category.SetPaths(application);
         All = recipesDB
             .RecipesDataBase

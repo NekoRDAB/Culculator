@@ -1,6 +1,6 @@
 ﻿using Culculator.Domain;
 
-namespace Culculator.Application.Extentions;
+namespace Culculator.Application.Extensions;
 
 public static class DishExtensions
 {

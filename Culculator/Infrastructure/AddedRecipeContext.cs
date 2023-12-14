@@ -7,9 +7,9 @@ public class AddedRecipeContext : DbContext, IAddedRecipeContext
     private static string _path = Path.GetFullPath(
         Path.Combine("..", "..", "..", "..", @"Culculator\AddedRecipesDataBase.db"));
 
-    public AddedRecipeContext(string path)
+    public AddedRecipeContext(RecipeContextPathProvider provider)
     {
-        _path = path;
+        _path = provider.PathToAddedDB;
     }
 
     public AddedRecipeContext()

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Castle.Core.Internal;
+﻿using Castle.Core.Internal;
 
-namespace UserInterface
+namespace Culculator.Application.Extensions
 {
     public static class KeyExtensions
     {
-        public static bool IsNumeric(this string key, string currentText, bool isDotAllow = false, bool isZeroFirstAllowed = false)
+        public static bool IsNumeric(this string key, string currentText,
+            bool isDotAllow = false, bool isZeroFirstAllowed = false)
         {
             if (isZeroFirstAllowed && key == "D0")
                 return true;

@@ -8,11 +8,6 @@ public class Application
     
     private IRepository _repository;
     
-    public Application(string pathToRecipes, string pathToAddedRecipes, IRepositoryFactory factory)
-    {
-        _repository = factory.Create(pathToRecipes, pathToAddedRecipes);
-    }
-
     public Application(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)
     {
         _repository = new Repository(recipesContext, addedRecipeContext);

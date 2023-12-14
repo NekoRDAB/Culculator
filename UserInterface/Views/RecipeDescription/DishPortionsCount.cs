@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Culculator.Application.Extensions;
 
 namespace UserInterface.Views;
 

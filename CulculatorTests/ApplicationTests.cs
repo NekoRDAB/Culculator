@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Culculator.Application.Extensions;
+using Moq;
 
 namespace CulculatorTests;
 

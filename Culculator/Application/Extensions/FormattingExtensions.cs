@@ -1,4 +1,4 @@
-﻿namespace Culculator.Application;
+﻿namespace Culculator.Application.Extensions;
 
 public static class FormattingExtensions
 {
