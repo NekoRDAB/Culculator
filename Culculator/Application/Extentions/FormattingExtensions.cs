@@ -1,6 +1,6 @@
 ﻿namespace Culculator.Application;
 
-public static class FormatingExtentions
+public static class FormattingExtensions
 {
     public static string FormatPortionsNumber(this int number)
     {

@@ -11,7 +11,7 @@ public class DishPortionsCount : TextBlock
         Margin = new Thickness(7, 3);
         FontSize = 29;
         Foreground = Brushes.Gray;
-        Text = $"{count} {DisplayPortionsNumber(count)}";
+        Text = $"{count} {count.FormatPortionsNumber()}";
     }
 
     private string DisplayPortionsNumber(int count)

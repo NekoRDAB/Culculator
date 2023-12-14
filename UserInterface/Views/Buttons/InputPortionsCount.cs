@@ -4,6 +4,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Castle.Core.Internal;
+using Culculator.Application.Extentions;
 
 namespace UserInterface.Views;
 
@@ -29,23 +31,21 @@ class InputPortionsCount : Border
 
         textBox.KeyUp += (sender, args) =>
         {
-            RecalculateTotalPrice();
+            if (!textBox.Text.IsNullOrEmpty())
+            {
+                _dish.RecalculateTotalPrice(int.Parse(textBox.Text));
+                _priceTextBlock.Text = $"{Math.Round(_dish.Price, 2)} руб.";
+            }
+        };
+        
+        textBox.KeyDown += (sender, args) =>
+        {
+            var inputText = args.Key.ToString();
+            var isNumeric = inputText.IsNumeric(textBox.Text);
+            args.Handled = !isNumeric;
         };
 
-        textBox.KeyDown += (sender, args) => { args.Handled = !IsNumeric(args.Key); };
         Child = textBox;
-    }
-
-    private bool IsNumeric(Key key)
-    {
-        if (key == Key.D0 || key == Key.NumPad0)
-        {
-            var textBox = (TextBox)Child;
-            if (textBox.Text.Length == 0 || textBox.CaretIndex == 0)
-                return false;
-        }
-
-        return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
     }
 
     private void RecalculateTotalPrice()

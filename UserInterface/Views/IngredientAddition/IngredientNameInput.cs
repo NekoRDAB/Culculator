@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
@@ -54,10 +55,13 @@ namespace UserInterface.Views.IngredientAddition
                 Margin = new Thickness(5)
             };
 
-            price.KeyDown += (sender, e) =>
+            price.KeyDown += (sender, args) =>
             {
-                e.Handled = !IsNumeric(e.Key);
+                var inputText = args.Key.ToString();
+                var isNumeric = inputText.IsNumeric(price.Text, true, true);
+                args.Handled = !isNumeric;
             };
+
             horizontalStackPanel.Children.Add(price);
 
             var measurementUnit = new ComboBox
@@ -124,11 +128,6 @@ namespace UserInterface.Views.IngredientAddition
                 "Л" => "Мл.",
                 _ => "Шт."
             };
-        }
-        
-        private bool IsNumeric(Key key)
-        {
-            return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
         }
     }
 }

@@ -34,15 +34,16 @@ public class AddRecipeButton : Panel
             {
                 var recipeParameters = new AddRecipeParameters();
                 var addReturnButton = new AddAndReturnButton(mainWindow, category, categoryColor, recipeParameters.recipeNameTextBox, recipeParameters.selectedIngredients, recipeParameters.recipeInfoTextBox, recipeParameters.portionsCountTextBox);
-                var returnButton = new ReturnButton(mainWindow, category, categoryColor);
-                mainWindow.Content = new AddRecipeWindow(recipeParameters, addReturnButton,returnButton);
+                var returnToDishesMenuButton = new BaseTargetButton(
+                    () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); }, "Images/ReturnButton.png");
+                mainWindow.Content = new AddRecipeWindow(recipeParameters, addReturnButton,returnToDishesMenuButton);
             })
         });
     }
 
     class AddRecipeWindow : Panel
     {
-        public AddRecipeWindow(AddRecipeParameters recipeParameters, AddAndReturnButton addReturnButton, ReturnButton returnButton)
+        public AddRecipeWindow(AddRecipeParameters recipeParameters, AddAndReturnButton addReturnButton, BaseTargetButton returnButton)
         {
             Children.Add(recipeParameters);
             Children.Add(addReturnButton);
@@ -73,16 +74,15 @@ public class AddRecipeButton : Panel
 
             portionsCountTextBox = new TextBox
             {
+                MaxLength = 3,
                 Width = 200,
                 Watermark = "Введите количество порций"
             };
-            portionsCountTextBox.TextChanged += (sender, args) =>
+            portionsCountTextBox.KeyDown += (sender, args) =>
             {
-                var textBox = (TextBox)sender;
-                if (!IsNumeric(textBox.Text))
-                {
-                    textBox.Text = "0";
-                }
+                var inputText = args.Key.ToString();
+                var isNumeric = inputText.IsNumeric(portionsCountTextBox.Text);
+                args.Handled = !isNumeric;
             };
             stackPanel.Children.Add(portionsCountTextBox);
             
@@ -207,18 +207,17 @@ public class AddRecipeButton : Panel
 
                         var quantityTextBox = new TextBox
                         {
+                            MaxLength = 3,
                             Width = 100,
                             Height = 20,
-                            Text = "Количество",
+                            Watermark = "Количество",
                             Margin = new Thickness(3,3)
                         };
-                        quantityTextBox.TextChanged += (sender, args) =>
+                        quantityTextBox.KeyDown += (sender, args) =>
                         {
-                            var textBox = (TextBox)sender;
-                            if (!IsNumeric(textBox.Text))
-                            {
-                                textBox.Text = "0";
-                            }
+                            var inputText = args.Key.ToString();
+                            var isNumeric = inputText.IsNumeric(quantityTextBox.Text);
+                            args.Handled = !isNumeric;
                         };
 
                         ingredientPanel.Children.Add(quantityTextBox);
@@ -247,35 +246,6 @@ public class AddRecipeButton : Panel
                 HorizontalAlignment = HorizontalAlignment.Right
             };
             stackPanel.Children.Add(recipeInfoTextBox);
-        }
-        
-        private bool IsNumeric(string text)
-        {
-            return double.TryParse(text, out _);
-        }
-    }
-
-    class ReturnButton : Panel
-    {
-        public ReturnButton(MainWindow mainWindow, Category category, Color categoryColor)
-        {
-            Children.Add(new Button
-            {
-                Width = 70,
-                Height = 40,
-                Content = new Image
-                {
-                    Source = new Bitmap("Images/ReturnButton.png"),
-                    Width = 30,
-                    Height = 30,
-                },
-                Background = Brushes.Transparent,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                Command = ReactiveCommand.Create(
-                    () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); }
-                )
-            });
         }
     }
 

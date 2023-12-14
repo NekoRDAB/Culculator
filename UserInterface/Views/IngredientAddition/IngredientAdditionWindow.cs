@@ -2,6 +2,7 @@
 using Avalonia.Layout;
 using Avalonia.Media;
 using DynamicData;
+using ReactiveUI;
 
 namespace UserInterface.Views.IngredientAddition;
 
@@ -16,6 +17,8 @@ public class IngredientAdditionWindow : Panel
             VerticalAlignment = VerticalAlignment.Top
         });
         Children.Add(ContainerConfigurer.GetIngredientInput(parent));
-        Children.Add(new ReturnButton(parent, categoryColor));
+        var returnToMainMenuButton = new BaseTargetButton(
+            () => { parent.Content = new MainMenu(parent, categoryColor); }, "Images/ReturnButton.png");
+        Children.Add(returnToMainMenuButton);
     }
 }

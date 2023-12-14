@@ -23,7 +23,9 @@ class DishesMenu : Panel
         Background = new SolidColorBrush(categoryColor);
         Children.Add(new ScrollViewer
             { Content = new DishesList(mainWindow, category, categoryColor) });
-        Children.Add(new ReturnButton(mainWindow, categoryColor));
+        var returnToMainMenuButton = new BaseTargetButton(
+            () => { mainWindow.Content = new MainMenu(mainWindow, categoryColor); }, "Images/ReturnButton.png");
+        Children.Add(returnToMainMenuButton);
         Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
         Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, categoryColor));
     }
