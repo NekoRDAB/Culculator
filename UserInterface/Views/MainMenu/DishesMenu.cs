@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace UserInterface.Views;
@@ -21,12 +22,22 @@ class DishesMenu : Panel
     {
         categoryColor = CategoryColors[category.Name];
         Background = new SolidColorBrush(categoryColor);
+        
         Children.Add(new ScrollViewer
             { Content = new DishesList(mainWindow, category, categoryColor) });
+        
         var returnToMainMenuButton = new BaseTargetButton(
-            () => { mainWindow.Content = new MainMenu(mainWindow, categoryColor); }, "Images/ReturnButton.png");
+            () => 
+            { mainWindow.Content = new MainMenu(mainWindow, categoryColor); }, 
+            "Images/ReturnButton.png", HorizontalAlignment.Left);
         Children.Add(returnToMainMenuButton);
-        Children.Add(new AddRecipeButton(mainWindow, category, categoryColor));
+        
+        var goToAddRecipeWindowButton = new BaseTargetButton(
+            () =>
+        { mainWindow.Content = new AddRecipeLogic(mainWindow, category, categoryColor); },
+            "Images/AddButton.png", HorizontalAlignment.Right);
+        Children.Add(goToAddRecipeWindowButton);
+        
         Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, categoryColor));
     }
 }

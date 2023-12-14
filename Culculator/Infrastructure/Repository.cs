@@ -79,6 +79,12 @@ public class Repository : IRepository
         return ingredient.Concat(addedIngredients).ToList();
     }
 
+    public List<string> GetIngredientsNames()
+    {
+        var allIngredients = GetIngredients();
+        return allIngredients.Select(ingredient => ingredient.Name).ToList();
+    }
+
     public void AddRecipeToPersonalDB(DishEntry dish)
     {
         _addedRecipesContext.AddedRecipesDataBase.Add(dish);

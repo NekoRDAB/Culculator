@@ -9,7 +9,7 @@ namespace UserInterface.Views
 {
     public class BaseTargetButton : Panel
     {
-        public BaseTargetButton(Action commandHandler, string pathToImage)
+        public BaseTargetButton(Action commandHandler, string pathToImage, HorizontalAlignment horizontalAlignment)
         {
             Children.Add(new Button
             {
@@ -24,7 +24,7 @@ namespace UserInterface.Views
                 Background = Brushes.Transparent,
                 Foreground = Brushes.DarkGray,
                 VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = horizontalAlignment,
                 Command = ReactiveCommand.Create(commandHandler)
             });
         }

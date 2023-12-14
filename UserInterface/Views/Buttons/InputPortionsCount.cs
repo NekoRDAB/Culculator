@@ -1,7 +1,6 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Castle.Core.Internal;
@@ -46,18 +45,5 @@ class InputPortionsCount : Border
         };
 
         Child = textBox;
-    }
-
-    private void RecalculateTotalPrice()
-    {
-        if (double.TryParse(((TextBox)Child).Text, out double newPortionCount))
-        {
-            var coef = newPortionCount / _dish.NumberOfPortions;
-            _dish.Price = _dish.PricePerPortion * newPortionCount;
-            _dish.NumberOfPortions = (int)newPortionCount;
-            _priceTextBlock.Text = $"{Math.Round(_dish.Price, 2)} руб.";
-            foreach (var ingredient in _dish.Ingredients)
-                ingredient.Amount *= coef;
-        }
     }
 }

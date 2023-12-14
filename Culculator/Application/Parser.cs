@@ -1,4 +1,6 @@
-﻿using Culculator.Domain;
+﻿using System.Runtime.InteropServices;
+using System.Text;
+using Culculator.Domain;
 using Culculator.Infrastructure;
 
 namespace Culculator.Application;
@@ -28,5 +30,26 @@ public static class Parser
             .Where(p => p != "" && p != " ")
             .Select(p => ParseIngredient(idCounter++, p, repository))
             .ToList();
+    }
+
+    public static List<Ingredient> ConvertIngredientsEntryToIngredients(Dictionary<IngredientEntry, int> ingredientsDict)
+    {
+        return ingredientsDict
+            .Select(kvp 
+                => new Ingredient(kvp.Key.id, kvp.Key.Name, kvp.Value, kvp.Key.MeasurementUnit, kvp.Key.Price))
+            .ToList();
+    }
+
+    public static string ConvertIngredientsToString(List<Ingredient> ingredients)
+    {
+        var str = new StringBuilder();
+        foreach (var ingredient in ingredients)
+        {
+            str.Append($"{ingredient.Name} {ingredient.Amount}");
+            if (!ingredient.Equals(ingredients.Last()))
+                str.Append("; ");
+        }
+
+        return str.ToString();
     }
 }

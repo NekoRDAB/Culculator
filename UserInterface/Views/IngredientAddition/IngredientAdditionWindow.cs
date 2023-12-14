@@ -18,7 +18,7 @@ public class IngredientAdditionWindow : Panel
         });
         Children.Add(ContainerConfigurer.GetIngredientInput(parent));
         var returnToMainMenuButton = new BaseTargetButton(
-            () => { parent.Content = new MainMenu(parent, categoryColor); }, "Images/ReturnButton.png");
+            () => { parent.Content = new MainMenu(parent, categoryColor); }, "Images/ReturnButton.png", HorizontalAlignment.Left);
         Children.Add(returnToMainMenuButton);
     }
 }
