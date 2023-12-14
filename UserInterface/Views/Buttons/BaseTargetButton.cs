@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
 using ReactiveUI;
 using System;
 
@@ -9,24 +8,32 @@ namespace UserInterface.Views
 {
     public class BaseTargetButton : Panel
     {
-        public BaseTargetButton(Action commandHandler, string pathToImage, HorizontalAlignment horizontalAlignment)
+        public BaseTargetButton(int? width, int? height, ContentControl? content, IBrush? background, IBrush? foreground, double? fontsize,
+            VerticalAlignment verticalAlignment, HorizontalAlignment horizontalAlignment, Action? commandHandler)
         {
-            Children.Add(new Button
+            var button = new Button
             {
-                Width = 70,
-                Height = 40,
-                Content = new Image
-                {
-                    Source = new Bitmap(pathToImage),
-                    Width = 30,
-                    Height = 30,
-                },
-                Background = Brushes.Transparent,
-                Foreground = Brushes.DarkGray,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = horizontalAlignment,
-                Command = ReactiveCommand.Create(commandHandler)
-            });
+                VerticalAlignment = verticalAlignment,
+                HorizontalAlignment = horizontalAlignment
+            };
+            if (width != null && height != null)
+            {
+                button.Width = (int)width;
+                button.Height = (int)height;
+            }
+            if (commandHandler != null)
+                button.Command = ReactiveCommand.Create(commandHandler);
+            if (content != null)
+                button.Content = content;
+            if (background != null && foreground != null)
+            {
+                button.Background = background;
+                button.Foreground = foreground;
+            }
+
+            if (fontsize != null)
+                button.FontSize = (double)fontsize;
+            Children.Add(button);
         }
     }
 }

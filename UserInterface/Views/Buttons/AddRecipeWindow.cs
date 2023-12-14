@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 
 namespace UserInterface.Views;
 
@@ -14,12 +15,32 @@ class AddRecipeLogic : Panel
         var recipeParameters = new AddRecipeParameters();
         Children.Add(recipeParameters);
 
-        var returnToDishesMenuButton = new BaseTargetButton(
-            () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); },
-            "Images/ReturnButton.png", HorizontalAlignment.Left);
+        var returnImageContent = new ContentControl()
+        {
+            Content = new Image
+            {
+                Source = new Bitmap("Images/ReturnButton.png"),
+                Width = 30,
+                Height = 30,
+            }
+        };
+        
+        var addImageContent = new ContentControl()
+        {
+            Content = new Image
+            {
+                Source = new Bitmap("Images/AddButton.png"),
+                Width = 30,
+                Height = 30,
+            }
+        };
+        
+        var returnToDishesMenuButton = new BaseTargetButton(90, 50, returnImageContent,  Brushes.Transparent, Brushes.Gray, null, VerticalAlignment.Bottom, HorizontalAlignment.Left,
+            () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); });
         Children.Add(returnToDishesMenuButton);
 
-        var addRecipeButton = new BaseTargetButton(() =>
+        var addRecipeButton = new BaseTargetButton(90, 50, addImageContent, Brushes.Transparent, Brushes.Gray, null, VerticalAlignment.Bottom, HorizontalAlignment.Right,
+            () =>
         {
             var repository = new Repository();
             
@@ -45,7 +66,7 @@ class AddRecipeLogic : Panel
             repository.AddRecipeToPersonalDB(newDishEntry);
             category.Dishes.Add(dish);
             mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor);
-        }, "Images/AddButton.png", HorizontalAlignment.Right);
+        });
         Children.Add(addRecipeButton);
     }
 }

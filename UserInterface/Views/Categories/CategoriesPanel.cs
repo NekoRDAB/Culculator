@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace UserInterface.Views;
@@ -7,7 +8,7 @@ namespace UserInterface.Views;
 public class CategoriesPanel : StackPanel
 {
     static ICategoriesFactory _categories;
-    
+
     public CategoriesPanel(MainWindow mainWindow, ICategoriesFactory categories, Color categoryColor)
     {
         _categories = categories;
@@ -21,6 +22,13 @@ public class CategoriesPanel : StackPanel
         var pathToAddedRecipes = dir.Replace("UserInterface", "Culculator\\AddedRecipesDataBase.db")
             .Replace("\\bin\\Release\\net6.0", "");
         foreach (var category in _categories.Create(pathToRecipes, pathToIngredients, pathToAddedRecipes).All)
-            Children.Add(new CategoryButton(mainWindow, category, categoryColor));
+        {
+            var categoryContent = new ContentControl() { Content = category.Name };
+            var categoryButton = new BaseTargetButton(330, 75, categoryContent, null, null, 25,
+                VerticalAlignment.Center, HorizontalAlignment.Center,
+                () => { mainWindow.Content = new DishesMenu(mainWindow, category, categoryColor); });
+            categoryButton.Children.Add(new BlackBorder(330, 75, 1));
+            Children.Add(categoryButton);
+        }
     }
 }
