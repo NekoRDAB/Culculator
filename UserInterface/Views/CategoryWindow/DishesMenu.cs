@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -25,7 +26,7 @@ class DishesMenu : Panel
         Background = new SolidColorBrush(categoryColor);
         
         Children.Add(new ScrollViewer
-            { Content = new DishesList(mainWindow, category, categoryColor) });
+            { Content = FormDishesMenu(mainWindow, category, categoryColor) });
         
         var returnImageContent = new ContentControl()
         {
@@ -58,5 +59,18 @@ class DishesMenu : Panel
         Children.Add(goToAddRecipeWindowButton);
         
         Children.Add(ContainerConfigurer.GetSortButton(mainWindow, category, categoryColor));
+    }
+
+    private StackPanel FormDishesMenu(MainWindow mainWindow, Category category, Color categoryColor)
+    {
+        var dishesStackPanel = new StackPanel()
+        {
+            Margin = new Thickness(20),
+            Spacing = 10,
+            HorizontalAlignment = HorizontalAlignment.Center
+        };
+        foreach (var dish in category.Dishes)
+            dishesStackPanel.Children.Add(new DishBox(mainWindow, category, dish,  categoryColor));
+        return dishesStackPanel;
     }
 }

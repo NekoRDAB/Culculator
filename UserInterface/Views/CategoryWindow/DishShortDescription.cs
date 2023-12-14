@@ -1,4 +1,5 @@
 ﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -12,14 +13,13 @@ class DishShortDescription : Panel
     private readonly Dish _dish;
     public DishShortDescription(Dish dish)
     {
-        _dish = dish;
-        var priceTextBlock = new DishPrice(dish.Price);
-        Children.Add(priceTextBlock);
+        var dishPriceTextBlock = FormDishPrice(dish);
+        Children.Add(dishPriceTextBlock);
 
-        var inputPortionsCountButton = new BaseTargetButton(null, null, CreateTextBox(dish, priceTextBlock), Brushes.Transparent, Brushes.Transparent,
+        var inputPortionsCountButton = new BaseTargetButton(null, null, CreateTextBox(dish, dishPriceTextBlock), Brushes.Transparent, Brushes.Transparent,
             null, VerticalAlignment.Center, HorizontalAlignment.Right, null);
         Children.Add(inputPortionsCountButton);
-        Children.Add(new DishPricePerPortion(dish.PricePerPortion));
+        Children.Add(FormDishPricePerPortion(dish));
     }
     
     private static ContentControl CreateTextBox(Dish dish, TextBlock priceTextBlock)
@@ -49,5 +49,30 @@ class DishShortDescription : Panel
 
         var contentControl = new ContentControl { Content = textBox };
         return contentControl;
+    }
+
+    private TextBlock FormDishPrice(Dish dish)
+    {
+        var dishPriceTextBlock = new TextBlock()
+        {
+            Margin = new Thickness(10),
+            HorizontalAlignment = HorizontalAlignment.Right,
+            Text = $"{Math.Round(dish.Price, 2)} руб.",
+            FontSize = 22,
+        };
+        return dishPriceTextBlock;
+    }
+
+    private TextBlock FormDishPricePerPortion(Dish dish)
+    {
+        var dishPricePerPortionTextBlock = new TextBlock()
+        {
+            Margin = new Thickness(10),
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Bottom,
+            Text = $"{Math.Round(dish.PricePerPortion, 2)} руб. за порцию",
+            FontSize = 22
+        };
+        return dishPricePerPortionTextBlock;
     }
 }
