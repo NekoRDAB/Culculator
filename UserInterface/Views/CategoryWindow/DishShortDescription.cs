@@ -44,6 +44,9 @@ class DishShortDescription : Panel
         {
             var inputText = args.Key.ToString();
             var isNumeric = inputText.IsNumeric(textBox.Text);
+            var caretIndex = textBox.CaretIndex;
+            if (inputText == "D0" && caretIndex == 0)
+                isNumeric = false;
             args.Handled = !isNumeric;
         };
 

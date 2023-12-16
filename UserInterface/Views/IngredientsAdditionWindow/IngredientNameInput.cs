@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using Castle.Core.Internal;
 using Culculator.Application.Extensions;
 using ReactiveUI;
 
@@ -59,6 +60,12 @@ namespace UserInterface.Views.IngredientAddition
             {
                 var inputText = args.Key.ToString();
                 var isNumeric = inputText.IsNumeric(price.Text, true, true);
+                var caretIndex = price.CaretIndex;
+                if (!price.Text.IsNullOrEmpty() && price.Text.Contains("0") && !price.Text.Contains(".") &&
+                    inputText == "D0")
+                    isNumeric = false;
+                if (!price.Text.IsNullOrEmpty() && price.Text.Contains("0.") && caretIndex <= 1)
+                    isNumeric = false;
                 args.Handled = !isNumeric;
             };
 

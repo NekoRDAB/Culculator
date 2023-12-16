@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Castle.Core.Internal;
 using Culculator.Application.Extensions;
 
 namespace UserInterface.Views;
@@ -87,7 +89,8 @@ class AddRecipeParameters : Panel
         recipeNameTextBox = new TextBox
         {
             Width = 200,
-            Watermark = "Введите название рецепта"
+            Watermark = "Введите название рецепта",
+            Margin = new Thickness(5)
         };
         stackPanel.Children.Add(recipeNameTextBox);
 
@@ -95,12 +98,16 @@ class AddRecipeParameters : Panel
         {
             MaxLength = 3,
             Width = 200,
-            Watermark = "Введите количество порций"
+            Watermark = "Введите количество порций",
+            Margin = new Thickness(5)
         };
         portionsCountTextBox.KeyDown += (sender, args) =>
         {
             var inputText = args.Key.ToString();
             var isNumeric = inputText.IsNumeric(portionsCountTextBox.Text);
+            var caretIndex = portionsCountTextBox.CaretIndex;
+            if (inputText == "D0" && caretIndex == 0)
+                isNumeric = false;
             args.Handled = !isNumeric;
         };
         stackPanel.Children.Add(portionsCountTextBox);
@@ -115,12 +122,19 @@ class AddRecipeParameters : Panel
 
         var ingredientsBox = new ComboBox()
         {
-            Width = 200,
+            Width = 220,
             PlaceholderText = "Выберите ингредиент",
             VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            Margin = new Thickness(5)
         };
 
-        var searchTextBox = new TextBox();
+        var searchTextBox = new TextBox()
+        {
+            Margin = new Thickness(5),
+            Width = 220,
+            HorizontalAlignment = HorizontalAlignment.Left
+        };
 
         var repository = new Repository();
         var allIngredients = repository.GetIngredientsNames();
@@ -133,7 +147,7 @@ class AddRecipeParameters : Panel
         searchTextBox.KeyUp += (sender, a) =>
         {
             ingredientsBox.IsDropDownOpen = true;
-            if (searchTextBox.Text != "")
+            if (!searchTextBox.Text.IsNullOrEmpty())
             {
                 var searchText = searchTextBox.Text.ToLower();
                 var filteredIngredients = allIngredients
@@ -195,6 +209,8 @@ class AddRecipeParameters : Panel
             Background = null,
             Foreground = Brushes.DarkGray,
             VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            Margin = new Thickness(10)
         };
 
         addButton.Click += (sender, args) =>
@@ -202,7 +218,11 @@ class AddRecipeParameters : Panel
             if (ingredientsBox.SelectedItem is string selectedIngredientName)
             {
                 var selectedIngredient = repository.GetIngredientFromDB(selectedIngredientName);
-
+                var name = selectedIngredient.Name;
+                var words = name.Split("_");
+                if (words.Length > 1)
+                    name = words.Aggregate("", (current, t) => current + (t + "\n"));
+                
                 if (selectedIngredient != null)
                 {
                     var ingredientPanel = new StackPanel { Orientation = Orientation.Horizontal };
@@ -215,25 +235,31 @@ class AddRecipeParameters : Panel
 
                     var textBlock = new TextBlock
                     {
-                        Text = selectedIngredient.Name,
+                        Text = name,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Margin = new Thickness(3, 3)
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(3, 3),
                     };
 
                     ingredientPanel.Children.Add(textBlock);
 
                     var quantityTextBox = new TextBox
                     {
-                        MaxLength = 3,
+                        MaxLength = 6,
                         Width = 100,
-                        Height = 20,
+                        Height = 20 * words.Length,
                         Watermark = "Количество",
-                        Margin = new Thickness(3, 3)
+                        Margin = new Thickness(3, 3),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
                     };
                     quantityTextBox.KeyDown += (sender, args) =>
                     {
                         var inputText = args.Key.ToString();
                         var isNumeric = inputText.IsNumeric(quantityTextBox.Text);
+                        var caretIndex = quantityTextBox.CaretIndex;
+                        if (inputText == "D0" && caretIndex == 0)
+                            isNumeric = false;
                         args.Handled = !isNumeric;
                     };
 
@@ -258,9 +284,8 @@ class AddRecipeParameters : Panel
         {
             Width = 600,
             Height = 400,
-            Margin = new Thickness(0, 30, 50, 30),
+            Margin = new Thickness(220,20,50,10),
             Watermark = "Введите описание рецепта",
-            HorizontalAlignment = HorizontalAlignment.Right
         };
         stackPanel.Children.Add(recipeInfoTextBox);
     }
