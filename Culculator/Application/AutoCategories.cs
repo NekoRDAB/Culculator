@@ -6,9 +6,9 @@ public class AutoCategories : ICategories
 {
     public List<Category> All { get; }
     
-    public AutoCategories(IRecipesContext recipesDB, Application application)
+    public AutoCategories(IRecipesContext recipesDB, DishesCollector dishesCollector)
     {
-        Category.SetPaths(application);
+        Category.SetPaths(dishesCollector);
         All = recipesDB
             .RecipesDataBase
             .Select(d => d.Category)

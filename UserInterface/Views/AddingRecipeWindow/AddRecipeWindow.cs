@@ -83,6 +83,19 @@ class AddRecipeParameters : Panel
 
     public AddRecipeParameters()
     {
+        void AddSearchedIngredients(TextBox textBox, ComboBox comboBox, List<string> list)
+        {
+            var searchText = textBox.Text.ToLower();
+            comboBox.Items.Clear();
+            var filteredIngredients = list
+                .Where(ingredient => ingredient.ToLower().Contains(searchText)
+                                     && !ingredient.IsNullOrEmpty());
+            foreach (var ingr in filteredIngredients)
+            {
+                comboBox.Items.Add(ingr);
+            }
+        }
+
         var stackPanel = new StackPanel { VerticalAlignment = VerticalAlignment.Top };
         Children.Add(stackPanel);
 
@@ -149,16 +162,7 @@ class AddRecipeParameters : Panel
             ingredientsBox.IsDropDownOpen = true;
             if (!searchTextBox.Text.IsNullOrEmpty())
             {
-                var searchText = searchTextBox.Text.ToLower();
-                var filteredIngredients = allIngredients
-                    .Where(ingredient => ingredient.ToLower().Contains(searchText))
-                    .Where(ingredient => ingredient != "")
-                    .ToList();
-                ingredientsBox.Items.Clear();
-                foreach (var ingr in filteredIngredients)
-                {
-                    ingredientsBox.Items.Add(ingr);
-                }
+                AddSearchedIngredients(searchTextBox, ingredientsBox, allIngredients);
             }
         };
 
@@ -174,16 +178,7 @@ class AddRecipeParameters : Panel
             }
             else
             {
-                var searchText = searchTextBox.Text.ToLower();
-                var filteredIngredients = allIngredients
-                    .Where(ingredient => ingredient.ToLower().Contains(searchText))
-                    .Where(ingredient => ingredient != "")
-                    .ToList();
-                ingredientsBox.Items.Clear();
-                foreach (var ingr in filteredIngredients)
-                {
-                    ingredientsBox.Items.Add(ingr);
-                }
+                AddSearchedIngredients(searchTextBox, ingredientsBox, allIngredients);
             }
         };
 

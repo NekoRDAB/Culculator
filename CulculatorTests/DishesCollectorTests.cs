@@ -4,17 +4,17 @@ using Moq;
 namespace CulculatorTests;
 
 [TestFixture]
-public class ApplicationTests
+public class DishesCollectorTests
 {
     [SetUp]
     public void Setup()
     {
         _parserMock = new Mock<IRepository>();
 
-        _application = new Application(_parserMock.Object);
+        _dishesCollector = new DishesCollector(_parserMock.Object);
     }
 
-    private Application _application;
+    private DishesCollector _dishesCollector;
     private Mock<IRepository> _parserMock;
 
     // [Test]
@@ -43,7 +43,7 @@ public class ApplicationTests
         };
         _parserMock.Setup(p => p.GetRecipesFromDbByCategory(category)).Returns(recipes);
 
-        var result = _application.GetDishesByCategory(category);
+        var result = _dishesCollector.GetDishesByCategory(category);
 
         Assert.AreEqual(2, result.Count);
         Assert.IsTrue(result.All(d => d.Category == category));
@@ -55,7 +55,7 @@ public class ApplicationTests
         var category = "Dessert";
         _parserMock.Setup(p => p.GetRecipesFromDbByCategory(category)).Returns(new List<DishEntry>());
 
-        var result = _application.GetDishesByCategory(category);
+        var result = _dishesCollector.GetDishesByCategory(category);
 
         Assert.IsEmpty(result);
     }

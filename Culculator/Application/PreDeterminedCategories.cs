@@ -8,9 +8,9 @@ public class PreDeterminedCategories : ICategories
 {
     public List<Category> All { get; }
     public PreDeterminedCategories(string pathToRecipes, string pathToIngredients, 
-        IRecipesContext recipesDB, Application application)
+        IRecipesContext recipesDB, DishesCollector dishesCollector)
     {
-        Category.SetPaths(application);
+        Category.SetPaths(dishesCollector);
         All = new List<Category>
         {
             new("Завтраки"),

@@ -16,4 +16,30 @@ public static class FormattingExtensions
         }
         return $"{number} {suffix}";
     }
+    
+    public static string ReformatMeasurementUnit(this string measurementUnit)
+    {
+        return measurementUnit switch
+        {
+            "Кг" => "Гр.",
+            "Л" => "Мл.",
+            _ => "Шт."
+        };
+    }
+    
+    public static double GetPriceByMeasurementUnit(this string price, string measurementUnit)
+    {
+        if (price == null)
+            return 0;
+        switch (measurementUnit)
+        {
+            case "Шт":
+                return int.Parse(price);
+            case "Кг":
+            case "Л":
+                return double.Parse(price) / 1000;
+            default:
+                return 0;
+        }
+    }
 }

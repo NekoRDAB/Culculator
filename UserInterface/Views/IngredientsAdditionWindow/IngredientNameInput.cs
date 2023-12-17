@@ -30,7 +30,7 @@ namespace UserInterface.Views.IngredientAddition
             {
                 Orientation = Orientation.Horizontal
             };
-            
+            var completionTextBlock = new TextBlock();
             var name = new TextBox
             {
                 Watermark = "Название",
@@ -99,42 +99,22 @@ namespace UserInterface.Views.IngredientAddition
                 Margin = new Thickness(10),
                 Command = ReactiveCommand.Create(() =>
                 {
+                    var measurement = measurementUnit.SelectedItem.ToString();
                     repository.AddIngredientToPersonalDB(new IngredientEntry
                     {
                         Name = name.Text ?? " ",
-                        Price = GetPrice(price.Text, measurementUnit.SelectedItem.ToString()),
-                        MeasurementUnit = GetMeasurementUnit(measurementUnit.SelectedItem.ToString())
+                        Price = price.Text.GetPriceByMeasurementUnit(measurement),
+                        MeasurementUnit = measurement.ReformatMeasurementUnit()
                     });
+                    completionTextBlock.Text = $"Индгредиент \"{name.Text}\" добавлен";
+                    name.Text = "";
+                    price.Text = "";
+                    measurementUnit.SelectedItem = "";
                 })
             });
+            mainStackPanel.Children.Add(completionTextBlock);
 
             Children.Add(mainStackPanel);
-        }
-
-        private double GetPrice(string price, string measurementUnit)
-        {
-            if (price == null)
-                return 0;
-            switch (measurementUnit)
-            {
-                case "Шт":
-                    return int.Parse(price);
-                case "Кг":
-                case "Л":
-                    return double.Parse(price) / 1000;
-                default:
-                    return 0;
-            }
-        }
-
-        private string GetMeasurementUnit(string measurementUnit)
-        {
-            return measurementUnit switch
-            {
-                "Кг" => "Гр.",
-                "Л" => "Мл.",
-                _ => "Шт."
-            };
         }
     }
 }

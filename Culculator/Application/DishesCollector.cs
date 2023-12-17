@@ -3,17 +3,17 @@ using Culculator.Infrastructure;
 
 namespace Culculator.Application;
 
-public class Application
+public class DishesCollector
 {
     
     private IRepository _repository;
     
-    public Application(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)
+    public DishesCollector(IRecipesContext recipesContext, IAddedRecipeContext addedRecipeContext)
     {
         _repository = new Repository(recipesContext, addedRecipeContext);
     }
 
-    public Application(IRepository repository)
+    public DishesCollector(IRepository repository)
     {
         _repository = repository;
     }

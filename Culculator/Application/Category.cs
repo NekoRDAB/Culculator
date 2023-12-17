@@ -7,14 +7,14 @@ namespace Culculator.Application;
     {
         private static string _pathToRecipes;
         private static string _pathToIngredients;
-        private static Application _application;
+        private static DishesCollector _dishesCollector;
 
         public readonly List<Dish> Dishes;
         public readonly string Name;
 
-        internal static void SetPaths(Application application)
+        internal static void SetPaths(DishesCollector dishesCollector)
         {
-            _application = application;
+            _dishesCollector = dishesCollector;
         }
 
         public Category(string name, IEnumerable<Dish> dishes)
@@ -26,6 +26,6 @@ namespace Culculator.Application;
         public Category(string name)
         {
             Name = name;
-            Dishes = _application.GetDishesByCategory(name);
+            Dishes = _dishesCollector.GetDishesByCategory(name);
         }
     }

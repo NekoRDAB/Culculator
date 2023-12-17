@@ -28,7 +28,7 @@ public static class ContainerConfigurer
         kernel.Bind<ICategories>().To<AutoCategories>();
         kernel.Bind<IRecipesContext>().To<RecipesContextSQLite>();
         kernel.Bind<IAddedRecipeContext>().To<AddedRecipeContext>();
-        kernel.Bind<Application>().ToSelf();
+        kernel.Bind<DishesCollector>().ToSelf();
         kernel.Bind<IRepository>().To<Repository>();
         kernel.Bind<RecipeContextPathProvider>()
             .ToConstant(new RecipeContextPathProvider(pathToRecipes, pathToAddedRecipes));
