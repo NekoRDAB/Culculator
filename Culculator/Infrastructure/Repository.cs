@@ -61,7 +61,7 @@ public class Repository : IRepository
         return recipes;
     }
 
-    public List<IngredientEntry> GetIngredients()
+    private List<IngredientEntry> GetIngredients()
     {
         var ingredient = _recipesContext
             .IngredientsDataBase
