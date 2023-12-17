@@ -9,13 +9,13 @@ namespace Culculator.Application.Extensions
         {
             if (isZeroFirstAllowed && key == "D0")
                 return true;
-            if (isDotAllow && key == "OemPeriod" && !currentText.IsNullOrEmpty() && currentText.Contains('.'))
+            if (isDotAllow && key == "OemPeriod" && !string.IsNullOrEmpty(currentText) && currentText.Contains('.'))
                 return false;
-            if (!isZeroFirstAllowed && key == "D0" && currentText.IsNullOrEmpty())
+            if (!isZeroFirstAllowed && key == "D0" && string.IsNullOrEmpty(currentText))
                 return false;
             // if (!isZeroFirstAllowed && key == "D0" && currentText.Length > 0)
             //     return false;
-            if (isDotAllow && key == "OemPeriod" && currentText.IsNullOrEmpty())
+            if (isDotAllow && key == "OemPeriod" && string.IsNullOrEmpty(currentText))
                 return false;
             if (isDotAllow && key == "OemPeriod")
                 return true;

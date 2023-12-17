@@ -89,7 +89,7 @@ class AddRecipeParameters : Panel
             comboBox.Items.Clear();
             var filteredIngredients = list
                 .Where(ingredient => ingredient.ToLower().Contains(searchText)
-                                     && !ingredient.IsNullOrEmpty());
+                                     && !string.IsNullOrEmpty(ingredient));
             foreach (var ingr in filteredIngredients)
             {
                 comboBox.Items.Add(ingr);
@@ -160,7 +160,7 @@ class AddRecipeParameters : Panel
         searchTextBox.KeyUp += (sender, a) =>
         {
             ingredientsBox.IsDropDownOpen = true;
-            if (!searchTextBox.Text.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(searchTextBox.Text))
             {
                 AddSearchedIngredients(searchTextBox, ingredientsBox, allIngredients);
             }

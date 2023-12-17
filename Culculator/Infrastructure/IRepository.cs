@@ -6,8 +6,6 @@ public interface IRepository
     public DishEntry GetRecipeFromDB(string recipeName);
 
     public List<DishEntry> GetRecipesFromDbByCategory(string category);
-
-    public List<DishEntry> GetAllRecipesFromDB();
     public void AddRecipeToPersonalDB(DishEntry dish);
     public void AddIngredientToPersonalDB(IngredientEntry ingredientEntry);
 }
