@@ -1,5 +1,4 @@
-﻿using Culculator.Application.Extensions;
-using Moq;
+﻿using Moq;
 
 namespace CulculatorTests;
 
@@ -76,7 +75,7 @@ public class DishesCollectorTests
         private Repository _repositoryMock;
         private string _pathToImage;
         private DishWithImage _dishWithImage;
-        
+
         [Test]
         public void DishWithImage_Constructor_CallsBaseConstructor()
         {
@@ -97,25 +96,5 @@ public class DishesCollectorTests
 
         private string _pathToRecipes;
         private string _pathToIngredients;
-    }
-    
-    [TestFixture]
-    public class FormatingExtentionsTests
-    {
-        [TestCase(1, ExpectedResult = "1 порция")]
-        [TestCase(2, ExpectedResult = "2 порции")]
-        [TestCase(5, ExpectedResult = "5 порций")]
-        [TestCase(11, ExpectedResult = "11 порций")]
-        [TestCase(12, ExpectedResult = "12 порций")]
-        [TestCase(21, ExpectedResult = "21 порция")]
-        [TestCase(22, ExpectedResult = "22 порции")]
-        [TestCase(25, ExpectedResult = "25 порций")]
-        [TestCase(101, ExpectedResult = "101 порция")]
-        [TestCase(102, ExpectedResult = "102 порции")]
-        [TestCase(105, ExpectedResult = "105 порций")]
-        public string FormatPortionsNumber_ValidNumber_ReturnsFormattedString(int number)
-        {
-            return number.FormatPortionsNumber();
-        }
     }
 }

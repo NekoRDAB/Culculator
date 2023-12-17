@@ -55,25 +55,25 @@ public class RepositoryTests
             db.RecipesDataBase.Add(new DishEntry
             {
                 Name = "Recipe 1",
-                Category = category, 
-                Ingredients = "mock", 
-                PortionsAmount = 1, 
+                Category = category,
+                Ingredients = "mock",
+                PortionsAmount = 1,
                 RecipeInfo = "mock"
             });
             db.RecipesDataBase.Add(new DishEntry
             {
-                Name = "Recipe 2", 
-                Category = category, 
-                Ingredients = "mock", 
+                Name = "Recipe 2",
+                Category = category,
+                Ingredients = "mock",
                 PortionsAmount = 1,
                 RecipeInfo = "mock"
             });
             db.RecipesDataBase.Add(new DishEntry
             {
                 Name = "Recipe 3",
-                Category = "Тест", 
+                Category = "Тест",
                 Ingredients = "mock",
-                PortionsAmount = 1, 
+                PortionsAmount = 1,
                 RecipeInfo = "mock"
             });
             db.SaveChanges();

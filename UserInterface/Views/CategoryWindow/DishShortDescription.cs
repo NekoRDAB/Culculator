@@ -33,7 +33,7 @@ class DishShortDescription : Panel
 
         textBox.KeyUp += (sender, args) =>
         {
-            if (!textBox.Text.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(textBox.Text))
             {
                 dish.RecalculateTotalPrice(int.Parse(textBox.Text));
                 priceTextBlock.Text = $"{Math.Round(dish.Price, 2)} руб.";

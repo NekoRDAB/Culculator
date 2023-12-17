@@ -53,14 +53,6 @@ public class Repository : IRepository
         return recipes.Concat(addedRecipes).ToList();
     }
 
-    public List<DishEntry> GetAllRecipesFromDB()
-    {
-        var recipes = _recipesContext
-            .RecipesDataBase
-            .ToList();
-        return recipes;
-    }
-
     public List<IngredientEntry> GetIngredients()
     {
         var ingredient = _recipesContext
