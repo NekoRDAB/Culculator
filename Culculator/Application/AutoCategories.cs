@@ -2,14 +2,14 @@
 
 namespace Culculator.Application;
 
-public class AutoCategories : ICategories
+public class AutoCategoriesCollector : ICategories
 {
-    public List<Category> All { get; }
+    public List<Category> AllCategories { get; }
     
-    public AutoCategories(IRecipesContext recipesDB, DishesCollector dishesCollector)
+    public AutoCategoriesCollector(IRecipesContext recipesDB, DishesCollector dishesCollector)
     {
         Category.SetPaths(dishesCollector);
-        All = recipesDB
+        AllCategories = recipesDB
             .RecipesDataBase
             .Select(d => d.Category)
             .Where(d => d != " ")

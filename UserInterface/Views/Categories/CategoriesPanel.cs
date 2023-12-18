@@ -14,7 +14,7 @@ public class CategoriesPanel : StackPanel
         _categories = categories;
         Margin = new(20);
         Spacing = 10;
-        foreach (var category in _categories.All)
+        foreach (var category in _categories.AllCategories)
         {
             var categoryContent = new ContentControl() { Content = category.Name };
             var categoryButton = new BaseTargetButton(330, 75, categoryContent, null, null, 25,

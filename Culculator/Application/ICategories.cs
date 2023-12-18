@@ -2,5 +2,5 @@
 
 public interface ICategories
 {
-    public List<Category> All { get; }
+    public List<Category> AllCategories { get; }
 }
