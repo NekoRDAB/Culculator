@@ -6,12 +6,12 @@ namespace Culculator.Application;
 
 public class PreDeterminedCategories : ICategories
 {
-    public List<Category> All { get; }
+    public List<Category> AllCategories { get; }
     public PreDeterminedCategories(string pathToRecipes, string pathToIngredients, 
         IRecipesContext recipesDB, DishesCollector dishesCollector)
     {
         Category.SetPaths(dishesCollector);
-        All = new List<Category>
+        AllCategories = new List<Category>
         {
             new("Завтраки"),
             new("Мясные блюда"),

@@ -25,7 +25,7 @@ public static class ContainerConfigurer
     {
         
         var kernel = new StandardKernel();
-        kernel.Bind<ICategories>().To<AutoCategories>();
+        kernel.Bind<ICategories>().To<AutoCategoriesCollector>();
         kernel.Bind<IRecipesContext>().To<RecipesContextSQLite>();
         kernel.Bind<IAddedRecipeContext>().To<AddedRecipeContext>();
         kernel.Bind<DishesCollector>().ToSelf();
