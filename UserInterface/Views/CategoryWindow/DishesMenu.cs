@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Castle.Core.Smtp;
 
 namespace UserInterface.Views;
 
@@ -11,6 +13,8 @@ class DishesMenu : Panel
 {
     private static Color categoryColor;
     private static string sortType;
+    private TextBox searchTextBox;
+    private StackPanel contentStackPanel;
 
     private static readonly Dictionary<string, Color> CategoryColors = new()
     {
@@ -24,9 +28,26 @@ class DishesMenu : Panel
     {
         categoryColor = CategoryColors[category.Name];
         Background = new SolidColorBrush(categoryColor);
+
+        contentStackPanel = FormDishesMenu(mainWindow, category, categoryColor);
+        Children.Add(new ScrollViewer { Content = contentStackPanel });
         
-        Children.Add(new ScrollViewer
-            { Content = FormDishesMenu(mainWindow, category, categoryColor) });
+        searchTextBox = new TextBox
+        {
+            Watermark = "Рецепт",
+            Width = 135,
+            Height = 40,
+            FontSize = 15,
+            Margin = new Thickness(0,45,0,0),
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top
+        };
+        searchTextBox.TextChanged += (sender, args) =>
+        {
+            Children.Remove(contentStackPanel);
+            UpdateDisplayedDishes(mainWindow, category, categoryColor, searchTextBox.Text);
+        };
+        Children.Add(searchTextBox);
         
         var returnImageContent = new ContentControl()
         {
@@ -72,5 +93,33 @@ class DishesMenu : Panel
         foreach (var dish in category.Dishes)
             dishesStackPanel.Children.Add(new DishBox(mainWindow, category, dish,  categoryColor));
         return dishesStackPanel;
+    }
+
+    private void UpdateDisplayedDishes(MainWindow mainWindow, Category category, Color categoryColor, string searchText)
+    {
+        if (contentStackPanel != null)
+        {
+            contentStackPanel.Children.Clear(); 
+            foreach (var dish in category.Dishes.Where(n => n.Name.ToLower().Contains(searchText.ToLower())))
+            {
+                contentStackPanel.Children.Add(new DishBox(mainWindow, category, dish, categoryColor));
+            }
+        }
+        else
+        {
+            contentStackPanel = new StackPanel()
+            {
+                Margin = new Thickness(20),
+                Spacing = 10,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            foreach (var dish in category.Dishes.Where(n => n.Name.Contains(searchText)))
+            {
+                contentStackPanel.Children.Add(new DishBox(mainWindow, category, dish, categoryColor));
+            }
+
+            Children.Add(new ScrollViewer { Content = contentStackPanel });
+        }
     }
 }
